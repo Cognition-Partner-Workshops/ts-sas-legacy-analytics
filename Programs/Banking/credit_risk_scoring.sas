@@ -96,15 +96,14 @@
     INTERCEPT = -3.2145;
 
     /* FICO score contribution (normalized) */
-    if not missing(FICO_SCORE) then
-      WOE_FICO = case
-        when FICO_SCORE >= 760 then -1.204
-        when FICO_SCORE >= 720 then -0.812
-        when FICO_SCORE >= 680 then -0.356
-        when FICO_SCORE >= 640 then  0.198
-        when FICO_SCORE >= 600 then  0.654
-        else 1.102
-      end;
+    if not missing(FICO_SCORE) then do;
+      if FICO_SCORE >= 760      then WOE_FICO = -1.204;
+      else if FICO_SCORE >= 720 then WOE_FICO = -0.812;
+      else if FICO_SCORE >= 680 then WOE_FICO = -0.356;
+      else if FICO_SCORE >= 640 then WOE_FICO =  0.198;
+      else if FICO_SCORE >= 600 then WOE_FICO =  0.654;
+      else WOE_FICO = 1.102;
+    end;
     else WOE_FICO = 0.198;  /* Population average for missing */
 
     /* Utilization contribution */

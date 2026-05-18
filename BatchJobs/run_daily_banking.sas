@@ -38,9 +38,14 @@
   /* ----------------------------------------------------------
      Macro to execute a step with error handling
      ---------------------------------------------------------- */
+  %let _batch_abort = 0;
+
   %macro run_step(step_num, step_name, program);
 
     %local step_start step_rc;
+
+    /* Skip if batch was aborted by a prior step */
+    %if &_batch_abort = 1 %then %return;
 
     /* Skip if restarting past this step */
     %if %length(&restart_from) > 0 and &step_num < &restart_from %then %do;
@@ -95,7 +100,7 @@
           body=Step &step_num (&step_name) failed with SYSERR=&step_rc. Batch halted. Restart with restart_from=&step_num.
         );
 
-        %goto BATCH_END;
+        %let _batch_abort = 1;
       %end;
     %end;
 
@@ -115,8 +120,6 @@
 
   %run_step(4, Monthly Regulatory Reporting,
     /opt/sas/custom/programs/Banking/monthly_regulatory_reporting.sas)
-
-  %BATCH_END:
 
   /* ----------------------------------------------------------
      Batch Summary

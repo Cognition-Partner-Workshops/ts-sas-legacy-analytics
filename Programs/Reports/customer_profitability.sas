@@ -21,7 +21,7 @@
   %parmv(report_month, _req=1)
 
   %local month_start month_end;
-  %let month_start = %sysfunc(inputn(01&report_month, ddmmyyn8.), date9.);
+  %let month_start = %sysfunc(inputn(&report_month.01, yymmdd8.), date9.);
   %let month_end   = %sysfunc(intnx(month, "&month_start"d, 0, E), date9.);
 
   %put NOTE: ============================================;
