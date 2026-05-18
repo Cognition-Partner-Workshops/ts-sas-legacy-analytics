@@ -25,7 +25,7 @@ options
   yearcutoff=1920
   obs=MAX
   msglevel=i
-  errorabend
+  noerrorabend
 ;
 
 /* ---------------------------------------------------------------

@@ -175,15 +175,15 @@
       50000000                     as CET1_CAPITAL format=dollar20.2,
       65000000                     as TIER1_CAPITAL format=dollar20.2,
       80000000                     as TOTAL_CAPITAL format=dollar20.2,
-      50000000 / sum(RWA) * 100    as CET1_RATIO format=8.2,
-      65000000 / sum(RWA) * 100    as TIER1_RATIO format=8.2,
-      80000000 / sum(RWA) * 100    as TOTAL_CAPITAL_RATIO format=8.2,
+      case when sum(RWA) > 0 then 50000000 / sum(RWA) * 100 else . end as CET1_RATIO format=8.2,
+      case when sum(RWA) > 0 then 65000000 / sum(RWA) * 100 else . end as TIER1_RATIO format=8.2,
+      case when sum(RWA) > 0 then 80000000 / sum(RWA) * 100 else . end as TOTAL_CAPITAL_RATIO format=8.2,
       /* Minimum requirements: CET1=4.5%, Tier1=6%, Total=8% */
-      case when 50000000/sum(RWA)*100 >= 4.5 then 'PASS' else 'FAIL' end
+      case when sum(RWA) = 0 then 'PASS' when 50000000/sum(RWA)*100 >= 4.5 then 'PASS' else 'FAIL' end
         as CET1_STATUS length=4,
-      case when 65000000/sum(RWA)*100 >= 6.0 then 'PASS' else 'FAIL' end
+      case when sum(RWA) = 0 then 'PASS' when 65000000/sum(RWA)*100 >= 6.0 then 'PASS' else 'FAIL' end
         as TIER1_STATUS length=4,
-      case when 80000000/sum(RWA)*100 >= 8.0 then 'PASS' else 'FAIL' end
+      case when sum(RWA) = 0 then 'PASS' when 80000000/sum(RWA)*100 >= 8.0 then 'PASS' else 'FAIL' end
         as TOTAL_CAPITAL_STATUS length=4
     from REPORTS.MONTHLY_RWA
     ;

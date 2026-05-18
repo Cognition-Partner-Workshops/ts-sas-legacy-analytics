@@ -207,6 +207,7 @@
       a.RISK_RATING as PREV_RATING,
       s.NEW_RISK_RATING as CURR_RATING,
       case
+        when a.RISK_RATING is null then 'NEW'
         when s.NEW_RISK_RATING < a.RISK_RATING then 'UPGRADE'
         when s.NEW_RISK_RATING > a.RISK_RATING then 'DOWNGRADE'
         else 'STABLE'
