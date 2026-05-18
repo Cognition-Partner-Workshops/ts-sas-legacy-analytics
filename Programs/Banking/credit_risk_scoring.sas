@@ -200,7 +200,7 @@
      Step 3: Risk Migration Matrix
      ---------------------------------------------------------- */
   proc sql;
-    create table CURATED.RISK_MIGRATION as
+    create table WORK.RISK_MIGRATION as
     select
       "&score_date"d as SCORE_DATE format=date9.,
       a.ACCOUNT_ID,
@@ -224,7 +224,7 @@
   quit;
 
   /* ----------------------------------------------------------
-     Step 4: Load Scores to Curated
+     Step 4: Load Scores and Migration to Curated
      ---------------------------------------------------------- */
   %lock(CURATED.RISK_SCORES);
 
@@ -232,6 +232,13 @@
   run;
 
   %lock(CURATED.RISK_SCORES, unlock);
+
+  %lock(CURATED.RISK_MIGRATION);
+
+  proc append base=CURATED.RISK_MIGRATION data=WORK.RISK_MIGRATION force;
+  run;
+
+  %lock(CURATED.RISK_MIGRATION, unlock);
 
   /* ----------------------------------------------------------
      Step 5: Risk Summary Report
@@ -251,11 +258,11 @@
   %put NOTE: ============================================;
   %put NOTE: credit_risk_scoring completed;
   %put NOTE: Accounts scored: %nobs(WORK.SCORED);
-  %put NOTE: Risk migrations: %nobs(CURATED.RISK_MIGRATION);
+  %put NOTE: Risk migrations: %nobs(WORK.RISK_MIGRATION);
   %put NOTE: ============================================;
 
   proc datasets lib=WORK nolist;
-    delete SCORE_INPUT SCORED;
+    delete SCORE_INPUT SCORED RISK_MIGRATION;
   quit;
 
 %mend credit_risk_scoring;

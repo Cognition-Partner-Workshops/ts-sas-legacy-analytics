@@ -64,10 +64,17 @@
     %put NOTE: ----------------------------------------;
 
     %let step_rc = 0;
+    %local _saved_syscc;
+    %let _saved_syscc = &SYSCC;
+    %let SYSCC = 0;
+
+    /* Propagate run_date to child programs via CURR_DT */
+    %let CURR_DT = &run_date;
 
     %include "&program" / source2;
 
-    %if &SYSERR > 4 %then %let step_rc = &SYSERR;
+    %if &SYSCC > 4 %then %let step_rc = &SYSCC;
+    %let SYSCC = &_saved_syscc;
 
     /* Log to control table */
     proc sql;
@@ -81,7 +88,7 @@
         &step_start,
         %sysfunc(datetime()),
         %sysevalf(%sysfunc(datetime()) - &step_start),
-        ifc(&step_rc = 0, "", "SYSERR=&step_rc")
+        ifc(&step_rc = 0, "", "SYSCC=&step_rc")
       );
     quit;
 
@@ -91,7 +98,7 @@
     %end;
     %else %do;
       %let job_fail = %eval(&job_fail + 1);
-      %put ERROR: Step &step_num FAILED (SYSERR=&step_rc);
+      %put ERROR: Step &step_num FAILED (SYSCC=&step_rc);
 
       %if &ABORT_ON_ERR = Y %then %do;
         %put ERROR: ABORT_ON_ERR=Y — halting batch;
