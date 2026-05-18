@@ -130,7 +130,31 @@
   quit;
 
   /* ----------------------------------------------------------
-     Step 3: Anomaly Detection
+     Step 3: Running Balance Calculation
+     Compute cumulative balance before anomaly detection so
+     OVERDRAFT checks use correct multi-transaction balances.
+     ---------------------------------------------------------- */
+  data WORK.TXN_WITH_BALANCE;
+    set WORK.TXN_ENRICHED;
+    by ACCOUNT_ID TRANSACTION_DATE TRANSACTION_ID;
+
+    retain RUNNING_BALANCE;
+
+    if first.ACCOUNT_ID then
+      RUNNING_BALANCE = PRE_TXN_BALANCE;
+
+    if TRANSACTION_TYPE in ('DEP','INT','REF','REV') then
+      RUNNING_BALANCE = RUNNING_BALANCE + TRANSACTION_AMOUNT;
+    else if TRANSACTION_TYPE in ('WDR','PMT','FEE','CHG') then
+      RUNNING_BALANCE = RUNNING_BALANCE - abs(TRANSACTION_AMOUNT);
+    else if TRANSACTION_TYPE in ('TRF','ADJ') then
+      RUNNING_BALANCE = RUNNING_BALANCE + TRANSACTION_AMOUNT;
+
+    format RUNNING_BALANCE dollar18.2;
+  run;
+
+  /* ----------------------------------------------------------
+     Step 4: Anomaly Detection (uses cumulative RUNNING_BALANCE)
      ---------------------------------------------------------- */
   proc sql;
     create table WORK.TXN_STATS as
@@ -158,14 +182,14 @@
       end as Z_SCORE,
       case
         when calculated Z_SCORE > 3 then 'HIGH_AMOUNT'
-        when e.POST_TXN_BALANCE < 0 then 'OVERDRAFT'
+        when e.RUNNING_BALANCE < 0 then 'OVERDRAFT'
         when e.TRANSACTION_TYPE = 'WDR'
           and abs(e.TRANSACTION_AMOUNT) > e.PRE_TXN_BALANCE * 0.9
           then 'LARGE_WITHDRAWAL'
         when missing(e.CUSTOMER_ID) then 'ORPHAN_ACCOUNT'
         else ''
       end as ANOMALY_TYPE length=20
-    from WORK.TXN_ENRICHED e
+    from WORK.TXN_WITH_BALANCE e
     left join WORK.TXN_STATS s
       on e.ACCOUNT_ID = s.ACCOUNT_ID
     having ANOMALY_TYPE ne ''
@@ -176,12 +200,12 @@
   %put NOTE: Anomalies detected: &nobs_anom;
 
   /* ----------------------------------------------------------
-     Step 4: Load to Curated Layer
+     Step 5: Load to Curated Layer
      ---------------------------------------------------------- */
   %lock(CURATED.DAILY_TRANSACTIONS);
 
   proc append base=CURATED.DAILY_TRANSACTIONS
-              data=WORK.TXN_ENRICHED force;
+              data=WORK.TXN_WITH_BALANCE force;
   run;
 
   %lock(CURATED.DAILY_TRANSACTIONS, unlock);
@@ -193,25 +217,11 @@
   %end;
 
   /* ----------------------------------------------------------
-     Step 5: Running Balance Calculation
+     Step 6: Persist Running Balances
      ---------------------------------------------------------- */
   data CURATED.RUNNING_BALANCES;
-    set WORK.TXN_ENRICHED;
-    by ACCOUNT_ID TRANSACTION_DATE TRANSACTION_ID;
-
-    retain RUNNING_BALANCE;
-
-    if first.ACCOUNT_ID then
-      RUNNING_BALANCE = PRE_TXN_BALANCE;
-
-    if TRANSACTION_TYPE in ('DEP','INT','REF','REV') then
-      RUNNING_BALANCE = RUNNING_BALANCE + TRANSACTION_AMOUNT;
-    else if TRANSACTION_TYPE in ('WDR','PMT','FEE','CHG') then
-      RUNNING_BALANCE = RUNNING_BALANCE - abs(TRANSACTION_AMOUNT);
-    else if TRANSACTION_TYPE in ('TRF','ADJ') then
-      RUNNING_BALANCE = RUNNING_BALANCE + TRANSACTION_AMOUNT;
-
-    format RUNNING_BALANCE dollar18.2;
+    set WORK.TXN_WITH_BALANCE;
+    keep ACCOUNT_ID TRANSACTION_DATE TRANSACTION_ID RUNNING_BALANCE;
   run;
 
   %put NOTE: ============================================;

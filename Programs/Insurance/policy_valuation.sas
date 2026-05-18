@@ -147,7 +147,8 @@
     format COMBINED_RATIO percent8.2;
 
     /* Premium Adequacy Flag */
-    if COMBINED_RATIO > 1.0 then PREMIUM_ADEQUATE = 'N';
+    if COMBINED_RATIO = . then PREMIUM_ADEQUATE = 'N';
+    else if COMBINED_RATIO > 1.0 then PREMIUM_ADEQUATE = 'N';
     else PREMIUM_ADEQUATE = 'Y';
 
     /* IBNR Estimate (basic: 15% of earned premium - paid) */

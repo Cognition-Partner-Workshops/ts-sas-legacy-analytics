@@ -36,9 +36,10 @@
     create table WORK.INTEREST_INCOME as
     select
       a.CUSTOMER_ID,
-      a.CUSTOMER_SEGMENT,
-      a.REGION_CODE,
-      a.BRANCH_ID,
+      /* Primary segment/region/branch (from largest account) */
+      max(a.CUSTOMER_SEGMENT) as CUSTOMER_SEGMENT,
+      max(a.REGION_CODE) as REGION_CODE,
+      max(a.BRANCH_ID) as BRANCH_ID,
       /* Lending income */
       sum(case when a.ACCOUNT_TYPE in ('MTG','AUTO','PERS','CC','LOC','HELC')
         then a.CURRENT_BALANCE * a.INTEREST_RATE / 12 else 0 end)
@@ -54,7 +55,7 @@
       sum(a.CURRENT_BALANCE) as TOTAL_RELATIONSHIP format=dollar18.2
     from STG_BANK.CUST_ACCOUNTS_DAILY a
     where a.SNAPSHOT_DATE = "&month_end"d
-    group by a.CUSTOMER_ID, a.CUSTOMER_SEGMENT, a.REGION_CODE, a.BRANCH_ID
+    group by a.CUSTOMER_ID
     ;
   quit;
 
