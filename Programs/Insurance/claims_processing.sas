@@ -146,7 +146,7 @@
       and CLAIMED_AMOUNT <= 5000
       and POLICY_TYPE in ('AUTO','HOME','RENT')
     then do;
-      ADJUDICATION_RESULT = 'APPROVE';
+      ADJUDICATION_RESULT = 'APPR';
       ADJUDICATION_REASON = 'Auto-approved: low risk, small claim';
       APPROVED_AMOUNT = max(0, CLAIMED_AMOUNT - DEDUCTIBLE);
       output WORK.AUTO_ADJUDICATED;
@@ -158,7 +158,7 @@
       and CLAIMED_AMOUNT <= SUM_INSURED * 0.25
       and CLAIMED_AMOUNT <= 50000
     then do;
-      ADJUDICATION_RESULT = 'APPROVE';
+      ADJUDICATION_RESULT = 'APPR';
       ADJUDICATION_REASON = 'Auto-approved: within 25% of sum insured';
       APPROVED_AMOUNT = max(0, CLAIMED_AMOUNT - DEDUCTIBLE);
       output WORK.AUTO_ADJUDICATED;
@@ -166,7 +166,7 @@
     end;
 
     /* Everything else goes to manual review */
-    ADJUDICATION_RESULT = 'PENDING';
+    ADJUDICATION_RESULT = 'PEND';
     ADJUDICATION_REASON = catx('; ',
       ifc(FRAUD_RISK='MEDIUM', 'Medium fraud risk', ''),
       ifc(CLAIMED_AMOUNT > 50000, 'Large claim', ''),

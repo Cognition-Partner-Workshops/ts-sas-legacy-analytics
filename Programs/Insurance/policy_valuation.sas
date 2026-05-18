@@ -66,6 +66,7 @@
       %if &lob ne ALL %then %do;
         and p.POLICY_TYPE = "&lob"
       %end;
+    order by p.POLICY_ID
     ;
   quit;
 

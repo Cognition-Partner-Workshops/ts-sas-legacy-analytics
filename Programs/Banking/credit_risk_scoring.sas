@@ -216,8 +216,9 @@
     from WORK.SCORED s
     inner join STG_BANK.CUST_ACCOUNTS_DAILY a
       on s.ACCOUNT_ID = a.ACCOUNT_ID
-    where a.RISK_RATING ne s.NEW_RISK_RATING
-      or a.RISK_RATING is null
+    where a.SNAPSHOT_DATE = "&score_date"d
+      and (a.RISK_RATING ne s.NEW_RISK_RATING
+      or a.RISK_RATING is null)
     ;
   quit;
 
