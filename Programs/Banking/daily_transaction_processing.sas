@@ -238,7 +238,7 @@
   %EXIT:
 
   proc datasets lib=WORK nolist;
-    delete TXN_VALIDATED TXN_REJECTED TXN_ENRICHED TXN_STATS TXN_ANOMALIES;
+    delete TXN_VALIDATED TXN_REJECTED TXN_ENRICHED TXN_WITH_BALANCE TXN_STATS TXN_ANOMALIES;
   quit;
 
 %mend daily_transaction_processing;

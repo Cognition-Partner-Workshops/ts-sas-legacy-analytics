@@ -39,9 +39,11 @@
 
     %if &_batch_abort = 1 %then %return;
 
-    %if %length(&restart_from) > 0 and &step_num < &restart_from %then %do;
-      %put NOTE: Skipping step &step_num (&step_name) — restart from &restart_from;
-      %return;
+    %if %length(&restart_from) > 0 %then %do;
+      %if &step_num < &restart_from %then %do;
+        %put NOTE: Skipping step &step_num (&step_name) — restart from &restart_from;
+        %return;
+      %end;
     %end;
 
     %let job_count = %eval(&job_count + 1);
