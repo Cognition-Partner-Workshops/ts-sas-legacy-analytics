@@ -69,6 +69,14 @@ This codebase exercises the full range of SAS features that migration tools need
 - **Control-M**: Job scheduling and dependency management
 - **Email (SMTP)**: Operational alerts and batch status notifications
 
+## Migration Assessments
+
+Domain-level migration assessments documenting data lineage, macro dependencies, complexity scores, and recommended migration sequences:
+
+| Domain | Assessment | Programs Covered | Overall Complexity |
+|--------|-----------|-----------------|-------------------|
+| Reports | [REPORTS_MIGRATION_ASSESSMENT.md](REPORTS_MIGRATION_ASSESSMENT.md) | `customer_profitability.sas` (176 lines) | Medium (2.7/5) |
+
 ## License
 
 This macro library is released under the [Unlicense](UNLICENSE.txt). The banking and insurance programs are original content created for migration analysis exercises.
