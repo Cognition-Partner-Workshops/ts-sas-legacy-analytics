@@ -32,7 +32,7 @@ joined as (
     inner join demographics as d
         on a.customer_id = d.customer_id
     where a.account_status not in ('W', 'C')
-      and a.open_date <= current_date()
+      and a.open_date <= {{ var('run_date') }}
 
 ),
 
@@ -58,7 +58,7 @@ neg_bal as (
         customer_id,
         'NEG_BAL' as exception_code,
         'Negative balance on deposit account ' || cast(account_id as string) as exception_desc,
-        current_date() as snapshot_date
+        {{ var('run_date') }} as snapshot_date
 
     from with_utilization
     where account_type in ('CHK', 'SAV', 'MMA', 'CD')
@@ -74,7 +74,7 @@ high_util as (
         customer_id,
         'HIGH_UTIL' as exception_code,
         'Utilization at ' || cast(round(utilization_pct, 1) as string) || '% for account ' || cast(account_id as string) as exception_desc,
-        current_date() as snapshot_date
+        {{ var('run_date') }} as snapshot_date
 
     from with_utilization
     where utilization_pct > 95
@@ -89,7 +89,7 @@ no_risk as (
         customer_id,
         'NO_RISK' as exception_code,
         'Missing risk rating for customer ' || cast(customer_id as string) as exception_desc,
-        current_date() as snapshot_date
+        {{ var('run_date') }} as snapshot_date
 
     from with_utilization
     where risk_rating is null

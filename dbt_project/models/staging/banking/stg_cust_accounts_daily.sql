@@ -1,7 +1,7 @@
 -- stg_cust_accounts_daily.sql
 -- Daily Customer Account Snapshot — replaces load_customer_accounts.sas (Program #1)
 --
--- Joins accounts + demographics + rates, applies business rules, and computes
+-- Joins accounts + demographics, applies business rules, and computes
 -- derived metrics (utilization %, account age, dormancy/high-balance flags).
 -- Mirrors SAS PROC SQL join (lines 34-69) and DATA step logic (lines 82-157).
 
@@ -16,12 +16,6 @@ with accounts as (
 demographics as (
 
     select * from {{ ref('stg_cust_demographics') }}
-
-),
-
-daily_rates as (
-
-    select * from {{ ref('stg_daily_rates') }}
 
 ),
 
@@ -86,7 +80,7 @@ joined as (
     inner join demographics as d
         on a.customer_id = d.customer_id
     where a.account_status not in ('W', 'C')
-      and a.open_date <= current_date()
+      and a.open_date <= {{ var('run_date') }}
 
 ),
 
@@ -97,10 +91,10 @@ with_metrics as (
         j.*,
 
         -- Account age in months (SAS: intck('month', OPEN_DATE, run_date))
-        datediff(month, j.open_date, current_date()) as acct_age_months,
+        datediff(month, j.open_date, {{ var('run_date') }}) as acct_age_months,
 
         -- Days since last activity (SAS: run_date - LAST_ACTIVITY_DATE)
-        datediff(day, j.last_activity_date, current_date()) as days_inactive,
+        datediff(day, j.last_activity_date, {{ var('run_date') }}) as days_inactive,
 
         -- Utilization % for revolving accounts (SAS: lines 106-109)
         case
@@ -111,7 +105,7 @@ with_metrics as (
 
         -- Dormancy flag (SAS: lines 112-115)
         case
-            when datediff(day, j.last_activity_date, current_date()) > 365
+            when datediff(day, j.last_activity_date, {{ var('run_date') }}) > 365
                  and j.account_status = 'A'
                 then 'Y'
             else 'N'
@@ -163,7 +157,7 @@ final as (
         m.utilization_pct,
         m.dormancy_flag,
         m.high_balance_flag,
-        current_date() as snapshot_date,
+        {{ var('run_date') }} as snapshot_date,
         current_timestamp() as load_timestamp
 
     from with_metrics as m
