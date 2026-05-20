@@ -38,14 +38,14 @@ with account_base as (
                 then (a.current_balance / a.credit_limit) * 100
             else null
         end as utilization_pct,
-        current_date() as snapshot_date,
+        {{ var('snapshot_date') }} as snapshot_date,
         current_timestamp() as load_timestamp
 
     from {{ ref('stg_cust_accounts') }} a
     inner join {{ ref('stg_cust_demographics') }} d
         on a.customer_id = d.customer_id
     where a.account_status not in ('W', 'C')
-      and a.open_date <= current_date()
+      and a.open_date <= {{ var('snapshot_date') }}
 
 ),
 

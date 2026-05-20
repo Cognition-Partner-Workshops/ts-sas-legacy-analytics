@@ -31,12 +31,6 @@ demographics as (
 
 ),
 
-daily_rates as (
-
-    select * from {{ ref('stg_daily_rates') }}
-
-),
-
 -- Replicate SAS PROC SQL join (load_customer_accounts.sas lines 34-69)
 -- Filters: account_status not in ('W','C') and open_date <= run_date
 account_base as (
@@ -69,7 +63,7 @@ account_base as (
     inner join demographics d
         on a.customer_id = d.customer_id
     where a.account_status not in ('W', 'C')
-      and a.open_date <= current_date()
+      and a.open_date <= {{ var('snapshot_date') }}
 
 ),
 
@@ -80,10 +74,10 @@ with_derived_metrics as (
         *,
 
         -- Account age in months (SAS: intck('month', OPEN_DATE, "&run_date"d))
-        months_between(current_date(), open_date) as acct_age_months,
+        months_between({{ var('snapshot_date') }}, open_date) as acct_age_months,
 
         -- Days since last activity (SAS: "&run_date"d - LAST_ACTIVITY_DATE)
-        datediff(current_date(), last_activity_date) as days_inactive,
+        datediff({{ var('snapshot_date') }}, last_activity_date) as days_inactive,
 
         -- Utilization ratio for revolving accounts (SAS lines 106-109)
         case
@@ -94,7 +88,7 @@ with_derived_metrics as (
 
         -- Dormancy flag (SAS lines 112-115)
         case
-            when datediff(current_date(), last_activity_date) > 365
+            when datediff({{ var('snapshot_date') }}, last_activity_date) > 365
                  and account_status = 'A'
                 then 'Y'
             else 'N'
@@ -107,7 +101,7 @@ with_derived_metrics as (
         end as high_balance_flag,
 
         -- Snapshot metadata (SAS lines 150-152)
-        current_date() as snapshot_date,
+        {{ var('snapshot_date') }} as snapshot_date,
         current_timestamp() as load_timestamp
 
     from account_base
