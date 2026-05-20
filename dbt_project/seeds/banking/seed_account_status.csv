@@ -1,0 +1,9 @@
+code,description
+A,Active
+C,Closed
+D,Dormant
+F,Frozen
+R,Restricted
+S,Suspended
+P,Pending
+W,Written Off

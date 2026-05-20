@@ -1,0 +1,11 @@
+code,description
+DEP,Deposit
+WDR,Withdrawal
+TRF,Transfer
+PMT,Payment
+FEE,Fee
+INT,Interest
+ADJ,Adjustment
+REV,Reversal
+CHG,Charge
+REF,Refund
