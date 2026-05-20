@@ -74,7 +74,9 @@ with_derived_metrics as (
         *,
 
         -- Account age in months (SAS: intck('month', OPEN_DATE, "&run_date"d))
-        months_between({{ var('snapshot_date') }}, open_date) as acct_age_months,
+        -- Uses integer month-boundary count to match SAS intck semantics
+        (year({{ var('snapshot_date') }}) * 12 + month({{ var('snapshot_date') }}))
+            - (year(open_date) * 12 + month(open_date)) as acct_age_months,
 
         -- Days since last activity (SAS: "&run_date"d - LAST_ACTIVITY_DATE)
         datediff({{ var('snapshot_date') }}, last_activity_date) as days_inactive,
