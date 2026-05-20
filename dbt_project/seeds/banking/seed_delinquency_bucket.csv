@@ -1,0 +1,8 @@
+min_days,max_days,bucket_label
+0,0,Current
+1,29,1-29 Days
+30,59,30-59 Days
+60,89,60-89 Days
+90,119,90-119 Days
+120,179,120-179 Days
+180,999999,180+ Days

@@ -1,0 +1,84 @@
+version: 2
+
+seeds:
+  - name: seed_account_type
+    description: >
+      Account type lookup replacing SAS $ACCTTYPE. format from banking_formats.sas.
+      Maps account type codes to human-readable descriptions.
+    columns:
+      - name: code
+        description: Short alphanumeric account type code (e.g., CHK, SAV, MMA)
+      - name: description
+        description: Full descriptive label for the account type
+
+  - name: seed_account_status
+    description: >
+      Account status lookup replacing SAS $ACCTSTAT. format from banking_formats.sas.
+      Maps single-character status codes to descriptive labels.
+    columns:
+      - name: code
+        description: Single-character account status code (e.g., A, C, D)
+      - name: description
+        description: Full descriptive label for the account status
+
+  - name: seed_risk_rating
+    description: >
+      Risk rating lookup replacing SAS RISKRATE. format from banking_formats.sas.
+      Maps numeric risk rating codes (1-7) to descriptive risk levels.
+    columns:
+      - name: rating_code
+        description: Numeric risk rating code (1 = lowest risk, 7 = highest risk)
+      - name: description
+        description: Full descriptive label for the risk level
+
+  - name: seed_customer_segment
+    description: >
+      Customer segment lookup replacing SAS $CUSTSEG. format from banking_formats.sas.
+      Maps customer segment codes to business segment descriptions.
+    columns:
+      - name: code
+        description: Short alphanumeric customer segment code (e.g., RET, PREM, PB)
+      - name: description
+        description: Full descriptive label for the customer segment
+
+  - name: seed_region
+    description: >
+      Branch region lookup replacing SAS $REGION. format from banking_formats.sas.
+      Maps region codes to geographic region names.
+    columns:
+      - name: code
+        description: Short alphanumeric region code (e.g., NE, SE, MW)
+      - name: description
+        description: Full descriptive label for the geographic region
+
+  - name: seed_transaction_category
+    description: >
+      Transaction category lookup replacing SAS $TXNCAT. format from banking_formats.sas.
+      Maps transaction category codes to descriptive labels.
+    columns:
+      - name: code
+        description: Short alphanumeric transaction category code (e.g., DEP, WDR, TRF)
+      - name: description
+        description: Full descriptive label for the transaction category
+
+  - name: seed_delinquency_bucket
+    description: >
+      Delinquency bucket lookup replacing SAS DELQBKT. format from banking_formats.sas.
+      Maps days-past-due ranges to delinquency bucket labels used in credit risk reporting.
+    columns:
+      - name: min_days
+        description: Minimum days past due (inclusive) for this bucket
+      - name: max_days
+        description: Maximum days past due (inclusive) for this bucket
+      - name: bucket_label
+        description: Human-readable label for the delinquency bucket
+
+  - name: seed_loan_purpose
+    description: >
+      Loan purpose lookup replacing SAS $LNPURP. format from banking_formats.sas.
+      Maps loan purpose codes to descriptive labels.
+    columns:
+      - name: code
+        description: Short alphanumeric loan purpose code (e.g., PURCH, REFI, CONST)
+      - name: description
+        description: Full descriptive label for the loan purpose
