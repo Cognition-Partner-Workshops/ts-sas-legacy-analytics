@@ -1,0 +1,149 @@
+version: 2
+
+sources:
+  - name: oracle_dw
+    description: Oracle Data Warehouse — primary source for customer and account data.
+    tables:
+      - name: cust_accounts
+        description: Customer account master table from Oracle DW (ORA_DW.CUST_ACCOUNTS).
+      - name: cust_demographics
+        description: Customer demographics table from Oracle DW (ORA_DW.CUST_DEMOGRAPHICS).
+
+  - name: raw_bank
+    description: Raw banking data feeds.
+    tables:
+      - name: daily_rates
+        description: Daily interest/exchange rate reference table (RAW_BANK.DAILY_RATES).
+
+models:
+  - name: stg_cust_accounts
+    description: >
+      Thin staging model over the Oracle DW customer accounts table.
+      Selects and renames columns from ORA_DW.CUST_ACCOUNTS.
+    columns:
+      - name: account_id
+        description: Unique account identifier.
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: Foreign key to customer demographics.
+        tests:
+          - not_null
+
+  - name: stg_cust_demographics
+    description: >
+      Thin staging model over the Oracle DW customer demographics table.
+      Selects and renames columns from ORA_DW.CUST_DEMOGRAPHICS.
+    columns:
+      - name: customer_id
+        description: Unique customer identifier.
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_daily_rates
+    description: >
+      Thin staging model over the raw bank daily rates table.
+      Selects from RAW_BANK.DAILY_RATES.
+
+  - name: stg_cust_accounts_daily
+    description: >
+      Daily customer account snapshot — replaces load_customer_accounts.sas (Program #1).
+      Joins accounts, demographics, and rates; applies business rules; computes derived
+      metrics (utilization %, account age, dormancy and high-balance flags); and joins
+      seed lookup tables for formatted descriptions.
+      Materialized as a table. Mirrors the SAS PROC SQL join (lines 34-69) and
+      DATA step logic (lines 82-157).
+    columns:
+      - name: account_id
+        description: Unique account identifier.
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: Foreign key to customer demographics.
+        tests:
+          - not_null
+      - name: account_type
+        description: Account type code.
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - 'MTG'
+                - 'AUTO'
+                - 'PERS'
+                - 'CC'
+                - 'LOC'
+                - 'HELC'
+                - 'CHK'
+                - 'SAV'
+                - 'MMA'
+                - 'CD'
+                - 'IRA'
+      - name: account_status
+        description: Current account status code.
+      - name: open_date
+        description: Date the account was opened.
+      - name: close_date
+        description: Date the account was closed (null if still open).
+      - name: current_balance
+        description: Current account balance.
+      - name: available_balance
+        description: Available balance (credit limit minus current balance for revolving accounts).
+      - name: credit_limit
+        description: Credit limit for revolving account types (CC, LOC, HELC).
+      - name: interest_rate
+        description: Current interest rate on the account.
+      - name: branch_id
+        description: Branch where the account is held.
+      - name: officer_id
+        description: Assigned account officer.
+      - name: last_activity_date
+        description: Date of most recent account activity.
+      - name: acct_age_months
+        description: Account age in months from open_date to current date.
+      - name: days_inactive
+        description: Days since last account activity.
+      - name: utilization_pct
+        description: >
+          Credit utilization percentage for revolving accounts (CC, LOC, HELC).
+          Null for non-revolving account types.
+      - name: dormancy_flag
+        description: "'Y' if inactive > 365 days and status is Active; otherwise 'N'."
+      - name: high_balance_flag
+        description: "'Y' if current_balance >= 250,000; otherwise 'N'."
+      - name: snapshot_date
+        description: Date this snapshot was generated.
+      - name: load_timestamp
+        description: Timestamp when the row was loaded.
+
+  - name: stg_acct_exceptions
+    description: >
+      Account data quality exceptions — replaces the exception routing logic in
+      load_customer_accounts.sas (lines 124-147). Flags records with negative balances
+      on deposit accounts (NEG_BAL), high credit utilization (HIGH_UTIL > 95%), and
+      missing risk ratings (NO_RISK).
+    columns:
+      - name: account_id
+        description: Account identifier for the exception record.
+        tests:
+          - not_null
+      - name: customer_id
+        description: Customer identifier for the exception record.
+        tests:
+          - not_null
+      - name: exception_code
+        description: Exception type code (NEG_BAL, HIGH_UTIL, NO_RISK).
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - 'NEG_BAL'
+                - 'HIGH_UTIL'
+                - 'NO_RISK'
+      - name: exception_desc
+        description: Human-readable description of the exception.
+      - name: snapshot_date
+        description: Date this exception was flagged.
