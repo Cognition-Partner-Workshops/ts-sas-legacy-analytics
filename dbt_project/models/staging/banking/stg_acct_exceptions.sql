@@ -57,7 +57,7 @@ neg_bal as (
         account_id,
         customer_id,
         'NEG_BAL' as exception_code,
-        'Negative balance on deposit account ' || cast(account_id as string) as exception_desc,
+        'Negative balance ' || cast(current_balance as string) || ' on deposit account ' || cast(account_id as string) as exception_desc,
         {{ var('run_date') }} as snapshot_date
 
     from with_utilization
