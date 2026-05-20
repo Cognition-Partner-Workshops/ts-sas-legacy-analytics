@@ -1,0 +1,56 @@
+name: sas_banking_migration
+version: '1.0.0'
+config-version: 2
+
+profile: databricks_banking
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+analysis-paths: ["analyses"]
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  run_date: "current_date()"
+  score_date: "current_date()"
+  report_month: "date_format(current_date() - interval 1 month, 'yyyyMM')"
+  # Credit risk model coefficients (Model ID: CRM-2023-Q4-v2)
+  risk_model_intercept: -3.2145
+  risk_model_weight_fico: 0.412
+  risk_model_weight_util: 0.198
+  risk_model_weight_dpd: 0.289
+  risk_model_weight_age: 0.067
+  risk_model_weight_ltv: 0.134
+
+models:
+  sas_banking_migration:
+    staging:
+      +materialized: view
+      +schema: staging
+      banking:
+        +tags: ["banking", "staging"]
+        stg_cust_accounts_daily:
+          +materialized: table
+    curated:
+      +materialized: table
+      +schema: curated
+      banking:
+        +tags: ["banking", "curated"]
+        curated_daily_transactions:
+          +materialized: incremental
+        curated_risk_scores:
+          +materialized: incremental
+    reports:
+      +materialized: table
+      +schema: reports
+      banking:
+        +tags: ["banking", "reports"]
+
+seeds:
+  sas_banking_migration:
+    banking:
+      +schema: seeds
