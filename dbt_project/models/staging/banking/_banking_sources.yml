@@ -1,0 +1,137 @@
+version: 2
+
+sources:
+  - name: oracle_dw
+    description: >
+      Oracle Data Warehouse (SAS library ORA_DW). Connects to the DW_BANKING
+      schema on the FINPROD Oracle instance. Contains master customer, account,
+      credit bureau, payment, collateral, and loan data used across banking
+      analytics pipelines.
+    database: "{{ var('oracle_dw_database', target.database) }}"
+    schema: DW_BANKING
+    loader: oracle
+    freshness:
+      warn_after: { count: 24, period: hour }
+      error_after: { count: 48, period: hour }
+    loaded_at_field: _etl_loaded_at
+    tables:
+      - name: cust_accounts
+        description: >
+          Customer account master table. Contains account balances, types,
+          statuses, interest rates, credit limits, and branch assignments.
+          Primary input for load_customer_accounts.sas (BANK_DAILY_01).
+        columns:
+          - name: account_id
+            description: Unique account identifier.
+            tests:
+              - not_null
+              - unique
+          - name: customer_id
+            description: Foreign key to cust_demographics.
+            tests:
+              - not_null
+
+      - name: cust_demographics
+        description: >
+          Customer demographic and segmentation data. Includes name, region,
+          risk rating, and contact information. Joined to cust_accounts in
+          load_customer_accounts.sas.
+        columns:
+          - name: customer_id
+            description: Unique customer identifier.
+            tests:
+              - not_null
+              - unique
+
+      - name: bureau_scores
+        description: >
+          External credit bureau scores and trade-line summaries (FICO,
+          VantageScore, inquiries, derogatory marks). Primary input for
+          credit_risk_scoring.sas (BANK_WEEKLY_01).
+        freshness:
+          warn_after: { count: 7, period: day }
+          error_after: { count: 14, period: day }
+        columns:
+          - name: customer_id
+            description: Foreign key linking bureau data to customer.
+            tests:
+              - not_null
+
+      - name: payment_history
+        description: >
+          Historical payment behavior metrics — on-time counts, late-bucket
+          counts (30/60/90 day), and max days-past-due. Used by
+          credit_risk_scoring.sas to derive payment behavior features.
+        columns:
+          - name: account_id
+            description: Foreign key to cust_accounts.
+            tests:
+              - not_null
+
+      - name: collateral
+        description: >
+          Collateral and security details for secured lending products.
+          Includes valuation, type, and lien position. Used by
+          credit_risk_scoring.sas for LGD estimation and by
+          monthly_regulatory_reporting.sas for RWA calculations.
+        columns:
+          - name: collateral_id
+            description: Unique collateral identifier.
+            tests:
+              - not_null
+              - unique
+
+      - name: loan_details
+        description: >
+          Loan-level attributes including LTV, term, origination date,
+          maturity, and delinquency status. Used by
+          monthly_regulatory_reporting.sas for Basel III RWA and
+          delinquency aging reports.
+        columns:
+          - name: loan_id
+            description: Unique loan identifier.
+            tests:
+              - not_null
+              - unique
+
+  - name: raw_bank
+    description: >
+      Raw banking data landing zone (SAS library RAW_BANK, path
+      /data/sas/raw/banking). Contains flat-file feeds and reference
+      data loaded by upstream ETL before SAS processing.
+    database: "{{ var('raw_bank_database', target.database) }}"
+    schema: "{{ var('raw_bank_schema', 'raw_banking') }}"
+    loader: file
+    tables:
+      - name: daily_rates
+        description: >
+          Daily interest and exchange rate reference table. Used by
+          load_customer_accounts.sas to apply current rates during
+          account snapshot generation.
+        freshness:
+          warn_after: { count: 24, period: hour }
+          error_after: { count: 48, period: hour }
+        loaded_at_field: _etl_loaded_at
+
+      - name: txn_feed
+        description: >
+          Daily transaction feed. In the legacy SAS environment this table
+          is named TXN_FEED_YYYYMMDD with a dynamic date suffix
+          (e.g. TXN_FEED_20240115). In dbt the feed is consolidated into a
+          single source table. Used by daily_transaction_processing.sas
+          (BANK_DAILY_02) for transaction validation, classification, and
+          anomaly detection.
+        freshness:
+          warn_after: { count: 24, period: hour }
+          error_after: { count: 48, period: hour }
+        loaded_at_field: _etl_loaded_at
+        columns:
+          - name: transaction_id
+            description: Unique transaction identifier.
+            tests:
+              - not_null
+              - unique
+          - name: account_id
+            description: Foreign key to the account involved in the transaction.
+            tests:
+              - not_null
