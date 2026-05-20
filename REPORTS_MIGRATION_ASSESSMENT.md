@@ -69,9 +69,9 @@ The Reports domain consists of a single SAS program (`customer_profitability.sas
 All three input datasets originate from the **Banking domain**:
 
 ```
-Programs/Banking/account_loading.sas  ──▶  STG_BANK.CUST_ACCOUNTS_DAILY
-Programs/Banking/transaction_etl.sas  ──▶  CURATED.DAILY_TRANSACTIONS
-Programs/Banking/credit_risk.sas      ──▶  CURATED.RISK_SCORES
+Programs/Banking/load_customer_accounts.sas        ──▶  STG_BANK.CUST_ACCOUNTS_DAILY
+Programs/Banking/daily_transaction_processing.sas  ──▶  CURATED.DAILY_TRANSACTIONS
+Programs/Banking/credit_risk_scoring.sas           ──▶  CURATED.RISK_SCORES
                                               │
                                               ▼
                               Programs/Reports/customer_profitability.sas
@@ -156,7 +156,7 @@ However, the `%export_xlsx` macro definition accepts `PATH=` (not `file=`) and h
 
 Using weights: Data Volume (20%), Business Logic (30%), External Dependencies (20%), Error Handling (15%), Macro Depth (15%):
 
-**Overall: 2.65 / 5 — Medium Complexity**
+**Overall: 2.70 / 5 — Medium Complexity**
 
 ```
 (3 × 0.20) + (3 × 0.30) + (3 × 0.20) + (2 × 0.15) + (2 × 0.15) = 2.70
@@ -172,9 +172,9 @@ Since `customer_profitability.sas` is a downstream consumer of Banking domain ou
 
 | Priority | Banking Program | Output Dataset | Required By |
 |---|---|---|---|
-| 1 | `Programs/Banking/account_loading.sas` | `STG_BANK.CUST_ACCOUNTS_DAILY` | Step 1 (Interest Income) |
-| 2 | `Programs/Banking/transaction_etl.sas` | `CURATED.DAILY_TRANSACTIONS` | Step 2 (Fee Income) |
-| 3 | `Programs/Banking/credit_risk.sas` | `CURATED.RISK_SCORES` | Step 3 (Expected Credit Loss) |
+| 1 | `Programs/Banking/load_customer_accounts.sas` | `STG_BANK.CUST_ACCOUNTS_DAILY` | Step 1 (Interest Income) |
+| 2 | `Programs/Banking/daily_transaction_processing.sas` | `CURATED.DAILY_TRANSACTIONS` | Step 2 (Fee Income) |
+| 3 | `Programs/Banking/credit_risk_scoring.sas` | `CURATED.RISK_SCORES` | Step 3 (Expected Credit Loss) |
 
 ### Migration Plan for customer_profitability.sas
 
