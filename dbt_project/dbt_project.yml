@@ -1,0 +1,40 @@
+name: sas_banking_migration
+version: 1.0.0
+config-version: 2
+
+profile: databricks_banking
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+seeds:
+  sas_banking_migration:
+    +schema: seeds
+
+models:
+  sas_banking_migration:
+    staging:
+      +materialized: view
+      banking:
+        +materialized: view
+        stg_cust_accounts_daily:
+          +materialized: table
+        stg_acct_exceptions:
+          +materialized: table
+    curated:
+      +materialized: incremental
+    reports:
+      +materialized: table
+
+vars:
+  # Replaces SAS &CURR_DT macro variable
+  snapshot_date: "current_date()"

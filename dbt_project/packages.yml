@@ -1,0 +1,5 @@
+packages:
+  - package: dbt-labs/dbt_utils
+    version: [">=1.0.0", "<2.0.0"]
+  - package: databricks/dbt_databricks
+    version: [">=1.6.0", "<2.0.0"]

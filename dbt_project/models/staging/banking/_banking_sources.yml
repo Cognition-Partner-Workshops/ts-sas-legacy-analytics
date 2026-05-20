@@ -1,0 +1,56 @@
+version: 2
+
+sources:
+  - name: oracle_dw
+    description: >
+      Oracle Data Warehouse (FINPROD) — banking schema DW_BANKING.
+      Mapped from SAS libname ORA_DW defined in Config/autoexec.sas lines 62-70.
+    schema: "{{ var('oracle_dw_schema', 'dw_banking') }}"
+    tables:
+      - name: cust_accounts
+        description: >
+          Customer account master table containing balances, limits, status codes,
+          and relationship metadata. Source for the daily account snapshot.
+        columns:
+          - name: account_id
+            description: Unique account identifier
+          - name: customer_id
+            description: Foreign key to customer demographics
+          - name: account_type
+            description: "Account type code (CHK, SAV, MTG, CC, etc.)"
+          - name: account_status
+            description: "Account status code (A=Active, C=Closed, etc.)"
+          - name: current_balance
+            description: Current account balance as of last posting
+          - name: credit_limit
+            description: Credit limit for revolving accounts
+
+      - name: cust_demographics
+        description: >
+          Customer demographic and segmentation attributes including region,
+          risk rating, and contact information.
+        columns:
+          - name: customer_id
+            description: Unique customer identifier (join key to cust_accounts)
+          - name: customer_segment
+            description: "Customer segment code (RET, PREM, PB, SMB, etc.)"
+          - name: region_code
+            description: "Branch region code (NE, SE, MW, SW, W, NW)"
+          - name: risk_rating
+            description: "Numeric risk rating (1=Minimal through 7=Loss Expected)"
+
+  - name: raw_bank
+    description: >
+      Raw banking file feeds landing zone. Daily flat file loads from
+      upstream systems. Mapped from SAS libname RAW_BANK at /data/sas/raw/banking
+      (Config/autoexec.sas line 35).
+    schema: "{{ var('raw_bank_schema', 'raw_banking') }}"
+    tables:
+      - name: daily_rates
+        description: >
+          Daily interest rate reference data used for rate-sensitive
+          calculations in the account snapshot process.
+        loaded_at_field: rate_date
+        freshness:
+          warn_after: {count: 1, period: day}
+          error_after: {count: 2, period: day}

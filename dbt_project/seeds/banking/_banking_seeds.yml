@@ -1,0 +1,49 @@
+version: 2
+
+seeds:
+  - name: seed_account_type
+    description: >
+      Account type lookup table replacing SAS format $ACCTTYPE.
+      Defined in Formats/banking_formats.sas lines 15-28.
+      Used across all banking programs for account type labeling.
+    config:
+      column_types:
+        code: varchar(4)
+        description: varchar(30)
+
+  - name: seed_account_status
+    description: >
+      Account status lookup table replacing SAS format $ACCTSTAT.
+      Defined in Formats/banking_formats.sas lines 31-41.
+    config:
+      column_types:
+        code: varchar(1)
+        description: varchar(20)
+
+  - name: seed_risk_rating
+    description: >
+      Risk rating lookup table replacing SAS numeric format RISKRATE.
+      Defined in Formats/banking_formats.sas lines 44-53.
+      Rating scale: 1 (Minimal Risk) through 7 (Loss Expected).
+    config:
+      column_types:
+        rating_code: int
+        description: varchar(20)
+
+  - name: seed_customer_segment
+    description: >
+      Customer segment lookup table replacing SAS format $CUSTSEG.
+      Defined in Formats/banking_formats.sas lines 106-114.
+    config:
+      column_types:
+        code: varchar(4)
+        description: varchar(20)
+
+  - name: seed_region
+    description: >
+      Branch region lookup table replacing SAS format $REGION.
+      Defined in Formats/banking_formats.sas lines 94-103.
+    config:
+      column_types:
+        code: varchar(2)
+        description: varchar(15)

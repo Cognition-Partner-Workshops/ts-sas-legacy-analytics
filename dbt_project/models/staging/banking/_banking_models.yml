@@ -1,0 +1,106 @@
+version: 2
+
+models:
+  - name: stg_cust_accounts
+    description: >
+      Base staging view over the Oracle DW customer accounts table.
+      Applies column typing and trimming.
+
+  - name: stg_cust_demographics
+    description: >
+      Base staging view over the Oracle DW customer demographics table.
+      Applies column typing and trimming.
+
+  - name: stg_daily_rates
+    description: >
+      Base staging view over the raw daily interest rates file feed.
+
+  - name: stg_cust_accounts_daily
+    description: >
+      Daily customer account snapshot — the primary output replacing
+      SAS program `Programs/Banking/load_customer_accounts.sas`.
+      
+      Joins account master with demographics, computes derived metrics
+      (utilization, dormancy, account age), and enriches with lookup
+      labels from seed tables (replacing SAS PROC FORMAT).
+      
+      This table is the foundational dependency for downstream programs:
+      - daily_transaction_processing (Program #2)
+      - credit_risk_scoring (Program #3)
+      - monthly_regulatory_reporting (Program #4)
+    columns:
+      - name: account_id
+        description: Unique account identifier
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: Customer identifier (foreign key to demographics)
+        tests:
+          - not_null
+      - name: account_type
+        description: "Account type code"
+        tests:
+          - accepted_values:
+              values: ['MTG', 'AUTO', 'PERS', 'CC', 'LOC', 'HELC', 'CHK', 'SAV', 'MMA', 'CD', 'IRA']
+      - name: account_status
+        description: "Account status (excludes W=Written Off and C=Closed)"
+        tests:
+          - accepted_values:
+              values: ['A', 'D', 'F', 'R', 'S', 'P']
+      - name: current_balance
+        description: Current account balance as of last posting
+        tests:
+          - not_null
+      - name: acct_age_months
+        description: Account age in months since open date
+      - name: days_inactive
+        description: Days since last activity on the account
+      - name: utilization_pct
+        description: >
+          Credit utilization percentage for revolving accounts (CC, LOC, HELC).
+          NULL for non-revolving account types.
+      - name: dormancy_flag
+        description: "'Y' if account is Active but inactive > 365 days"
+        tests:
+          - accepted_values:
+              values: ['Y', 'N']
+      - name: high_balance_flag
+        description: "'Y' if current_balance >= 250,000"
+        tests:
+          - accepted_values:
+              values: ['Y', 'N']
+      - name: snapshot_date
+        description: Date of the snapshot run (replaces SAS &CURR_DT macro variable)
+        tests:
+          - not_null
+      - name: risk_rating
+        description: "Numeric risk rating (1-7 scale)"
+      - name: region_code
+        description: "Branch region code"
+
+  - name: stg_acct_exceptions
+    description: >
+      Account data quality exceptions — records flagged by business rules
+      during the daily account snapshot process. Replaces the exception
+      output branch of the SAS DATA step in load_customer_accounts.sas.
+      
+      Exception codes:
+      - NEG_BAL: Negative balance on deposit account
+      - HIGH_UTIL: Credit utilization > 95%
+      - NO_RISK: Missing risk rating
+    columns:
+      - name: account_id
+        description: Account that triggered the exception
+        tests:
+          - not_null
+      - name: exception_code
+        description: "Exception type code (NEG_BAL, HIGH_UTIL, NO_RISK)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['NEG_BAL', 'HIGH_UTIL', 'NO_RISK']
+      - name: exception_desc
+        description: Human-readable description of the exception condition
+        tests:
+          - not_null
