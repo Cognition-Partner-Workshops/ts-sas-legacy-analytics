@@ -242,7 +242,9 @@ def _numeric_ne(
 ) -> pd.Series:
     a_num = pd.to_numeric(a, errors="coerce")
     b_num = pd.to_numeric(b, errors="coerce")
+    both_na = a_num.isna() & b_num.isna()
+    one_na = a_num.isna() != b_num.isna()
     if method.lower() == "exact":
-        return (a_num != b_num) & ~(a_num.isna() & b_num.isna())
+        return (a_num != b_num) & ~both_na
     diff = (a_num - b_num).abs()
-    return (diff > criterion) & ~(a_num.isna() & b_num.isna())
+    return ((diff > criterion) | one_na) & ~both_na

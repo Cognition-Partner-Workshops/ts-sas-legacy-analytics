@@ -67,7 +67,7 @@ def subset_data(
         df = df.iloc[start:end]
 
     if obs is not None:
-        mask = _parse_obs(obs, len(data))
+        mask = _parse_obs(obs, len(df))
         df = df.iloc[mask]
 
     if where is not None:

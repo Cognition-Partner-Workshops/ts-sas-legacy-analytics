@@ -18,9 +18,13 @@ import pandas as pd
 
 _EXTENSION_MAP: dict[str, str] = {
     "xlsx": ".xlsx",
-    "xls": ".xls",
     "spss": ".sav",
     "stata": ".dta",
+}
+
+_DEPRECATED_FORMATS: dict[str, str] = {
+    "xls": "Legacy .xls (Excel 97-2003) format is not supported by modern "
+           "Python libraries. Use dbms='xlsx' instead.",
 }
 
 
@@ -45,7 +49,8 @@ def export_dbms(
           attribute (falling back to ``"data"``).
         * If a file path, it is used as-is.
     dbms : str
-        ``"xlsx"`` (default), ``"xls"``, ``"spss"``, or ``"stata"``.
+        ``"xlsx"`` (default), ``"spss"``, or ``"stata"``.
+        Legacy ``"xls"`` raises ``ValueError`` (no modern Python writer).
     replace : bool
         Overwrite an existing file (default ``False``).
     label : bool
@@ -68,6 +73,8 @@ def export_dbms(
         If *dbms* is not a recognised format.
     """
     dbms_lower = dbms.lower()
+    if dbms_lower in _DEPRECATED_FORMATS:
+        raise ValueError(_DEPRECATED_FORMATS[dbms_lower])
     if dbms_lower not in _EXTENSION_MAP:
         raise ValueError(
             f"Unsupported dbms '{dbms}'. Choose from: {', '.join(_EXTENSION_MAP)}"
@@ -92,7 +99,7 @@ def export_dbms(
         labels_map: dict[str, str] = data.attrs.get("_labels", {})
         df = df.rename(columns=lambda c: labels_map.get(c, c))
 
-    if dbms_lower in ("xlsx", "xls"):
+    if dbms_lower == "xlsx":
         df.to_excel(out_path, index=False, sheet_name=sheet_name, engine="openpyxl")
     elif dbms_lower == "stata":
         df.to_stata(out_path, write_index=False)

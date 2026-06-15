@@ -48,6 +48,25 @@ class TestValueDifferences:
         )
         assert result.match is False
 
+    def test_nan_vs_number_detected_absolute(self):
+        """NaN in one dataset and a real number in the other must be flagged."""
+        base = pd.DataFrame({"key": ["A", "B"], "val": [1.0, 2.0]})
+        comp = pd.DataFrame({"key": ["A", "B"], "val": [1.0, float("nan")]})
+        result = compare_datasets(
+            base, comp, by=["key"], method="absolute", criterion=1e-6
+        )
+        assert result.match is False
+        assert len(result.value_diffs) == 1
+
+    def test_both_nan_is_match_absolute(self):
+        """Both NaN should be treated as equal (matching SAS behaviour)."""
+        base = pd.DataFrame({"key": ["A"], "val": [float("nan")]})
+        comp = pd.DataFrame({"key": ["A"], "val": [float("nan")]})
+        result = compare_datasets(
+            base, comp, by=["key"], method="absolute", criterion=1e-6
+        )
+        assert result.match is True
+
 
 class TestColumnDifferences:
     def test_base_only_column(self, class_df: pd.DataFrame):

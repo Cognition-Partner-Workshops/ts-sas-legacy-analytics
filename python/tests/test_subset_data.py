@@ -31,6 +31,11 @@ class TestObsFiltering:
         assert len(result) == 1
         assert result["Name"].iloc[0] == "Barbara"
 
+    def test_obs_after_firstobs_no_index_error(self, class_df: pd.DataFrame):
+        """obs indices should apply to the already-sliced frame, not original."""
+        result = subset_data(class_df, firstobs=5, obs="1-3")
+        assert len(result) == 3
+
 
 class TestFirstLastObs:
     def test_firstobs(self, class_df: pd.DataFrame):

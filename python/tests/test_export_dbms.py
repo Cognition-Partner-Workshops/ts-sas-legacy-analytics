@@ -61,3 +61,7 @@ class TestExportDbms:
     def test_derives_extension_from_dbms(self, sample_df: pd.DataFrame, tmp_path):
         out = export_dbms(sample_df, tmp_path / "noext", dbms="xlsx", replace=True)
         assert out.suffix == ".xlsx"
+
+    def test_legacy_xls_raises(self, sample_df: pd.DataFrame, tmp_path):
+        with pytest.raises(ValueError, match="Legacy .xls"):
+            export_dbms(sample_df, tmp_path, dbms="xls", replace=True)
