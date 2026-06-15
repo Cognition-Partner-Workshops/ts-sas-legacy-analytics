@@ -17,6 +17,7 @@ The Python version uses:
 
 from __future__ import annotations
 
+import warnings
 from pathlib import Path
 from typing import Optional
 
@@ -75,7 +76,16 @@ def export_dbms(
     if label and labels:
         export_data = export_data.rename(columns=labels)
 
-    if dbms_upper in ("XLSX", "XLS"):
+    if dbms_upper == "XLS":
+        warnings.warn(
+            "Legacy XLS format is not supported by openpyxl. "
+            "Writing XLSX-format content to a .xls path. "
+            "Consider using dbms='XLSX' for correct extension.",
+            UserWarning,
+            stacklevel=2,
+        )
+        export_data.to_excel(resolved, index=False, engine="openpyxl")
+    elif dbms_upper == "XLSX":
         export_data.to_excel(resolved, index=False, engine="openpyxl")
     elif dbms_upper == "STATA":
         export_data.to_stata(resolved, write_index=False)

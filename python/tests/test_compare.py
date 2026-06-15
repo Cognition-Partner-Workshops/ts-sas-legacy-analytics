@@ -81,6 +81,24 @@ class TestLibraryCompare:
         assert "shoes" not in result.matched_members
 
 
+class TestDuplicateByKeys:
+    def test_duplicate_keys_warns(self) -> None:
+        """Non-unique BY keys should emit a warning, not explode."""
+        base = pd.DataFrame({"key": [1, 1, 2], "val": [10, 20, 30]})
+        comp = pd.DataFrame({"key": [1, 1, 2], "val": [10, 20, 30]})
+        with pytest.warns(UserWarning, match="do not uniquely identify"):
+            result = compare(base, comp, by=["key"])
+        assert result.value_diffs.empty
+
+    def test_duplicate_keys_no_row_explosion(self) -> None:
+        """Row count should not blow up from many-to-many join."""
+        base = pd.DataFrame({"key": [1, 1, 2, 2], "val": [10, 20, 30, 40]})
+        comp = pd.DataFrame({"key": [1, 1, 2, 2], "val": [10, 20, 30, 40]})
+        with pytest.warns(UserWarning):
+            result = compare(base, comp, by=["key"])
+        assert result.value_diffs.empty
+
+
 class TestValidation:
     def test_type_mismatch(self, class_df: pd.DataFrame) -> None:
         with pytest.raises(TypeError):

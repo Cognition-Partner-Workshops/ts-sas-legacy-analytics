@@ -36,6 +36,14 @@ class TestExportDbmsStata:
         assert len(result) == len(class_df)
 
 
+class TestExportDbmsXls:
+    def test_xls_emits_warning(self, class_df: pd.DataFrame, tmp_path) -> None:
+        """XLS format should warn about XLSX content in .xls extension."""
+        with pytest.warns(UserWarning, match="Legacy XLS format"):
+            out = export_dbms(class_df, str(tmp_path / "class.xls"), dbms="XLS", replace=True)
+        assert out.endswith(".xls")
+
+
 class TestExportDbmsErrorHandling:
     def test_invalid_dbms(self, class_df: pd.DataFrame, tmp_path) -> None:
         with pytest.raises(ValueError, match="Unsupported DBMS"):

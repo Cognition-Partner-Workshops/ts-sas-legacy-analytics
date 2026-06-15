@@ -16,6 +16,7 @@ This module provides:
 from __future__ import annotations
 
 import re
+import warnings
 from dataclasses import dataclass, field
 from typing import Optional, Sequence, Union
 
@@ -151,8 +152,22 @@ def _compare_datasets(
         base_s = base.sort_values(by_list).reset_index(drop=True)
         comp_s = comp.sort_values(by_list).reset_index(drop=True)
 
-        merged = base_s[by_list].merge(
-            comp_s[by_list], on=by_list, how="outer", indicator=True,
+        # Warn if BY keys are not unique — mirrors SAS PROC COMPARE warning
+        if base_s.duplicated(subset=by_list).any() or comp_s.duplicated(subset=by_list).any():
+            warnings.warn(
+                "BY variables do not uniquely identify observations. "
+                "Duplicate keys may produce unreliable comparison results. "
+                "This mirrors the SAS WARNING for non-unique BY keys.",
+                UserWarning,
+                stacklevel=3,
+            )
+
+        # De-duplicate before merge to prevent row explosion
+        base_keys = base_s[by_list].drop_duplicates()
+        comp_keys = comp_s[by_list].drop_duplicates()
+
+        merged = base_keys.merge(
+            comp_keys, on=by_list, how="outer", indicator=True,
         )
         base_only_keys = merged.loc[merged["_merge"] == "left_only", by_list]
         comp_only_keys = merged.loc[merged["_merge"] == "right_only", by_list]
@@ -160,9 +175,11 @@ def _compare_datasets(
         result.base_only_rows = base_s.merge(base_only_keys, on=by_list)
         result.comp_only_rows = comp_s.merge(comp_only_keys, on=by_list)
 
-        both = merged.loc[merged["_merge"] == "both", by_list]
-        base_common = base_s.merge(both, on=by_list)
-        comp_common = comp_s.merge(both, on=by_list)
+        both_keys = merged.loc[merged["_merge"] == "both", by_list]
+        base_common = base_s.merge(both_keys, on=by_list).drop_duplicates(subset=by_list, keep="first")
+        comp_common = comp_s.merge(both_keys, on=by_list).drop_duplicates(subset=by_list, keep="first")
+        base_common = base_common.reset_index(drop=True)
+        comp_common = comp_common.reset_index(drop=True)
     else:
         min_len = min(len(base), len(comp))
         base_common = base.iloc[:min_len].reset_index(drop=True)
