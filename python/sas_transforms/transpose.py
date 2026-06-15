@@ -119,8 +119,12 @@ def transpose(
         result = pivot.reset_index()
 
         if copy_cols:
-            copy_df = df.groupby(by, sort=False)[copy_cols].first().reset_index()
-            result = result.merge(copy_df, on=by, how="left")
+            if by:
+                copy_df = df.groupby(by, sort=False)[copy_cols].first().reset_index()
+                result = result.merge(copy_df, on=by, how="left")
+            else:
+                for c in copy_cols:
+                    result[c] = df[c].iat[0] if len(df) > 0 else None
 
         return result
 

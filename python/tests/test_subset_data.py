@@ -124,3 +124,10 @@ class TestCombined:
         result = subset_data(class_df, firstobs=5, obs="1-3")
         # firstobs=5 keeps rows 5..19 (15 rows), then obs="1-3" keeps first 3
         assert len(result) == 3
+
+    def test_where_before_obs(self, class_df: pd.DataFrame) -> None:
+        """WHERE filters first, then OBS selects from filtered rows."""
+        # 9 females in class_df; obs="1-3" should take first 3 of those 9
+        result = subset_data(class_df, where='Sex == "F"', obs="1-3")
+        assert len(result) == 3
+        assert all(result["Sex"] == "F")

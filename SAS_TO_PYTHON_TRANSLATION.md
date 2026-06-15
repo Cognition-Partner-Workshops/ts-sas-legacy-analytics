@@ -55,7 +55,7 @@ Subsets a dataset by rows (WHERE, IF, OBS ranges, FIRSTOBS/LASTOBS) and columns 
 | `KEEP=` / `DROP=` | Column selection / `drop(columns=...)` | Applied last to match SAS DATA step order |
 
 ### Key difference
-SAS evaluation order is: dataset options (FIRSTOBS/LASTOBS/RENAME) → SET → subsetting IF → WHERE (actually WHERE is on the input, IF is on the PDV). Python version replicates this: RENAME first, then FIRSTOBS/LASTOBS, then OBS ranges, then WHERE, then IF, then KEEP/DROP.
+SAS evaluation order is: dataset options (FIRSTOBS/LASTOBS/RENAME) → WHERE (source-level filter) → subsetting IF (including OBS/_N_ checks). Python version replicates this: RENAME first, then FIRSTOBS/LASTOBS, then WHERE, then OBS ranges, then IF, then KEEP/DROP.
 
 The `obs` parameter accepts SAS-style range syntax (`"1-5 or 11-15 or 20-30"`) and is parsed with regex into pandas integer location indices.
 

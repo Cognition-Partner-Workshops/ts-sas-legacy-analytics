@@ -70,20 +70,20 @@ def subset_data(
     if rename:
         df = df.rename(columns=rename)
 
-    # FIRSTOBS / LASTOBS (1-based, inclusive)
+    # FIRSTOBS / LASTOBS (1-based, inclusive — dataset options on SET)
     if firstobs is not None or lastobs is not None:
         start = (firstobs - 1) if firstobs is not None else 0
         end = lastobs if lastobs is not None else len(df)
         df = df.iloc[start:end].reset_index(drop=True)
 
-    # OBS ranges
+    # WHERE clause (source-level filter — runs before subsetting IF in SAS)
+    if where is not None:
+        df = df.query(where).reset_index(drop=True)
+
+    # OBS ranges (subsetting IF — _N_ counts post-WHERE observations)
     if obs is not None:
         mask = _parse_obs_ranges(obs, len(df))
         df = df.iloc[mask].reset_index(drop=True)
-
-    # WHERE clause
-    if where is not None:
-        df = df.query(where).reset_index(drop=True)
 
     # Subsetting IF
     if if_ is not None:
