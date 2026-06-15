@@ -79,6 +79,9 @@ class TestLibraryCompare:
         result = compare(lib_base, lib_comp, filter="class")
         assert "class" in result.matched_members
         assert "shoes" not in result.matched_members
+        # Filtered-out members must not appear in any list
+        assert "shoes" not in result.base_only_members
+        assert "shoes" not in result.comp_only_members
 
 
 class TestDuplicateByKeys:

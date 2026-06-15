@@ -112,6 +112,7 @@ def _compare_libraries(
     if filter is not None:
         rx = re.compile(filter, re.IGNORECASE)
         base_names = {n for n in base_names if rx.search(n)}
+        comp_names = {n for n in comp_names if rx.search(n)}
 
     matched = sorted(base_names & comp_names)
     result = LibraryCompareResult(
