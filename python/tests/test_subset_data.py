@@ -111,3 +111,16 @@ class TestCombined:
         assert list(result.columns) == ["Name", "Age", "Gender"]
         assert all(result["Gender"] == "F")
         assert len(result) == 9
+
+    def test_rename_preserved_with_obs(self, class_df: pd.DataFrame) -> None:
+        """OBS should operate on already-renamed df, not original data."""
+        result = subset_data(class_df, rename={"Sex": "Gender"}, obs="1-3")
+        assert "Gender" in result.columns
+        assert "Sex" not in result.columns
+        assert len(result) == 3
+
+    def test_firstobs_then_obs(self, class_df: pd.DataFrame) -> None:
+        """OBS applied after FIRSTOBS — both should take effect."""
+        result = subset_data(class_df, firstobs=5, obs="1-3")
+        # firstobs=5 keeps rows 5..19 (15 rows), then obs="1-3" keeps first 3
+        assert len(result) == 3

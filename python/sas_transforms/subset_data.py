@@ -78,10 +78,8 @@ def subset_data(
 
     # OBS ranges
     if obs is not None:
-        mask = _parse_obs_ranges(obs, len(data))
-        df = data.iloc[mask].reset_index(drop=True)
-        if rename:
-            df = df.rename(columns=rename)
+        mask = _parse_obs_ranges(obs, len(df))
+        df = df.iloc[mask].reset_index(drop=True)
 
     # WHERE clause
     if where is not None:
