@@ -1,0 +1,8 @@
+{
+  "bundle": "t007_customer_profitability",
+  "source_file": "Programs/Reports/customer_profitability.sas",
+  "source_blob_sha": "6ff0a36ba84cff55d3727aa406cb5c9fb01a88cc",
+  "source_commit": "e3378dfea4e4a8ba274b8b4fa34f2ff39e78d3d5",
+  "tier": "real_data",
+  "notes": "Step 1 interest-income PROC SQL (lending/deposit CASE split, calculated net interest margin, count(distinct), relationship balance), Step 4 P&L assembly DATA step (MERGE BY customer of income/fee/ECL, operating cost, total revenue, net profit, annualized ROA, profit tier with coalesce), and Step 5 segment PROC MEANS, all verbatim. STG_BANK account base and the fee-income/ECL rollups supplied inline."
+}

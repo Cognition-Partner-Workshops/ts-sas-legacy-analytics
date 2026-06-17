@@ -1,0 +1,8 @@
+{
+  "bundle": "t005_claims_hash",
+  "source_file": "Programs/Insurance/claims_processing.sas",
+  "source_blob_sha": "6d0aeeeca985d32bdf6f77720a0dc485fe4ced17",
+  "source_commit": "e3378dfea4e4a8ba274b8b4fa34f2ff39e78d3d5",
+  "tier": "real_data",
+  "notes": "Step 1 claims validation via SAS hash object verbatim: declare hash loaded from active policies with where= subset, definekey/definedata/definedone, find(), and the policy-period + sum-insured checks routing failures to CLAIMS_INVALID. RAW_INS.POLICIES and the daily claims feed supplied inline with the columns the step reads."
+}

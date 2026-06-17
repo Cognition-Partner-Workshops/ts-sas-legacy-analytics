@@ -1,0 +1,31 @@
+
+ACCOUNT_ID     ACCOUNT_TYPE  ACCOUNT_STATUS     RISK_RATING   REGION_CODE  ACCT_AGE_MONTHS  DAYS_INACTIVE  UTILIZATION_PCT  DORMANCY_FLAG  HIGH_BALANCE_FLAG
+----------  ---------------  --------------  --------------  ------------  ---------------  -------------  ---------------  -------------  -----------------
+A100001     Checking         Active                Low Risk  Northeast                 166             13                .  N              N
+A100002     Savings          Active            Minimal Risk  Southeast                  67             18                .  N              N
+A100003     Credit Card      Active           Elevated Risk  Midwest                    28             10        98.631875  N              N
+A100004     Mortgage         Active           Moderate Risk  Southwest                 228             16                .  N              Y
+A100005     Auto Loan        Active               High Risk  West                       95           1099                .  Y              N
+A100006     Home Equity LOC  Active          Very High Risk  Northwest                 118              6             98.5  N              N
+A100007     Checking         Active                Low Risk  Southwest                  54             13                .  N              N
+A100008     Line of Credit   Active                       .  Headquarters               44             11    97.0588235294  N              N
+
+ACCOUNT_ID     ACCOUNT_TYPE  CURRENT_BALANCE  UTILIZATION_PCT     RISK_RATING
+----------  ---------------  ---------------  ---------------  --------------
+A100003     Credit Card            $7,890.55        98.631875   Elevated Risk
+A100006     Home Equity LOC       $98,500.00             98.5  Very High Risk
+A100007     Checking                -$250.00                .        Low Risk
+A100008     Line of Credit        $33,000.00    97.0588235294               .
+A100008     Line of Credit        $33,000.00    97.0588235294               .
+
+ACCOUNT_TYPE  REGION_CODE  N_ACCOUNTS  TOTAL_BALANCE  AVG_BALANCE  AVG_UTILIZATION  AVG_AGE_MONTHS
+------------  -----------  ----------  -------------  -----------  ---------------  --------------
+AUTO          W                     1          12750        12750                .              95
+CC            MW                    1        7890.55      7890.55        98.631875              28
+CHK           NE                    1         1532.4       1532.4                .             166
+CHK           SW                    1           -250         -250                .              54
+HELC          NW                    1          98500        98500             98.5             118
+LOC           HQ                    1          33000        33000    97.0588235294              44
+MTG           SW                    1         285000       285000                .             228
+SAV           SE                    1          45200        45200                .              67
+

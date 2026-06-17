@@ -1,0 +1,8 @@
+{
+  "bundle": "t006_regulatory_rwa",
+  "source_file": "Programs/Banking/monthly_regulatory_reporting.sas",
+  "source_blob_sha": "63842fc807dc9704528029678af7362345372b35",
+  "source_commit": "e3378dfea4e4a8ba274b8b4fa34f2ff39e78d3d5",
+  "tier": "real_data",
+  "notes": "Step 1 Basel III RWA PROC SQL (risk-weight CASE + calculated + sum) and Step 2 delinquency-aging buckets PROC SQL (bucket CASE + CASE-based ORDER BY) verbatim. STG_BANK x ORA_DW.LOAN_DETAILS join result supplied inline; SNAPSHOT_DATE filter dropped since the inline table is the target month."
+}

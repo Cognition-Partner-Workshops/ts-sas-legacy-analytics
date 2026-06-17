@@ -1,0 +1,19 @@
+{
+  "_captured_at": "2026-06-17T06:57:50.243820+00:00",
+  "_captured_run_id": "r_019ed45ed7a47a70b79c63dce54f12ed",
+  "status": "ok",
+  "exit_code": 0,
+  "log_contains": [
+    "NOTE: Wrote WORK.SCORED (10 rows, 17 columns).",
+    "NOTE: Output dataset WORK.RISK_SUMMARY has 9 observations and 7 variables.",
+    "PROC PRINT completed: 10 observations printed, 8 variables"
+  ],
+  "log_does_not_contain": [
+    "ERROR:",
+    "[JENNER-ERROR"
+  ],
+  "diagnostics": {
+    "parse_warnings": [],
+    "runtime_warnings": []
+  }
+}
