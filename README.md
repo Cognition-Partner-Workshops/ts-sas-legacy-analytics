@@ -6,7 +6,15 @@ A representative enterprise SAS codebase for banking and insurance analytics. Th
 
 ```
 ├── Config/
-│   └── autoexec.sas              # Global environment: LIBNAMEs, macro vars, DB connections
+│   ├── autoexec.sas              # Global environment: LIBNAMEs, macro vars, DB connections
+│   └── autoexec_local.sas        # Same contract with local libraries instead of Oracle/Teradata
+├── Data/                         # Banking seed data — lets the estate run standalone
+│   ├── csv/                      # Oracle DW extracts, daily feed, 90-day curated history
+│   ├── generate_seed_data.py     # Deterministic regeneration
+│   ├── validate_seed_data.py     # Checks the data against the programs' assumptions
+│   ├── load_seed_data.sas        # CSV -> ORA_DW / RAW_BANK / CURATED
+│   ├── run_local_banking.sas     # Formats -> load -> four banking programs -> row counts
+│   └── bootstrap_local_env.sh    # Creates /data/sas and /opt/sas/custom, then runs the pipeline
 ├── Formats/
 │   ├── banking_formats.sas       # Custom formats: account types, risk ratings, delinquency
 │   └── insurance_formats.sas     # Custom formats: policy types, claim status, coverage
@@ -61,7 +69,27 @@ This codebase exercises the full range of SAS features that migration tools need
 | Error handling (`%GOTO`, `SYSERR`) | Batch orchestrators | dbt on-run-end hooks / Workflows |
 | Email notifications (`%sendmail`) | Exception handling | Databricks alerts / PagerDuty |
 
+## Running the Banking Pipeline Standalone
+
+The programs are unmodified production code, so they read from Oracle and write to
+`/data/sas`. `Data/` supplies those inputs as CSV and recreates the paths, which is
+enough to run the whole daily banking chain on Base SAS with no warehouse:
+
+```bash
+./Data/bootstrap_local_env.sh
+```
+
+This builds the format catalog, loads `ORA_DW` / `RAW_BANK` / `CURATED` from
+`Data/csv/`, runs `load_customer_accounts` → `daily_transaction_processing` →
+`credit_risk_scoring` → `monthly_regulatory_reporting` for business date
+31JAN2024, and prints the output row counts to reconcile a migrated target
+against. The data is seeded to trip every exception, reject and anomaly branch in
+the code. See [Data/README.md](Data/README.md).
+
 ## External Dependencies
+
+Production dependencies. Each is either stubbed or seeded from `Data/` when the
+pipeline runs standalone.
 
 - **Oracle DW** (`ORA_DW`): Customer demographics, loan details, bureau scores, collateral, payment history, cost of funds
 - **Teradata Analytics** (`TERA_DW`): Actuarial tables, fraud indicators
