@@ -1,0 +1,8 @@
+{
+  "bundle": "t004_account_snapshot",
+  "source_file": "Programs/Banking/load_customer_accounts.sas",
+  "source_blob_sha": "40870485b7e92d5e30ba9cb5180095015124e7e7",
+  "source_commit": "e3378dfea4e4a8ba274b8b4fa34f2ff39e78d3d5",
+  "tier": "real_data",
+  "notes": "Step 2 snapshot DATA step verbatim: applies the repository banking formats, derives account age/days-inactive/utilization/dormancy/high-balance, and splits out NEG_BAL/HIGH_UTIL/NO_RISK exceptions. Step 1 ORA_DW join replaced by inline WORK.ACCT_RAW; Step 4 PROC MEANS summary included. Formats loaded in autoexec from banking_formats.sas value sets."
+}

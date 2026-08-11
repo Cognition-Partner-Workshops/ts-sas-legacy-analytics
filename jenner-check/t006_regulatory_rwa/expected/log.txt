@@ -1,0 +1,27 @@
+Jenner 0.1.0 (Unlicensed - limited to 100 observations)
+Get a license at https://jenneranalytics.com/license
+
+NOTE: Option OBS changed to 100.
+NOTE: DATA WORK.CUST_ACCOUNTS_DAILY
+
+NOTE: Processing inline DATALINES (13 lines)
+
+NOTE: Read 13 rows from DATALINES.
+NOTE: Wrote WORK.CUST_ACCOUNTS_DAILY (13 rows, 7 columns).
+NOTE: DATA elapsed:
+  wall  0.00 seconds
+  cpu   0.00 seconds
+NOTE: PROC SQL 
+
+NOTE: Table WORK.MONTHLY_RWA created.
+NOTE: PROC SQL statement used.
+NOTE: PROC PRINT data=WORK.MONTHLY_RWA
+
+NOTE: PROC PRINT completed: 12 observations printed, 7 variables
+NOTE: PROC SQL 
+
+NOTE: Table WORK.DELINQUENCY_AGING created.
+NOTE: PROC SQL statement used.
+NOTE: PROC PRINT data=WORK.DELINQUENCY_AGING
+
+NOTE: PROC PRINT completed: 10 observations printed, 7 variables

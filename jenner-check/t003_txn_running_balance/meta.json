@@ -1,0 +1,8 @@
+{
+  "bundle": "t003_txn_running_balance",
+  "source_file": "Programs/Banking/daily_transaction_processing.sas",
+  "source_blob_sha": "814b972eb64f6c571481fef5825b8a2336893211",
+  "source_commit": "e3378dfea4e4a8ba274b8b4fa34f2ff39e78d3d5",
+  "tier": "real_data",
+  "notes": "Step 1 feed-validation multi-output DATA step (required-field/amount-range/txn-type/future-date checks) and Step 3 RETAIN/BY running-balance carry-forward, both verbatim. RAW_BANK feed and STG_BANK pre-balances supplied inline with the same column shapes; Step 2 enrichment reduced to the account pre-balance join needed by Step 3."
+}

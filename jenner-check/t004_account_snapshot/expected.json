@@ -1,0 +1,19 @@
+{
+  "_captured_at": "2026-06-17T07:01:00.737269+00:00",
+  "_captured_run_id": "r_019ed461ef2d7ae3b0a70342c509b239",
+  "status": "ok",
+  "exit_code": 0,
+  "log_contains": [
+    "NOTE: Wrote WORK.CUST_ACCOUNTS_DAILY (8 rows, 17 columns).",
+    "NOTE: Wrote WORK.ACCT_EXCEPTIONS (5 rows, 17 columns).",
+    "NOTE: Output dataset WORK.ACCT_SUMMARY has 8 observations and 7 variables."
+  ],
+  "log_does_not_contain": [
+    "ERROR:",
+    "[JENNER-ERROR"
+  ],
+  "diagnostics": {
+    "parse_warnings": [],
+    "runtime_warnings": []
+  }
+}

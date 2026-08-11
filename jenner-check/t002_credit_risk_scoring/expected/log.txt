@@ -1,0 +1,30 @@
+Jenner 0.1.0 (Unlicensed - limited to 100 observations)
+Get a license at https://jenneranalytics.com/license
+
+NOTE: Option OBS changed to 100.
+NOTE: DATA WORK.SCORE_INPUT
+
+NOTE: Processing inline DATALINES (10 lines)
+
+NOTE: Read 10 rows from DATALINES.
+NOTE: Wrote WORK.SCORE_INPUT (10 rows, 12 columns).
+NOTE: DATA elapsed:
+  wall  0.00 seconds
+  cpu   0.00 seconds
+NOTE: DATA WORK.SCORED
+
+
+NOTE: Read 10 rows from WORK.SCORE_INPUT.
+NOTE: Wrote WORK.SCORED (10 rows, 17 columns).
+NOTE: DATA elapsed:
+  wall  0.00 seconds
+  cpu   0.00 seconds
+NOTE: PROC PRINT data=WORK.SCORED
+
+NOTE: PROC PRINT completed: 10 observations printed, 8 variables
+NOTE: PROC MEANS
+NOTE: Output dataset WORK.RISK_SUMMARY has 9 observations and 7 variables.
+NOTE: PROC MEANS statement used.
+NOTE: PROC PRINT data=WORK.RISK_SUMMARY
+
+NOTE: PROC PRINT completed: 9 observations printed, 7 variables

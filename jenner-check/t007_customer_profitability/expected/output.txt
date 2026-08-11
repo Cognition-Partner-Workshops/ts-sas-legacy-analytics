@@ -1,0 +1,17 @@
+
+CUSTOMER_ID  CUSTOMER_SEGMENT  NUM_ACCOUNTS  NET_INTEREST_INCOME  FEE_INCOME  TOTAL_REVENUE  OPERATING_COST  TOTAL_ECL  NET_PROFIT        PROFIT_TIER
+-----------  ----------------  ------------  -------------------  ----------  -------------  --------------  ---------  ----------  -----------------
+C0001        PB                           2            $1,427.88          35      $1,462.88          $30.00        150   $1,282.88  Highly Profitable
+C0002        RET                          2               $69.53          90        $159.53          $30.00          .     $129.53  Profitable
+C0003        SMB                          2              $363.83          15        $378.83          $30.00        640    -$291.17  Unprofitable
+C0004        PREM                         1            $2,015.83          10      $2,025.83          $15.00       1100     $910.83  Highly Profitable
+C0005        CORP                         1              $558.17           .        $558.17          $15.00        220     $323.17  Profitable
+
+CUSTOMER_SEGMENT  N_CUSTOMERS    TOTAL_REVENUE  OPERATING_COST  TOTAL_ECL       NET_PROFIT  TOTAL_RELATIONSHIP  AVG_PROFIT_PER_CUSTOMER
+----------------  -----------  ---------------  --------------  ---------  ---------------  ------------------  -----------------------
+CORP                        1   558.1666666667              15        220   323.1666666667               98500           323.1666666667
+PB                          1         1462.875              30        150         1282.875              330200                 1282.875
+PREM                        1  2025.8333333333              15       1100   910.8333333333              410000           910.8333333333
+RET                         1          159.525              30          .          129.525                5700                  129.525
+SMB                         1   378.8333333333              30        640  -291.1666666667               51500          -291.1666666667
+

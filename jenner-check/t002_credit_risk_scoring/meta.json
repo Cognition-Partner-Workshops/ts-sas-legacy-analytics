@@ -1,0 +1,8 @@
+{
+  "bundle": "t002_credit_risk_scoring",
+  "source_file": "Programs/Banking/credit_risk_scoring.sas",
+  "source_blob_sha": "2b1b930e34fb4282805844112232cec330afaf98",
+  "source_commit": "e3378dfea4e4a8ba274b8b4fa34f2ff39e78d3d5",
+  "tier": "real_data",
+  "notes": "CRM-2023-Q4-v2 scorecard. Step 1 (joins of STG_BANK + ORA_DW warehouse tables) replaced by a 10-row inline WORK.SCORE_INPUT with the columns the scorecard reads. Step 2 (WOE binning, log-odds/PD logistic, LGD, EAD, expected loss, 1-7 risk rating) and Step 5 (PROC MEANS risk summary) verbatim."
+}

@@ -1,0 +1,20 @@
+{
+  "_captured_at": "2026-06-17T07:28:57.753031+00:00",
+  "_captured_run_id": "r_019ed47b4eba7ba08a9f33f673f10300",
+  "status": "ok",
+  "exit_code": 0,
+  "log_contains": [
+    "NOTE: Table WORK.MONTHLY_RWA created.",
+    "NOTE: PROC PRINT completed: 12 observations printed, 7 variables",
+    "NOTE: Table WORK.DELINQUENCY_AGING created.",
+    "NOTE: PROC PRINT completed: 10 observations printed, 7 variables"
+  ],
+  "log_does_not_contain": [
+    "ERROR:",
+    "[JENNER-ERROR"
+  ],
+  "diagnostics": {
+    "parse_warnings": [],
+    "runtime_warnings": []
+  }
+}

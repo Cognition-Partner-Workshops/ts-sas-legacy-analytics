@@ -1,0 +1,42 @@
+Jenner 0.1.0 (Unlicensed - limited to 100 observations)
+Get a license at https://jenneranalytics.com/license
+
+NOTE: Option OBS changed to 100.
+NOTE: PROC FORMAT library=WORK
+
+NOTE: FORMAT $ACCTTYPE defined (12 ranges).
+NOTE: FORMAT $ACCTSTAT defined (9 ranges).
+NOTE: FORMAT RISKRATE defined (8 ranges).
+NOTE: FORMAT $CUSTSEG defined (7 ranges).
+NOTE: FORMAT $REGION defined (8 ranges).
+NOTE: DATA WORK.ACCT_RAW
+
+NOTE: Processing inline DATALINES (8 lines)
+
+NOTE: Read 8 rows from DATALINES.
+NOTE: Wrote WORK.ACCT_RAW (8 rows, 11 columns).
+NOTE: DATA elapsed:
+  wall  0.00 seconds
+  cpu   0.00 seconds
+NOTE: DATA WORK.CUST_ACCOUNTS_DAILY WORK.ACCT_EXCEPTIONS
+
+NOTE: Multi-output DATA step splits stream into: WORK.CUST_ACCOUNTS_DAILY WORK.ACCT_EXCEPTIONS
+
+NOTE: Read 8 rows from WORK.ACCT_RAW.
+NOTE: Wrote WORK.CUST_ACCOUNTS_DAILY (8 rows, 17 columns).
+NOTE: Wrote WORK.ACCT_EXCEPTIONS (5 rows, 17 columns).
+NOTE: DATA elapsed:
+  wall  0.00 seconds
+  cpu   0.00 seconds
+NOTE: PROC PRINT data=WORK.CUST_ACCOUNTS_DAILY
+
+NOTE: PROC PRINT completed: 8 observations printed, 10 variables
+NOTE: PROC PRINT data=WORK.ACCT_EXCEPTIONS
+
+NOTE: PROC PRINT completed: 5 observations printed, 5 variables
+NOTE: PROC MEANS
+NOTE: Output dataset WORK.ACCT_SUMMARY has 8 observations and 7 variables.
+NOTE: PROC MEANS statement used.
+NOTE: PROC PRINT data=WORK.ACCT_SUMMARY
+
+NOTE: PROC PRINT completed: 8 observations printed, 7 variables

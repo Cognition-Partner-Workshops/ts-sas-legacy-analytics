@@ -1,0 +1,12 @@
+
+Account     Account Type   Status     Risk Rating        Region          Segment    Balance Band   Delinquency
+-------  ---------------  -------  --------------  ------------  ---------------  --------------  ------------
+A100001  Checking         Active         Low Risk  Northeast     Retail               $1K-$4,999       Current
+A100002  Savings          Active     Minimal Risk  Southeast     Premium            $25K-$99,999       Current
+A100003  Credit Card      Active    Elevated Risk  Midwest       Retail               $1K-$4,999    30-59 Days
+A100004  Mortgage         Active    Moderate Risk  Southwest     Private Banking  $100K-$499,999       Current
+A100005  Auto Loan        Dormant       High Risk  West          Small Business      $5K-$24,999  120-179 Days
+A100006  Home Equity LOC  Active   Very High Risk  Northwest     Corporate          $25K-$99,999    60-89 Days
+A100007  Personal Loan    Frozen    Loss Expected  Southwest     Retail              $5K-$24,999     180+ Days
+A100008  Line of Credit   Active    Moderate Risk  Headquarters  Commercial             Negative       Current
+

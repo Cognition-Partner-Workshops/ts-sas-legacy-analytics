@@ -1,0 +1,8 @@
+{
+  "bundle": "t001_banking_formats",
+  "source_file": "Formats/banking_formats.sas",
+  "source_blob_sha": "468656dd900f325b3af77bbb20255c071ab631c7",
+  "source_commit": "e3378dfea4e4a8ba274b8b4fa34f2ff39e78d3d5",
+  "tier": "real_data",
+  "notes": "Repository banking PROC FORMAT catalog verbatim (library=BANKING rewritten to WORK); consumer DATA step + PROC PRINT apply the account-type/status/risk/region/segment/balance/delinquency formats to an 8-row inline sample to make the formatted values observable."
+}

@@ -1,0 +1,20 @@
+{
+  "_captured_at": "2026-06-17T06:56:32.291625+00:00",
+  "_captured_run_id": "r_019ed45d625677038c300d27a731f665",
+  "status": "ok",
+  "exit_code": 0,
+  "log_contains": [
+    "FORMAT $ACCTTYPE defined (12 ranges).",
+    "FORMAT RISKRATE defined (8 ranges).",
+    "Banking formats loaded to WORK",
+    "PROC PRINT completed: 8 observations printed, 8 variables"
+  ],
+  "log_does_not_contain": [
+    "ERROR:",
+    "[JENNER-ERROR"
+  ],
+  "diagnostics": {
+    "parse_warnings": [],
+    "runtime_warnings": []
+  }
+}
