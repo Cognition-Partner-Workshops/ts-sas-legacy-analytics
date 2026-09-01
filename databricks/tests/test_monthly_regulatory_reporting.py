@@ -64,12 +64,12 @@ def test_capital_sql_has_constants_thresholds_and_zero_status() -> None:
     assert "total_rwa = 0 THEN 'PASS'" in sql
 
 
-def test_run_order_sheet_names_and_overwrites_existing_workbook(tmp_path: Path) -> None:
+def test_run_order_sheet_names_and_publishes_local_workbook(tmp_path: Path) -> None:
     executed: list[str] = []
     fetched: list[str] = []
-    written: list[tuple[str, bool]] = []
+    written: list[tuple[str, str]] = []
+    published: list[tuple[str, str]] = []
     workbook_path = tmp_path / "report.xlsx"
-    workbook_path.write_text("old", encoding="utf-8")
 
     def execute(sql: str) -> None:
         executed.append(sql)
@@ -80,22 +80,49 @@ def test_run_order_sheet_names_and_overwrites_existing_workbook(tmp_path: Path) 
 
     def write_sheet(rows, path: str, sheet: str) -> str:
         del rows
-        written.append((sheet, Path(path).exists()))
+        written.append((sheet, path))
         Path(path).touch()
         return path
 
-    summary = mrr.run(execute, fetch, "202401", date(2024, 1, 31), str(workbook_path), write_sheet)
+    def publish(src: str, dst: str) -> None:
+        assert Path(src).exists()
+        published.append((src, dst))
+
+    summary = mrr.run(
+        execute, fetch, "202401", date(2024, 1, 31), str(workbook_path), write_sheet, publish
+    )
     assert len(executed) == 8
     assert executed[:4] == mrr.ddl()
     assert "monthly_rwa" in executed[4]
     assert "delinquency_aging" in executed[5]
     assert "llp_coverage" in executed[6]
     assert "capital_adequacy" in executed[7]
-    assert [name for name, _exists in written] == ["RWA", "Delinquency", "LLP_Coverage"]
-    assert written[0] == ("RWA", False)
+    assert [name for name, _path in written] == ["RWA", "Delinquency", "LLP_Coverage"]
+    assert len({path for _name, path in written}) == 1
+    assert Path(written[0][1]).name == workbook_path.name
+    assert len(published) == 1
+    assert Path(published[0][0]).name == workbook_path.name
+    assert published[0][1] == str(workbook_path)
     assert "CAPITAL_ADEQUACY" not in fetched[-1].upper() if fetched else True
     assert summary["statements_run"] == 8
     assert summary["sheets_written"] == ["RWA", "Delinquency", "LLP_Coverage"]
+
+
+def test_run_default_publish_overwrites_existing_workbook(tmp_path: Path) -> None:
+    workbook_path = tmp_path / "report.xlsx"
+    workbook_path.write_bytes(b"junk")
+
+    def execute(sql: str) -> None:
+        del sql
+
+    def fetch(sql: str) -> list[dict[str, object]]:
+        del sql
+        return [{"report_month": "202401", "value": 1}]
+
+    mrr.run(execute, fetch, "202401", date(2024, 1, 31), str(workbook_path))
+    workbook = openpyxl.load_workbook(workbook_path, read_only=True)
+    assert workbook.sheetnames == ["RWA", "Delinquency", "LLP_Coverage"]
+    workbook.close()
 
 
 def test_export_xlsx_accumulates_and_replaces_sheets(tmp_path: Path) -> None:

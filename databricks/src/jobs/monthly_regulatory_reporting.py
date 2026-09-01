@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import os
 import re
+import shutil
 import sys
 import tempfile
 from calendar import monthrange
@@ -297,6 +298,14 @@ def export_sql(table: str, report_month: str) -> str:
     )
 
 
+def _publish_local(src: str, dst: str) -> None:
+    destination = Path(dst)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if destination.exists():
+        destination.unlink()
+    shutil.copyfile(src, destination)
+
+
 def run(
     execute: Callable[[str], object],
     fetch: Callable[[str], Iterable[Mapping[str, object]]],
@@ -304,6 +313,7 @@ def run(
     business_date: date | str,
     workbook_path: str,
     write_sheet: Callable[[Iterable[Mapping[str, object]], str, str], str] = export_xlsx,
+    publish: Callable[[str, str], None] = _publish_local,
 ) -> dict[str, object]:
     rm, month_end = parse_report_month(
         validate_param("report_month", report_month, required=True)
@@ -317,20 +327,20 @@ def run(
     execute(delinquency_sql(rm, month_end))
     execute(llp_sql(rm, month_end))
 
-    output = Path(workbook_path)
     sheets_written: list[str] = []
-    for table, sheet in WORKBOOK_SHEETS:
-        rows = fetch(export_sql(table, rm))
-        if not sheets_written and output.exists():
-            output.unlink()
-        write_sheet(rows, str(output), sheet)
-        sheets_written.append(sheet)
+    with tempfile.TemporaryDirectory() as tmp:
+        local = Path(tmp) / Path(workbook_path).name
+        for table, sheet in WORKBOOK_SHEETS:
+            rows = fetch(export_sql(table, rm))
+            write_sheet(rows, str(local), sheet)
+            sheets_written.append(sheet)
+        publish(str(local), workbook_path)
 
     execute(capital_sql(rm))
     return {
         "statements_run": len(statements) + 4,
         "sheets_written": sheets_written,
-        "path": str(output),
+        "path": workbook_path,
     }
 
 
@@ -373,11 +383,14 @@ def main(argv: list[str] | None = None) -> int:
 
         wh = Warehouse(a.warehouse_id)
         remote_path = _report_path(report_month, a.report_path)
-        with tempfile.TemporaryDirectory() as tmp:
-            local_path = str(Path(tmp) / Path(remote_path).name)
-            result = run(wh.query, wh.fetch, report_month, business_date, local_path)
-            wh.upload_file(local_path, remote_path)
-        result["path"] = remote_path
+        result = run(
+            wh.query,
+            wh.fetch,
+            report_month,
+            business_date,
+            remote_path,
+            publish=wh.upload_file,
+        )
     else:
         from pyspark.sql import SparkSession
 
