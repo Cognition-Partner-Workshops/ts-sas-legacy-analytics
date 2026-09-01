@@ -41,6 +41,7 @@ from recon.rules import (
     numeric_columns,
     row_level,
     t9,
+    t9_declared_unexercised,
     t10,
     t11,
     t12,
@@ -79,9 +80,10 @@ class TargetReader:
         return self.wh.query(f"SELECT * FROM {CATALOG}.{spec.schema}.{name}")
 
     def aggregates(self, spec: TableSpec, num_cols, ref_rows) -> dict:
+        keys = spec.distinct_keys or spec.keys
         if self.mode == "fixture":
-            return local_aggregates(self._local(spec.name), num_cols, spec.keys)
-        return self.wh.query(aggregate_sql(self.fqn(spec), num_cols, spec.keys))[0]
+            return local_aggregates(self._local(spec.name), num_cols, keys)
+        return self.wh.query(aggregate_sql(self.fqn(spec), num_cols, keys))[0]
 
     def _local(self, name: str) -> list[dict]:
         p = self.target_dir / f"{name}.csv"
@@ -110,11 +112,13 @@ def recon_table(spec: TableSpec, ref_dir: Path, tgt: TargetReader, xlsx_path: st
                                   None, None, f"table >= {ROW_DIFF_TIER} rows; keyed diff skipped"))
 
     num_cols = numeric_columns(spec, ref_rows, columns)
-    ref_agg = local_aggregates(ref_rows, num_cols, spec.keys)
+    ref_agg = local_aggregates(ref_rows, num_cols, spec.distinct_keys or spec.keys)
     tgt_agg = tgt.aggregates(spec, num_cols, ref_rows)
     results += compare_aggregates(spec, ref_agg, tgt_agg)
 
-    if spec.t9_group and tgt_rows is not None:
+    if spec.t9_unexercised:
+        results.append(t9_declared_unexercised(spec))
+    elif spec.t9_group and tgt_rows is not None:
         results.append(t9(spec, ref_rows, tgt_rows))
     results.append(t10(spec))
     results.append(t11(spec))
@@ -149,8 +153,8 @@ def summarize(report: dict) -> str:
         ),
         f"reference manifest sha256: {report['reference_manifest_sha256']}",
         "",
-        "| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | failing rules |",
-        "|---|---|---|---|---|---|---|---|",
+        "| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |",
+        "|---|---|---|---|---|---|---|---|---|",
     ]
     for t in report["tables"]:
         vs = [r["verdict"] for r in t["results"]]
@@ -159,7 +163,7 @@ def summarize(report: dict) -> str:
         lines.append(
             f"| {t['table']} | {t['tier']} | {t['rows_reference']} | {t['rows_target']} | "
             f"{vs.count('PASS')} | {vs.count('FAIL')} | {vs.count('NOT_APPLICABLE') + vs.count('INFO')} | "
-            f"{', '.join(failing)[:80] or '-'} |"
+            f"{vs.count('DECLARED-UNEXERCISED')} | {', '.join(failing)[:80] or '-'} |"
         )
     lines.append("")
     lines.append(f"warehouse statements: {report['warehouse']['statements']}, "
@@ -220,7 +224,8 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     verdicts = [r["verdict"] for t in tables for r in t["results"]]
-    counts = {k: verdicts.count(k) for k in ("PASS", "FAIL", "NOT_APPLICABLE", "INFO")}
+    counts = {k: verdicts.count(k)
+              for k in ("PASS", "FAIL", "NOT_APPLICABLE", "INFO", "DECLARED-UNEXERCISED")}
     report = {
         "run_id": str(uuid.uuid4()),
         "run_ts": now_iso(),

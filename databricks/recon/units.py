@@ -29,6 +29,16 @@ RATING_EDGES = (0.005, 0.01, 0.03, 0.07, 0.15, 0.30)  # ML-7
 EDGE_EPS = 1e-9
 
 
+ACCT_EXCEPTIONS_COLUMNS: tuple[str, ...] = (
+    "account_id", "customer_id", "account_type", "account_status", "open_date", "close_date",
+    "current_balance", "available_balance", "credit_limit", "interest_rate", "branch_id",
+    "officer_id", "last_activity_date", "first_name", "last_name", "ssn_hash", "date_of_birth",
+    "customer_segment", "risk_rating", "region_code", "primary_email", "phone_number",
+    "acct_age_months", "days_inactive", "utilization_pct", "dormancy_flag", "high_balance_flag",
+    "snapshot_date", "load_timestamp",
+)
+
+
 @dataclass(frozen=True)
 class TableSpec:
     name: str
@@ -38,6 +48,13 @@ class TableSpec:
     column_rules: dict[str, str] = field(default_factory=dict)
     # T-9 group-by column (reject_reason / exception_type); None when the rule does not apply
     t9_group: str | None = None
+    # Full-row multiset comparison (DEC-015 (a)): every column is part of the key and
+    # duplicate rows are matched by multiplicity. `distinct_keys` bounds the T-8
+    # COUNT DISTINCT probes for such tables; `t9_unexercised` carries the citation
+    # emitted as the T-9 DECLARED-UNEXERCISED verdict.
+    multiset: bool = False
+    distinct_keys: tuple[str, ...] | None = None
+    t9_unexercised: str | None = None
     ml: bool = False
     # ML-8 debug table (target side `<name>` ; reference `<name>.csv`)
     woe_debug: str | None = None
@@ -55,8 +72,19 @@ UNITS: dict[str, tuple[TableSpec, ...]] = {
         TableSpec(
             "acct_exceptions",
             "sas_silver",
-            ("account_id", "exception_type"),
-            t9_group="exception_type",
+            ACCT_EXCEPTIONS_COLUMNS,
+            # AMB-05: OUTPUT precedes the SNAPSHOT_DATE/LOAD_TIMESTAMP assignment, so both are
+            # literally missing on every exception row -> exact (T-3), not run-time (T-7).
+            {"utilization_pct": "T-5", "snapshot_date": "T-3", "load_timestamp": "T-3"},
+            multiset=True,
+            distinct_keys=("account_id",),
+            t9_unexercised=(
+                "DEC-015 (a): literal SAS output has no EXCEPTION_TYPE/EXCEPTION_CODE column "
+                "(the DROP statement applies to every OUTPUT data set, AMB-01/AMB-12); "
+                "T-9 per-type count has no grouping column and is declared unexercised. "
+                "Full-row multiset match (T-2) is the substitute. Owner: requester; severity medium; "
+                "gate: close before STOP E via REQ-05 or production-schema export."
+            ),
         ),
     ),
     "U2": (
@@ -195,7 +223,7 @@ def classify_column(spec: TableSpec, column: str) -> str:
     col = column.lower()
     if col in spec.column_rules:
         return spec.column_rules[col]
-    if col in spec.keys:
+    if col in spec.keys and not spec.multiset:  # a multiset key is the whole row; §3 rules apply
         return "T-3"
     if col.endswith(_T7_SUFFIXES) or col == "duration":
         return "T-7"

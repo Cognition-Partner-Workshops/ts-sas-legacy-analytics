@@ -68,9 +68,9 @@ class Warehouse:
         if state != "SUCCEEDED":
             err = body["status"].get("error", {})
             raise WarehouseError(f"statement {state}: {err.get('message', '')}\n{sql[:500]}")
-        cols = [c["name"] for c in body["manifest"]["schema"]["columns"]]
-        data = list(body["result"].get("data_array") or [])
-        nxt = body["result"].get("next_chunk_internal_link")
+        cols = [c["name"] for c in body.get("manifest", {}).get("schema", {}).get("columns", [])]
+        data = list(body.get("result", {}).get("data_array") or [])
+        nxt = body.get("result", {}).get("next_chunk_internal_link")
         while nxt:
             chunk = self._get(nxt)
             data.extend(chunk.get("data_array") or [])
