@@ -33,7 +33,7 @@ def test_sql_builders_preserve_source_joins_and_filter() -> None:
     assert "l.ltv > 0.80" in sqls[0]
     assert "REPLACE WHERE report_month = '202401'" in sqls[0]
     assert "'202401' AS report_month" in sqls[0]
-    assert "GROUP BY '202401', account_type, customer_segment, risk_weight" in sqls[0]
+    assert "GROUP BY account_type, customer_segment, risk_weight" in sqls[0]
     assert all("daily_transactions" not in sql and "collateral" not in sql for sql in sqls)
 
 
