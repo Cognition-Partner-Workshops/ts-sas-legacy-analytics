@@ -1,17 +1,18 @@
 # Migration Progress
 
-`[FACT]` State: setup DONE; STOP A re-confirmed 2026-09-01 (this session). Inventory DONE (`docs/migration/ts-sas-legacy-analytics_estate_inventory.md`); **STOP B pending** (user picks the first pipeline). Coverage 144 = 9 + 16 + 82 + 37; completeness UNVERIFIABLE.
+`[FACT]` State: setup DONE; STOP A re-confirmed 2026-09-01 (this session). Inventory DONE (`docs/migration/ts-sas-legacy-analytics_estate_inventory.md`); STOP B APPROVED 2026-09-01 → active pipeline **P1 banking-core** (DEC-012). P1 analysis + plan DONE (`docs/migration/ts-sas-legacy-analytics_P1_banking_core_{analysis,plan}.md`); **STOP C pending**. Coverage 144 = 9 + 16 + 82 + 37; completeness UNVERIFIABLE.
 
 | Pipeline | Setup | Inventory | Analysis | Convert | Recon | Cutover |
 |---|---|---|---|---|---|---|
-| `[PROPOSED]` shared-objects (wave 0) | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` banking / `load_customer_accounts` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` banking / `daily_transaction_processing` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` banking / `credit_risk_scoring` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` banking / `monthly_regulatory_reporting` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` insurance / `claims_processing` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` insurance / `policy_valuation` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` reports / `customer_profitability` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 shared-objects (wave 0) | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 banking / `load_customer_accounts` | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 banking / `daily_transaction_processing` | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 banking / `credit_risk_scoring` | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 banking / `monthly_regulatory_reporting` | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 banking / `run_daily_banking` (orchestrator) | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[PROPOSED]` P3 insurance / `claims_processing` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[PROPOSED]` P3 insurance / `policy_valuation` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[PROPOSED]` P2 reports / `customer_profitability` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
 
 ## Write targets registered
 

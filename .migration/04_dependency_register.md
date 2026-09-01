@@ -45,3 +45,32 @@
 | D9-INV-001 | D9 | `ARCHIVE.BATCH_HISTORY` shared write target | `[FACT]` Appended by both `run_daily_banking.sas` and `run_daily_insurance.sas`; must be registered once in `05_progress.md` before either orchestrator loads it. | Devin | UNDECIDED | both orchestrators |
 | D7-INV-001 | D7 | Last-run evidence gap | `[FACT]` `Logs/` covers only `load_customer_accounts` and `daily_transaction_processing` (2024-01-15); no run evidence for units 3-7 or orchestrators. | Customer | UNDECIDED | credit_risk_scoring; monthly_regulatory_reporting; customer_profitability; insurance units |
 | D10-INV-001 | D10 | Estate completeness | `[FACT]` `autoexec.sas:14` and all `%include`s point at `/opt/sas/...` server paths outside the repo; no `sasautos` listing, metadata export, or scheduler job list exists. Completeness UNVERIFIABLE. | Customer | UNDECIDED | Whole estate |
+
+## P1 plan decisions (2026-09-01, DEC-013, PROPOSED pending STOP C)
+
+Full contract/routing/cutover/decommission columns are in `docs/migration/ts-sas-legacy-analytics_P1_banking_core_plan.md` §1; status here flips from PROPOSED to DECIDED when STOP C is approved.
+
+| ID | Decision | Status | Request |
+|---|---|---|---|
+| D2-001, D2-002, D2-003, D2-INV-001 | Port 12-file closure as behaviour; 9 banking formats → `sas_ref`; autoexec → libref map + job parameters | PROPOSED-DECIDED | — |
+| D3-001..006, 008, 009, D10-002 | Bronze snapshot from `Data/csv`; live ingestion DEFERRED-with-condition | PROPOSED-DEFERRED | REQ-01 |
+| D3-INV-001 | Header-only declarations are not lineage; edges dropped | PROPOSED-DECIDED | — |
+| D4-001, D4-002, D4-003 | Gold Delta = contract; xlsx via openpyxl task (T-12); email → Jobs notifications; DEFERRED-with-condition on destinations | PROPOSED-DEFERRED | REQ-02 |
+| D5-001, D5-002, D10-005 | Workflow task order 1→4; job PAUSED; Control-M remains trigger until STOP E | PROPOSED-DEFERRED | REQ-03 |
+| D9-002 | Intra-P1, handled by wave order | PROPOSED-DECIDED | — |
+| D9-INV-001 | P1 owns `sas_silver.archive_batch_history` | PROPOSED-DECIDED | — |
+| D9-001, D6-INV-001, D10-003, D10-004 | Not touched by P1; deferred to P2/P3 plans | OUT OF P1 SCOPE | — |
+| D7-INV-001, D10-INV-001 | Accepted as scope constraints | PROPOSED-ACCEPTED | REQ-04 |
+| D10-001, D10-007 | Reference-derived recon (DEC-004); STOP E requires customer in-perimeter recon | PROPOSED-ACCEPTED | REQ-05 |
+| D10-006 | Devin creates `sas_legacy` in wave 0 | PROPOSED-DECIDED | — |
+
+### Fired requests
+
+| Req | Ask | Recipient | Lead time | Status |
+|---|---|---|---|---|
+| REQ-01 | Oracle DW / RAW_BANK delivery path to target (extract to volume or federation; secret names only) | requester → source DBA | ≥ 1 week assumed | FIRED 2026-09-01 (STOP C DM) |
+| REQ-02 | `REPORTS.*` consumers, xlsx delivery path, notification destination | requester | days | FIRED 2026-09-01 |
+| REQ-03 | Control-M export for `run_daily_banking` | requester → scheduler team | days | FIRED 2026-09-01 |
+| REQ-04 | `sasautos` listing / SAS metadata export | requester | days | FIRED 2026-09-01 |
+| REQ-05 | In-perimeter SAS run of the 31JAN2024 bootstrap, outputs as CSV | requester | unknown | FIRED 2026-09-01 |
+
