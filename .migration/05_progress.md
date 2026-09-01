@@ -1,17 +1,17 @@
 # Migration Progress
 
-`[FACT]` State: setup DONE, STOP A approved 2026-09-01 (DEC-010). Inventory may begin.
+`[FACT]` State: setup DONE; STOP A re-confirmed 2026-09-01 (this session). Inventory DONE (`docs/migration/ts-sas-legacy-analytics_estate_inventory.md`); **STOP B pending** (user picks the first pipeline). Coverage 144 = 9 + 16 + 82 + 37; completeness UNVERIFIABLE.
 
 | Pipeline | Setup | Inventory | Analysis | Convert | Recon | Cutover |
 |---|---|---|---|---|---|---|
-| `[PROPOSED]` shared-objects (wave 0) | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` banking / `load_customer_accounts` | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` banking / `daily_transaction_processing` | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` banking / `credit_risk_scoring` | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` banking / `monthly_regulatory_reporting` | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` insurance / `claims_processing` | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` insurance / `policy_valuation` | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[PROPOSED]` reports / `customer_profitability` | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[PROPOSED]` shared-objects (wave 0) | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[PROPOSED]` banking / `load_customer_accounts` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[PROPOSED]` banking / `daily_transaction_processing` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[PROPOSED]` banking / `credit_risk_scoring` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[PROPOSED]` banking / `monthly_regulatory_reporting` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[PROPOSED]` insurance / `claims_processing` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[PROPOSED]` insurance / `policy_valuation` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[PROPOSED]` reports / `customer_profitability` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
 
 ## Write targets registered
 
