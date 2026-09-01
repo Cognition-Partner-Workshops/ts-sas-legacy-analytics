@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import math
 import re
+from collections import Counter
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
@@ -32,7 +33,7 @@ class RuleResult:
     rule: str
     table: str
     column: str | None
-    verdict: str  # PASS | FAIL | NOT_APPLICABLE | INFO
+    verdict: str  # PASS | FAIL | NOT_APPLICABLE | INFO | DECLARED-UNEXERCISED
     reference: object = None
     target: object = None
     detail: str = ""
@@ -132,6 +133,9 @@ def row_level(
             len(ref_rows), len(tgt_rows), "row count exact",
         )
     )
+    if spec.multiset:
+        out.extend(_multiset_rows(spec, ref_rows, tgt_rows, columns))
+        return out
     ref_by = {key_of(r, spec.keys): r for r in ref_rows}
     tgt_by = {key_of(r, spec.keys): r for r in tgt_rows}
     dup_ref = len(ref_rows) - len(ref_by)
@@ -178,6 +182,56 @@ def row_level(
                 mism[:MAX_EXAMPLES],
             )
         )
+    return out
+
+
+def multiset_key(spec: TableSpec, row: Row) -> tuple:
+    """Full-row key (DEC-015 (a)): exact per column, except T-4/T-5 numerics which are
+    quantised to their tolerance and T-7 run-time columns which are excluded."""
+    out = []
+    for c in spec.keys:
+        rule = classify_column(spec, c)
+        v = row.get(c)
+        if rule == "T-7":
+            continue
+        if rule in ("T-4", "T-5") and not is_null(v):
+            f = to_float(v)
+            out.append(f"{round(f, 2):.2f}" if rule == "T-4" else f"{round(f, 6):.6f}")
+        else:
+            out.append(norm_exact(v))
+    return tuple(out)
+
+
+def _multiset_rows(
+    spec: TableSpec, ref_rows: list[Row], tgt_rows: list[Row], columns: list[str]
+) -> list[RuleResult]:
+    """T-2 as full-row multiset equality; per-column rules are subsumed by the key.
+    T-7 columns keep their non-null assertion."""
+    rc = Counter(multiset_key(spec, r) for r in ref_rows)
+    tc = Counter(multiset_key(spec, r) for r in tgt_rows)
+    missing = sorted((rc - tc).elements(), key=str)
+    extra = sorted((tc - rc).elements(), key=str)
+    out = [
+        RuleResult(
+            "T-2", spec.name, "*",
+            "PASS" if not missing and not extra else "FAIL",
+            {"rows": len(ref_rows), "distinct_rows": len(rc)},
+            {"rows": len(tgt_rows), "distinct_rows": len(tc)},
+            f"full-row multiset equality (DEC-015 (a)); missing_in_target={len(missing)} "
+            f"extra_in_target={len(extra)}; T-7 columns excluded, T-4/T-5 at tolerance",
+            [list(k) for k in (missing + extra)[:MAX_EXAMPLES]],
+        )
+    ]
+    for col in columns:
+        if classify_column(spec, col) == "T-7":
+            n_null = sum(1 for r in tgt_rows if is_null(r.get(col)))
+            out.append(
+                RuleResult(
+                    "T-7", spec.name, col, "PASS" if n_null == 0 else "FAIL",
+                    "excluded", f"null_count={n_null}",
+                    "run-time timestamp excluded from comparison; non-null asserted",
+                )
+            )
     return out
 
 
@@ -245,6 +299,11 @@ def grouped_counts(rows: list[Row], col: str) -> dict[str, int]:
         g = norm_str(r.get(col)) or "<NULL>"
         counts[g] = counts.get(g, 0) + 1
     return counts
+
+
+def t9_declared_unexercised(spec: TableSpec) -> RuleResult:
+    assert spec.t9_unexercised
+    return RuleResult("T-9", spec.name, None, "DECLARED-UNEXERCISED", None, None, spec.t9_unexercised)
 
 
 def t9(spec: TableSpec, ref_rows: list[Row], tgt_rows: list[Row]) -> RuleResult:
@@ -349,9 +408,10 @@ def ml8(
 
 
 def t10(spec: TableSpec) -> RuleResult:
+    how = "full-row multiset" if spec.multiset else f"sets keyed on ({', '.join(spec.keys)})"
     return RuleResult(
         "T-10", spec.name, None, "PASS", None, None,
-        f"compared as sets keyed on ({', '.join(spec.keys)}); no ordering asserted",
+        f"compared as {how}; no ordering asserted",
     )
 
 

@@ -6,6 +6,8 @@ resources:
         - environment_key: default
           spec:
             client: "2"
+            dependencies:
+              - openpyxl==3.1.5
       schedule:
         quartz_cron_expression: "0 45 5 * * ?"
         timezone_id: UTC
