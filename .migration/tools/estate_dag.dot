@@ -1,0 +1,47 @@
+digraph estate {
+  rankdir=LR; fontsize=10; node [shape=box, style="rounded,filled", fontsize=10];
+  edge [fontsize=8];
+
+  subgraph cluster_src { label="External sources (D3, no access)"; style=dashed; color=gray50;
+    node [fillcolor="#f2f2f2"];
+    ORA_CUST [label="ORA_DW.CUST_ACCOUNTS\nORA_DW.CUST_DEMOGRAPHICS"];
+    ORA_RISK [label="ORA_DW.BUREAU_SCORES\nORA_DW.PAYMENT_HISTORY\nORA_DW.COLLATERAL"];
+    ORA_LOAN [label="ORA_DW.LOAN_DETAILS"];
+    RAW_BANK [label="RAW_BANK.TXN_FEED_yyyymmdd"];
+    RAW_INS  [label="RAW_INS.CLAIMS_FEED_yyyymmdd\nRAW_INS.POLICIES / CLAIMS / PREMIUMS"];
+    TERA     [label="TERA_DW.FRAUD_INDICATORS"];
+  }
+
+  subgraph cluster_p1 { label="P1 banking-core (run_daily_banking, 4 %run_step)"; color="#1f77b4"; node [fillcolor="#dbe9f6"];
+    LCA [label="1 load_customer_accounts\n216 lines"];
+    DTP [label="2 daily_transaction_processing\n246 lines"];
+    CRS [label="3 credit_risk_scoring (ML)\n270 lines"];
+    MRR [label="4 monthly_regulatory_reporting\n199 lines"];
+  }
+  subgraph cluster_p2 { label="P2 reports (no scheduler edge)"; color="#ff7f0e"; node [fillcolor="#fde5cc"];
+    CP [label="customer_profitability\n176 lines"];
+  }
+  subgraph cluster_p3 { label="P3 insurance (run_daily_insurance, 2 %run_step)"; color="#2ca02c"; node [fillcolor="#d9f0d3"];
+    CLM [label="1 claims_processing\n238 lines"];
+    PV  [label="2 policy_valuation\n206 lines"];
+  }
+  subgraph cluster_cons { label="Consumers (D4/D5/D8)"; style=dashed; color=gray50; node [fillcolor="#fff5cc", shape=note];
+    XLSX  [label="Excel exports\n(%export_xlsx -> REPORT_PATH)"];
+    EMAIL [label="Email alerts\n(%sendmail -> EMAIL_ONCALL/EMAIL_DL)"];
+    ARCH  [label="ARCHIVE.BATCH_HISTORY"];
+  }
+
+  ORA_CUST -> LCA; ORA_RISK -> CRS; ORA_LOAN -> MRR; RAW_BANK -> DTP;
+  RAW_INS -> CLM; RAW_INS -> PV; TERA -> CLM;
+  LCA -> DTP [label="STG_BANK.CUST_ACCOUNTS_DAILY"];
+  LCA -> CRS [label="STG_BANK.CUST_ACCOUNTS_DAILY"];
+  LCA -> MRR [label="STG_BANK.CUST_ACCOUNTS_DAILY"];
+  LCA -> CP  [label="STG_BANK.CUST_ACCOUNTS_DAILY"];
+  DTP -> CP  [label="CURATED.DAILY_TRANSACTIONS"];
+  DTP -> DTP [label="CURATED.DAILY_TRANSACTIONS (90d self-history)"];
+  CRS -> CP  [label="CURATED.RISK_SCORES"];
+  CLM -> PV  [label="STG_INS.* (INFERRED: sequence only)", style=dashed];
+  MRR -> XLSX; CP -> XLSX;
+  LCA -> EMAIL; CLM -> EMAIL;
+  DTP -> ARCH [style=dotted, label="via orchestrator"]; CLM -> ARCH [style=dotted, label="via orchestrator"];
+}
