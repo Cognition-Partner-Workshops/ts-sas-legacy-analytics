@@ -1,0 +1,214 @@
+"""Unit -> table map and column -> rule classification.
+
+Source: docs/migration/ts-sas-legacy-analytics_P1_banking_core_analysis.md §6
+(tables, keys, checks) and §3 (type mapping rules); .migration/03_recon_tolerances.md.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+
+ROW_DIFF_TIER = 5_000_000  # full row-level diff at or below this size (03_recon_tolerances §economics)
+SAMPLE_FRACTION = 0.01
+SAMPLE_MIN_ROWS = 100_000
+
+# Declared source volumes: .migration/05_progress.md §"Baseline manifest" (rows excl. header).
+DECLARED_SOURCE_VOLUMES: dict[str, int] = {
+    "cust_accounts": 487,
+    "cust_demographics": 250,
+    "bureau_scores": 500,
+    "payment_history": 248,
+    "collateral": 114,
+    "loan_details": 248,
+    "daily_rates": 455,
+    "txn_feed_20240131": 622,
+    "daily_transactions_hist": 18293,
+}
+
+RATING_EDGES = (0.005, 0.01, 0.03, 0.07, 0.15, 0.30)  # ML-7
+EDGE_EPS = 1e-9
+
+
+@dataclass(frozen=True)
+class TableSpec:
+    name: str
+    schema: str
+    keys: tuple[str, ...]
+    # explicit column -> rule overrides; everything else is classified by name pattern
+    column_rules: dict[str, str] = field(default_factory=dict)
+    # T-9 group-by column (reject_reason / exception_type); None when the rule does not apply
+    t9_group: str | None = None
+    ml: bool = False
+    # ML-8 debug table (target side `<name>` ; reference `<name>.csv`)
+    woe_debug: str | None = None
+    xlsx: bool = False  # T-12: existence + 4 sheets when --xlsx-path is given
+
+
+UNITS: dict[str, tuple[TableSpec, ...]] = {
+    "U1": (
+        TableSpec(
+            "cust_accounts_daily",
+            "sas_silver",
+            ("account_id", "snapshot_date"),
+            {"utilization_pct": "T-5", "load_timestamp": "T-7"},
+        ),
+        TableSpec(
+            "acct_exceptions",
+            "sas_silver",
+            ("account_id", "exception_type"),
+            t9_group="exception_type",
+        ),
+    ),
+    "U2": (
+        TableSpec(
+            "daily_transactions",
+            "sas_silver",
+            ("transaction_id",),
+            {"running_balance": "T-4"},
+        ),
+        TableSpec(
+            "running_balances",
+            "sas_silver",
+            ("account_id", "transaction_date", "transaction_id"),
+        ),
+        TableSpec(
+            "txn_anomalies",
+            "sas_silver",
+            ("transaction_id",),
+            {
+                "z_score": "T-6",
+                "avg_txn_amt": "T-6",
+                "std_txn_amt": "T-6",
+                "anomaly_type": "T-3",
+            },
+        ),
+        TableSpec(
+            "txn_rejected",
+            "sas_silver",
+            ("transaction_id",),
+            t9_group="reject_reason",
+        ),
+    ),
+    "U3": (
+        TableSpec(
+            "risk_scores",
+            "sas_silver",
+            ("account_id", "score_date"),
+            {
+                "new_risk_rating": "ML-1",
+                "pd": "ML-2",
+                "lgd": "ML-3",
+                "ead": "ML-3",
+                "expected_loss": "ML-4",
+                "score_timestamp": "T-7",
+            },
+            ml=True,
+            woe_debug="risk_scores_woe_debug",
+        ),
+        TableSpec(
+            "risk_migration",
+            "sas_silver",
+            ("account_id", "score_date"),
+            {
+                "migration_direction": "ML-6",
+                "prev_rating": "ML-6",
+                "curr_rating": "ML-6",
+            },
+            ml=True,
+        ),
+        TableSpec(
+            "risk_summary",
+            "sas_gold",
+            ("account_type", "new_risk_rating"),
+            {
+                "avg_pd": "T-5",
+                "avg_lgd": "T-5",
+                "total_ead": "T-4",
+                "total_el": "T-4",
+            },
+        ),
+    ),
+    "U4": (
+        TableSpec(
+            "monthly_rwa",
+            "sas_gold",
+            ("report_month", "account_type", "customer_segment"),
+            {"n_accounts": "T-3", "total_exposure": "T-4", "rwa": "T-4"},
+            xlsx=True,
+        ),
+        TableSpec(
+            "delinquency_aging",
+            "sas_gold",
+            ("report_month", "account_type", "region_code", "delinq_bucket"),
+        ),
+        TableSpec(
+            "llp_coverage",
+            "sas_gold",
+            ("report_month", "account_type"),
+            {"coverage_pct": "T-5", "npl_coverage_pct": "T-5"},
+        ),
+        TableSpec(
+            "capital_adequacy",
+            "sas_gold",
+            ("report_month",),
+        ),
+    ),
+    "U5": (
+        TableSpec(
+            "archive_batch_history",
+            "sas_silver",
+            ("batch_id", "step_num"),
+            {
+                "start_time": "T-7",
+                "end_time": "T-7",
+                "duration": "T-7",
+                "status": "T-3",
+                "step_name": "T-3",
+            },
+        ),
+    ),
+}
+
+_T7_SUFFIXES = ("_timestamp", "_dttm", "_time")
+_T6_NAMES = {"z_score", "avg_txn_amt", "std_txn_amt"}
+_T5_TOKENS = ("_pct", "_ratio", "ltv", "nim", "interest_rate", "avg_pd", "avg_lgd")
+_T4_TOKENS = (
+    "_balance",
+    "_amount",
+    "_amt",
+    "ead",
+    "expected_loss",
+    "rwa",
+    "capital_",
+    "total_",
+    "gross_loans",
+    "npl_balance",
+    "cet1_capital",
+    "credit_limit",
+    "_exposure",
+    "_el",
+)
+
+
+def classify_column(spec: TableSpec, column: str) -> str:
+    """Return the tolerance rule id governing `column` (analysis §3 mapping rules)."""
+    col = column.lower()
+    if col in spec.column_rules:
+        return spec.column_rules[col]
+    if col in spec.keys:
+        return "T-3"
+    if col.endswith(_T7_SUFFIXES) or col == "duration":
+        return "T-7"
+    if col in _T6_NAMES:
+        return "T-6"
+    if any(tok in col for tok in _T5_TOKENS):
+        return "T-5"
+    if any(col == tok or col.endswith(tok) or col.startswith(tok) for tok in _T4_TOKENS):
+        return "T-4"
+    return "T-3"
+
+
+def tables_for(unit: str) -> tuple[TableSpec, ...]:
+    if unit not in UNITS:
+        raise SystemExit(f"unknown unit {unit!r}; expected one of {', '.join(UNITS)}")
+    return UNITS[unit]

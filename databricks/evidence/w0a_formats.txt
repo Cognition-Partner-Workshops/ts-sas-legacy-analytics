@@ -1,0 +1,10 @@
+format counts (source expected / deployed actual)
+fmt_accttype: 12 / 12 / 12 -> PASS
+fmt_acctstat: 9 / 9 / 9 -> PASS
+fmt_riskrate: 8 / 8 / 8 -> PASS
+fmt_txncat: 11 / 11 / 11 -> PASS
+fmt_delqbkt: 7 / 7 / 7 -> PASS
+fmt_balrange: 8 / 8 / 8 -> PASS
+fmt_region: 8 / 8 / 8 -> PASS
+fmt_custseg: 7 / 7 / 7 -> PASS
+fmt_lnpurp: 9 / 9 / 9 -> PASS

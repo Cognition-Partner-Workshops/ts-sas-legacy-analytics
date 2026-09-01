@@ -1,0 +1,6 @@
+Uploading bundle files to /Workspace/Users/<requester>/.bundle/sas_legacy/dev/files...
+Updated jobs.sas_legacy_recon
+Files: 7 uploaded, 5 deleted
+Resources: 0 created, 1 changed, 0 deleted, 1 unchanged
+sas_legacy_run_daily_banking PAUSED
+sas_legacy_recon no schedule

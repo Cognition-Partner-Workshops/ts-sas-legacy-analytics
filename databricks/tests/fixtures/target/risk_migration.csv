@@ -1,0 +1,3 @@
+account_id,score_date,prev_rating,curr_rating,migration_direction
+A001,2024-01-31,AA,AAA,UP
+A002,2024-01-31,BBB,BBB,STABLE
