@@ -1,0 +1,2 @@
+statement 1: SUCCEEDED
+[['/Volumes/sas_legacy/sas_bronze/landing/reports/REG_REPORT_202401.xlsx', 'REG_REPORT_202401.xlsx', '11361', '1788306539000']]

@@ -8,7 +8,7 @@
 | `[FACT]` P1 banking / `load_customer_accounts` | DONE | DONE | DONE | W1 B1 DONE (PR #29 merged; `databricks/src/jobs/load_customer_accounts.py`, DEC-015 (a) literal; idempotent per `snapshot_date`; job run `636052434694604` SUCCESS) | live PASS 2024-01-31 (mode DEGRADED; 52 PASS / 0 FAIL / 2 N/A / T-9 `acct_exceptions` DECLARED-UNEXERCISED; `databricks/evidence/w1_b1/`) | NOT STARTED |
 | `[FACT]` P1 banking / `daily_transaction_processing` | DONE | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED |
 | `[FACT]` P1 banking / `credit_risk_scoring` | DONE | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[FACT]` P1 banking / `monthly_regulatory_reporting` | DONE | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 banking / `monthly_regulatory_reporting` | DONE | DONE | DONE | W2 B4 DONE (PR pending review; `databricks/src/jobs/monthly_regulatory_reporting.py`, Spark SQL, literal DEC-015 (a)/AMB-07 `risk_weight` key; idempotent per `report_month` via `INSERT ... REPLACE WHERE`; xlsx `REG_REPORT_202401.xlsx` 3 sheets; job run `885378395536755` SUCCESS) | live PASS 2024-01-31 (mode DEGRADED; 70 PASS / 0 FAIL / 7 N/A; AMB-07 missing-MTG-LTV and `Unknown` bucket declared-unexercised by seed; `databricks/evidence/w2_b4/`) | NOT STARTED |
 | `[FACT]` P1 banking / `run_daily_banking` (orchestrator) | DONE | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED |
 | `[PROPOSED]` P3 insurance / `claims_processing` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
 | `[PROPOSED]` P3 insurance / `policy_valuation` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
@@ -27,10 +27,12 @@ Register each target as `sas_legacy.<schema>.<table>` here before loading it; ha
 | `sas_silver.cust_accounts_daily`, `sas_silver.acct_exceptions` | W1 B1 (U1) | reserved — LOADED 2026-09-01, 466 / 32 rows = reference (`databricks/evidence/w1_b1/idempotency.txt`) |
 | `sas_silver.daily_transactions`, `running_balances`, `txn_anomalies`, `txn_rejected` | W2 B2 (U2) | reserved |
 | `sas_silver.risk_scores`, `risk_migration`; `sas_gold.risk_summary` | W2 B3 (U3) | reserved |
-| `sas_gold.monthly_rwa`, `delinquency_aging`, `llp_coverage`, `capital_adequacy`; volume path `landing/reports/` | W2 B4 (U4) | reserved |
+| `sas_gold.monthly_rwa`, `delinquency_aging`, `llp_coverage`, `capital_adequacy`; volume path `landing/reports/` | W2 B4 (U4) | reserved — LOADED 2026-09-01, 59 / 70 / 6 / 1 rows = reference; workbook written (`databricks/evidence/w2_b4/idempotency.txt`) |
 | `sas_silver.archive_batch_history`; job `sas_legacy_run_daily_banking` | W3 B5 (U5) | reserved |
 
 W1 B1 cost line: ACUs not visible from the CLI; serverless SQL warehouse `565cd2fd713738c4`: ~20 short statements (2 DDL + 2 loads + raw count per ad hoc run, 6 per recon run x 3 live recon runs, checksum/count checks, source-volume check; each < 10 s); serverless job `sas_legacy_run_daily_banking` (job 216001923865775, still PAUSED) run ad hoc `--only load_customer_accounts` 3 times (runs `621597099070944` incl. 1 auto-retry — load succeeded, runner reported FAILED on `SystemExit(0)`; `636052434694604` SUCCESS, 71 s); 2 bundle deploys; no clusters. Live recon runs 3 of cap 3 (T-8 `interest_rate` T-3-vs-T-5 misclassification, then T-7 `load_timestamp` on literal-null exception rows — both harness-spec fixes, converted code unchanged).
+
+W2 B4 cost line: ACUs not visible from the CLI; serverless SQL warehouse `565cd2fd713738c4`: ~40 short statements (8 per ad hoc warehouse run x 2, 12 for the single live recon run (9.0 s), checksum/count x 3, source-volume + collision checks; each < 10 s); serverless job `sas_legacy_run_daily_banking` (job 216001923865775, still PAUSED) run ad hoc `--only monthly_regulatory_reporting` 2 times (run `864526455891115` FAILED — `OSError Errno 5` saving openpyxl workbook directly onto the Volumes FUSE mount, fixed by local build + sequential copy; run `885378395536755` SUCCESS); 2 bundle deploys; no clusters. Live recon runs 1 of cap 3.
 
 W0-A cost line: ACUs not visible from the CLI; serverless SQL warehouse `565cd2fd713738c4` used for ~30 short statements (bronze COPY/CTAS, 10 format tables, DDL, count checks; each < 10 s); bundle `sas_legacy` deployed to target `dev` (2 jobs, `sas_legacy_run_daily_banking` PAUSED, `sas_legacy_recon` unscheduled); no job runs, no clusters.
 

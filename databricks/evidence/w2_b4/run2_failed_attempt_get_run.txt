@@ -1,0 +1,260 @@
+{
+  "cleanup_duration": 0,
+  "creator_user_name": "dhrov.subramanian@cognition.ai",
+  "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+  "end_time": 1788306328083,
+  "execution_duration": 0,
+  "job_id": 216001923865775,
+  "job_run_id": 864526455891115,
+  "number_in_job": 864526455891115,
+  "original_attempt_run_id": 864526455891115,
+  "run_duration": 136815,
+  "run_id": 864526455891115,
+  "run_name": "sas_legacy_run_daily_banking",
+  "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/864526455891115",
+  "run_type": "JOB_RUN",
+  "setup_duration": 0,
+  "start_time": 1788306191268,
+  "state": {
+    "life_cycle_state": "INTERNAL_ERROR",
+    "result_state": "FAILED",
+    "state_message": "Task monthly_regulatory_reporting failed with message: Workload failed, see run output for details. This caused all downstream tasks to get skipped.",
+    "user_cancelled_or_timedout": false
+  },
+  "status": {
+    "state": "TERMINATED",
+    "termination_details": {
+      "code": "RUN_EXECUTION_ERROR",
+      "message": "Task monthly_regulatory_reporting failed with message: Workload failed, see run output for details. This caused all downstream tasks to get skipped.",
+      "type": "CLIENT_ERROR"
+    }
+  },
+  "tasks": [
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788306191305,
+      "environment_key": "default",
+      "execution_duration": 0,
+      "run_id": 76715099559896,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/76715099559896",
+      "setup_duration": 0,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/load_customer_accounts.py"
+      },
+      "start_time": 1788306191305,
+      "state": {
+        "life_cycle_state": "SKIPPED",
+        "result_state": "DISABLED",
+        "state_message": "This task was not selected in the partial run.",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "DISABLED",
+          "message": "This task was not selected in the partial run.",
+          "type": "SUCCESS"
+        }
+      },
+      "task_key": "load_customer_accounts"
+    },
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "depends_on": [
+        {
+          "task_key": "daily_transaction_processing"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788306191303,
+      "environment_key": "default",
+      "execution_duration": 0,
+      "run_id": 52975552858774,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/52975552858774",
+      "setup_duration": 0,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/credit_risk_scoring.py"
+      },
+      "start_time": 1788306191303,
+      "state": {
+        "life_cycle_state": "SKIPPED",
+        "result_state": "DISABLED",
+        "state_message": "This task was not selected in the partial run.",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "DISABLED",
+          "message": "This task was not selected in the partial run.",
+          "type": "SUCCESS"
+        }
+      },
+      "task_key": "credit_risk_scoring"
+    },
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "depends_on": [
+        {
+          "task_key": "load_customer_accounts"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788306191304,
+      "environment_key": "default",
+      "execution_duration": 0,
+      "run_id": 81844001721588,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/81844001721588",
+      "setup_duration": 0,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+      },
+      "start_time": 1788306191304,
+      "state": {
+        "life_cycle_state": "SKIPPED",
+        "result_state": "DISABLED",
+        "state_message": "This task was not selected in the partial run.",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "DISABLED",
+          "message": "This task was not selected in the partial run.",
+          "type": "SUCCESS"
+        }
+      },
+      "task_key": "daily_transaction_processing"
+    },
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "depends_on": [
+        {
+          "task_key": "credit_risk_scoring"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788306255459,
+      "environment_key": "default",
+      "execution_duration": 60000,
+      "run_id": 867881756184835,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/867881756184835",
+      "setup_duration": 4000,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py"
+      },
+      "start_time": 1788306191306,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "FAILED",
+        "state_message": "Workload failed, see run output for details",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "RUN_EXECUTION_ERROR",
+          "message": "Workload failed, see run output for details",
+          "type": "CLIENT_ERROR"
+        }
+      },
+      "task_key": "monthly_regulatory_reporting"
+    },
+    {
+      "attempt_number": 1,
+      "cleanup_duration": 0,
+      "depends_on": [
+        {
+          "task_key": "credit_risk_scoring"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788306327354,
+      "environment_key": "default",
+      "execution_duration": 65000,
+      "run_id": 373718717257374,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/373718717257374",
+      "setup_duration": 5000,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py"
+      },
+      "start_time": 1788306256822,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "FAILED",
+        "state_message": "Workload failed, see run output for details",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "RUN_EXECUTION_ERROR",
+          "message": "Workload failed, see run output for details",
+          "type": "CLIENT_ERROR"
+        }
+      },
+      "task_key": "monthly_regulatory_reporting"
+    }
+  ],
+  "trigger": "ONE_TIME"
+}

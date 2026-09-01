@@ -1,0 +1,139 @@
+{
+  "created_time": 1788302212000,
+  "creator_user_name": "dhrov.subramanian@cognition.ai",
+  "job_id": 216001923865775,
+  "run_as_user_name": "dhrov.subramanian@cognition.ai",
+  "settings": {
+    "deployment": {
+      "kind": "BUNDLE",
+      "metadata_file_path": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/state/metadata.json"
+    },
+    "edit_mode": "UI_LOCKED",
+    "email_notifications": {},
+    "environments": [
+      {
+        "environment_key": "default",
+        "spec": {
+          "client": "2",
+          "dependencies": [
+            "openpyxl==3.1.5"
+          ]
+        }
+      }
+    ],
+    "format": "MULTI_TASK",
+    "max_concurrent_runs": 1,
+    "name": "sas_legacy_run_daily_banking",
+    "queue": {
+      "enabled": true
+    },
+    "schedule": {
+      "pause_status": "PAUSED",
+      "quartz_cron_expression": "0 45 5 * * ?",
+      "timezone_id": "UTC"
+    },
+    "tasks": [
+      {
+        "depends_on": [
+          {
+            "task_key": "daily_transaction_processing"
+          }
+        ],
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--report-month",
+            "202401",
+            "--region",
+            "ALL",
+            "--abort-on-err",
+            "Y"
+          ],
+          "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/credit_risk_scoring.py"
+        },
+        "task_key": "credit_risk_scoring",
+        "timeout_seconds": 0
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "load_customer_accounts"
+          }
+        ],
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--report-month",
+            "202401",
+            "--region",
+            "ALL",
+            "--abort-on-err",
+            "Y"
+          ],
+          "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+        },
+        "task_key": "daily_transaction_processing",
+        "timeout_seconds": 0
+      },
+      {
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--report-month",
+            "202401",
+            "--region",
+            "ALL",
+            "--abort-on-err",
+            "Y"
+          ],
+          "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/load_customer_accounts.py"
+        },
+        "task_key": "load_customer_accounts",
+        "timeout_seconds": 0
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "credit_risk_scoring"
+          }
+        ],
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--report-month",
+            "202401",
+            "--region",
+            "ALL",
+            "--abort-on-err",
+            "Y"
+          ],
+          "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py"
+        },
+        "task_key": "monthly_regulatory_reporting",
+        "timeout_seconds": 0
+      }
+    ],
+    "timeout_seconds": 0,
+    "webhook_notifications": {}
+  }
+}

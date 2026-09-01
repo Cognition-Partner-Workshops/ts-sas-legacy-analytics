@@ -1,0 +1,78 @@
+{
+  "error": "OSError: [Errno 5] Input/output error",
+  "error_trace": "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m\n\u001b[0;31mOSError\u001b[0m                                   Traceback (most recent call last)\nFile \u001b[0;32m~/.ipykernel/8683/command--1-4284959584:8\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[38;5;28;01mdel\u001b[39;00m sys\n\u001b[1;32m      7\u001b[0m \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mopen\u001b[39m(filename, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrb\u001b[39m\u001b[38;5;124m\"\u001b[39m) \u001b[38;5;28;01mas\u001b[39;00m f:\n\u001b[0;32m----\u003e 8\u001b[0m   exec(\u001b[38;5;28mcompile\u001b[39m(f\u001b[38;5;241m.\u001b[39mread(), filename, \u001b[38;5;124m'\u001b[39m\u001b[38;5;124mexec\u001b[39m\u001b[38;5;124m'\u001b[39m))\n\nFile \u001b[0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:404\u001b[0m\n\u001b[1;32m    400\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;241m0\u001b[39m\n\u001b[1;32m    403\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;18m__name__\u001b[39m \u001b[38;5;241m==\u001b[39m \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124m__main__\u001b[39m\u001b[38;5;124m\"\u001b[39m:\n\u001b[0;32m--\u003e 404\u001b[0m     _rc \u001b[38;5;241m=\u001b[39m main()\n\u001b[1;32m    405\u001b[0m     \u001b[38;5;28;01mif\u001b[39;00m _rc:\n\u001b[1;32m    406\u001b[0m         \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mSystemExit\u001b[39;00m(_rc)\n\nFile \u001b[0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:389\u001b[0m, in \u001b[0;36mmain\u001b[0;34m(argv)\u001b[0m\n\u001b[1;32m    386\u001b[0m     \u001b[38;5;28;01mdef\u001b[39;00m \u001b[38;5;21mfetch\u001b[39m(sql: \u001b[38;5;28mstr\u001b[39m) \u001b[38;5;241m-\u001b[39m\u001b[38;5;241m\u003e\u001b[39m \u001b[38;5;28mlist\u001b[39m[\u001b[38;5;28mdict\u001b[39m[\u001b[38;5;28mstr\u001b[39m, \u001b[38;5;28mobject\u001b[39m]]:\n\u001b[1;32m    387\u001b[0m         \u001b[38;5;28;01mreturn\u001b[39;00m [row\u001b[38;5;241m.\u001b[39masDict(recursive\u001b[38;5;241m=\u001b[39m\u001b[38;5;28;01mTrue\u001b[39;00m) \u001b[38;5;28;01mfor\u001b[39;00m row \u001b[38;5;129;01min\u001b[39;00m spark\u001b[38;5;241m.\u001b[39msql(sql)\u001b[38;5;241m.\u001b[39mcollect()]\n\u001b[0;32m--\u003e 389\u001b[0m     result \u001b[38;5;241m=\u001b[39m run(\n\u001b[1;32m    390\u001b[0m         spark\u001b[38;5;241m.\u001b[39msql,\n\u001b[1;32m    391\u001b[0m         fetch,\n\u001b[1;32m    392\u001b[0m         report_month,\n\u001b[1;32m    393\u001b[0m         business_date,\n\u001b[1;32m    394\u001b[0m         _report_path(report_month, a\u001b[38;5;241m.\u001b[39mreport_path),\n\u001b[1;32m    395\u001b[0m     )\n\u001b[1;32m    396\u001b[0m \u001b[38;5;28mprint\u001b[39m(\n\u001b[1;32m    397\u001b[0m     \u001b[38;5;124mf\u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mmonthly_regulatory_reporting: \u001b[39m\u001b[38;5;132;01m{\u001b[39;00mresult[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mstatements_run\u001b[39m\u001b[38;5;124m'\u001b[39m]\u001b[38;5;132;01m}\u001b[39;00m\u001b[38;5;124m statements, \u001b[39m\u001b[38;5;124m\"\u001b[39m\n\u001b[1;32m    398\u001b[0m     \u001b[38;5;124mf\u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124msheets=\u001b[39m\u001b[38;5;132;01m{\u001b[39;00mresult[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124msheets_written\u001b[39m\u001b[38;5;124m'\u001b[39m]\u001b[38;5;132;01m}\u001b[39;00m\u001b[38;5;124m path=\u001b[39m\u001b[38;5;132;01m{\u001b[39;00mresult[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mpath\u001b[39m\u001b[38;5;124m'\u001b[39m]\u001b[38;5;132;01m}\u001b[39;00m\u001b[38;5;124m\"\u001b[39m\n\u001b[1;32m    399\u001b[0m )\n\u001b[1;32m    400\u001b[0m \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;241m0\u001b[39m\n\nFile \u001b[0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:326\u001b[0m, in \u001b[0;36mrun\u001b[0;34m(execute, fetch, report_month, business_date, workbook_path, write_sheet)\u001b[0m\n\u001b[1;32m    324\u001b[0m     \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;129;01mnot\u001b[39;00m sheets_written \u001b[38;5;129;01mand\u001b[39;00m output\u001b[38;5;241m.\u001b[39mexists():\n\u001b[1;32m    325\u001b[0m         output\u001b[38;5;241m.\u001b[39munlink()\n\u001b[0;32m--\u003e 326\u001b[0m     write_sheet(rows, \u001b[38;5;28mstr\u001b[39m(output), sheet)\n\u001b[1;32m    327\u001b[0m     sheets_written\u001b[38;5;241m.\u001b[39mappend(sheet)\n\u001b[1;32m    329\u001b[0m execute(capital_sql(rm))\n\nFile \u001b[0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/sas_macros/export_xlsx.py:36\u001b[0m, in \u001b[0;36mexport_xlsx\u001b[0;34m(rows, path, sheet, header)\u001b[0m\n\u001b[1;32m     34\u001b[0m \u001b[38;5;28;01mfor\u001b[39;00m record \u001b[38;5;129;01min\u001b[39;00m records:\n\u001b[1;32m     35\u001b[0m     worksheet\u001b[38;5;241m.\u001b[39mappend([record\u001b[38;5;241m.\u001b[39mget(key) \u001b[38;5;28;01mfor\u001b[39;00m key \u001b[38;5;129;01min\u001b[39;00m keys])\n\u001b[0;32m---\u003e 36\u001b[0m workbook\u001b[38;5;241m.\u001b[39msave(output)\n\u001b[1;32m     37\u001b[0m \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mstr\u001b[39m(output)\n\nFile \u001b[0;32m/local_disk0/.ephemeral_nfs/envs/pythonEnv-8ef99e57-fbf4-4907-ae33-387b4a9d7ca1/lib/python3.11/site-packages/openpyxl/workbook/workbook.py:386\u001b[0m, in \u001b[0;36mWorkbook.save\u001b[0;34m(self, filename)\u001b[0m\n\u001b[1;32m    384\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mwrite_only \u001b[38;5;129;01mand\u001b[39;00m \u001b[38;5;129;01mnot\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mworksheets:\n\u001b[1;32m    385\u001b[0m     \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mcreate_sheet()\n\u001b[0;32m--\u003e 386\u001b[0m save_workbook(\u001b[38;5;28mself\u001b[39m, filename)\n\nFile \u001b[0;32m/local_disk0/.ephemeral_nfs/envs/pythonEnv-8ef99e57-fbf4-4907-ae33-387b4a9d7ca1/lib/python3.11/site-packages/openpyxl/writer/excel.py:294\u001b[0m, in \u001b[0;36msave_workbook\u001b[0;34m(workbook, filename)\u001b[0m\n\u001b[1;32m    292\u001b[0m workbook\u001b[38;5;241m.\u001b[39mproperties\u001b[38;5;241m.\u001b[39mmodified \u001b[38;5;241m=\u001b[39m datetime\u001b[38;5;241m.\u001b[39mdatetime\u001b[38;5;241m.\u001b[39mnow(tz\u001b[38;5;241m=\u001b[39mdatetime\u001b[38;5;241m.\u001b[39mtimezone\u001b[38;5;241m.\u001b[39mutc)\u001b[38;5;241m.\u001b[39mreplace(tzinfo\u001b[38;5;241m=\u001b[39m\u001b[38;5;28;01mNone\u001b[39;00m)\n\u001b[1;32m    293\u001b[0m writer \u001b[38;5;241m=\u001b[39m ExcelWriter(workbook, archive)\n\u001b[0;32m--\u003e 294\u001b[0m writer\u001b[38;5;241m.\u001b[39msave()\n\u001b[1;32m    295\u001b[0m \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28;01mTrue\u001b[39;00m\n\nFile \u001b[0;32m/local_disk0/.ephemeral_nfs/envs/pythonEnv-8ef99e57-fbf4-4907-ae33-387b4a9d7ca1/lib/python3.11/site-packages/openpyxl/writer/excel.py:275\u001b[0m, in \u001b[0;36mExcelWriter.save\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m    273\u001b[0m \u001b[38;5;28;01mdef\u001b[39;00m \u001b[38;5;21msave\u001b[39m(\u001b[38;5;28mself\u001b[39m):\n\u001b[1;32m    274\u001b[0m \u001b[38;5;250m    \u001b[39m\u001b[38;5;124;03m\"\"\"Write data into the archive.\"\"\"\u001b[39;00m\n\u001b[0;32m--\u003e 275\u001b[0m     \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mwrite_data()\n\u001b[1;32m    276\u001b[0m     \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_archive\u001b[38;5;241m.\u001b[39mclose()\n\nFile \u001b[0;32m/local_disk0/.ephemeral_nfs/envs/pythonEnv-8ef99e57-fbf4-4907-ae33-387b4a9d7ca1/lib/python3.11/site-packages/openpyxl/writer/excel.py:60\u001b[0m, in \u001b[0;36mExcelWriter.write_data\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m     57\u001b[0m archive \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_archive\n\u001b[1;32m     59\u001b[0m props \u001b[38;5;241m=\u001b[39m ExtendedProperties()\n\u001b[0;32m---\u003e 60\u001b[0m archive\u001b[38;5;241m.\u001b[39mwritestr(ARC_APP, tostring(props\u001b[38;5;241m.\u001b[39mto_tree()))\n\u001b[1;32m     62\u001b[0m archive\u001b[38;5;241m.\u001b[39mwritestr(ARC_CORE, tostring(\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mworkbook\u001b[38;5;241m.\u001b[39mproperties\u001b[38;5;241m.\u001b[39mto_tree()))\n\u001b[1;32m     63\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mworkbook\u001b[38;5;241m.\u001b[39mloaded_theme:\n\nFile \u001b[0;32m/usr/lib/python3.11/zipfile.py:1855\u001b[0m, in \u001b[0;36mZipFile.writestr\u001b[0;34m(self, zinfo_or_arcname, data, compress_type, compresslevel)\u001b[0m\n\u001b[1;32m   1853\u001b[0m zinfo\u001b[38;5;241m.\u001b[39mfile_size \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mlen\u001b[39m(data)            \u001b[38;5;66;03m# Uncompressed size\u001b[39;00m\n\u001b[1;32m   1854\u001b[0m \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_lock:\n\u001b[0;32m-\u003e 1855\u001b[0m     \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mopen(zinfo, mode\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mw\u001b[39m\u001b[38;5;124m'\u001b[39m) \u001b[38;5;28;01mas\u001b[39;00m dest:\n\u001b[1;32m   1856\u001b[0m         dest\u001b[38;5;241m.\u001b[39mwrite(data)\n\nFile \u001b[0;32m/usr/lib/python3.11/zipfile.py:1220\u001b[0m, in \u001b[0;36m_ZipWriteFile.close\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m   1218\u001b[0m     \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_fileobj\u001b[38;5;241m.\u001b[39mseek(\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_zinfo\u001b[38;5;241m.\u001b[39mheader_offset)\n\u001b[1;32m   1219\u001b[0m     \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_fileobj\u001b[38;5;241m.\u001b[39mwrite(\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_zinfo\u001b[38;5;241m.\u001b[39mFileHeader(\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_zip64))\n\u001b[0;32m-\u003e 1220\u001b[0m     \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_fileobj\u001b[38;5;241m.\u001b[39mseek(\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_zipfile\u001b[38;5;241m.\u001b[39mstart_dir)\n\u001b[1;32m   1222\u001b[0m \u001b[38;5;66;03m# Successfully written: Add file to our caches\u001b[39;00m\n\u001b[1;32m   1223\u001b[0m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_zipfile\u001b[38;5;241m.\u001b[39mfilelist\u001b[38;5;241m.\u001b[39mappend(\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_zinfo)\n\n\u001b[0;31mOSError\u001b[0m: [Errno 5] Input/output error",
+  "metadata": {
+    "cleanup_duration": 0,
+    "creator_user_name": "dhrov.subramanian@cognition.ai",
+    "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+    "end_time": 1788306327354,
+    "execution_duration": 65000,
+    "job_id": 216001923865775,
+    "job_run_id": 864526455891115,
+    "number_in_job": 373718717257374,
+    "original_attempt_run_id": 867881756184835,
+    "run_id": 373718717257374,
+    "run_name": "monthly_regulatory_reporting",
+    "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/373718717257374",
+    "run_type": "JOB_RUN",
+    "setup_duration": 5000,
+    "start_time": 1788306256822,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "FAILED",
+      "state_message": "Workload failed, see run output for details",
+      "user_cancelled_or_timedout": false
+    },
+    "status": {
+      "state": "TERMINATED",
+      "termination_details": {
+        "code": "RUN_EXECUTION_ERROR",
+        "message": "Workload failed, see run output for details",
+        "type": "CLIENT_ERROR"
+      }
+    },
+    "tasks": [
+      {
+        "attempt_number": 1,
+        "cleanup_duration": 0,
+        "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+        "end_time": 1788306327354,
+        "environment_key": "default",
+        "execution_duration": 65000,
+        "run_id": 373718717257374,
+        "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/373718717257374",
+        "setup_duration": 5000,
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--report-month",
+            "202401",
+            "--region",
+            "ALL",
+            "--abort-on-err",
+            "Y"
+          ],
+          "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py"
+        },
+        "start_time": 1788306256822,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "FAILED",
+          "state_message": "Workload failed, see run output for details",
+          "user_cancelled_or_timedout": false
+        },
+        "status": {
+          "state": "TERMINATED",
+          "termination_details": {
+            "code": "RUN_EXECUTION_ERROR",
+            "message": "Workload failed, see run output for details",
+            "type": "CLIENT_ERROR"
+          }
+        },
+        "task_key": "monthly_regulatory_reporting"
+      }
+    ],
+    "trigger": "RETRY"
+  }
+}
