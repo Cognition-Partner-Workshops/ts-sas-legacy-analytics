@@ -1,0 +1,6 @@
+manifest columns: file, rows, sha256, business_date, source_commit, loaded_at
+manifest TXN_FEED_20240131.csv (txn_feed_20240131): 622
+manifest DAILY_TRANSACTIONS.csv (daily_transactions_hist): 18293
+bronze txn_feed_20240131: 622 (expected 622)
+bronze daily_transactions_hist: 18293 (expected 18293)
+cust_accounts_daily snapshot 2024-01-31: 466 (expected 466)

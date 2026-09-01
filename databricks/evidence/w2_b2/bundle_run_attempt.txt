@@ -1,0 +1,492 @@
+FAILED BUNDLE RUN NOTE: The shared .bundle/sas_legacy/dev/files workspace was overwritten by concurrent wave-2 child deployments before execution; the deployed U2 file remained the placeholder.
+
+--- bundle run output ---
+Run URL: https://dbc-8bc9474f-40ae.cloud.databricks.com/jobs/216001923865775/runs/230304745023138?o=7474651138173478
+
+2026-09-01 23:39:16 "sas_legacy_run_daily_banking" RUNNING
+2026-09-01 23:40:26 "sas_legacy_run_daily_banking" INTERNAL_ERROR FAILED Task daily_transaction_processing failed with message: Workload failed, see run output for details. This caused all downstream tasks to get skipped.
+Task daily_transaction_processing FAILED:
+NotImplementedError: daily_transaction_processing is converted in wave 2
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNotImplementedError[0m                       Traceback (most recent call last)
+File [0;32m~/.ipykernel/3281/command--1-477832147:8[0m
+[1;32m      5[0m [38;5;28;01mdel[39;00m sys
+[1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
+[0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
+
+File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
+[1;32m      1[0m [38;5;124;03m"""Wave 2 placeholder for daily transaction processing."""[39;00m
+[0;32m----> 3[0m [38;5;28;01mraise[39;00m [38;5;167;01mNotImplementedError[39;00m([38;5;124m"[39m[38;5;124mdaily_transaction_processing is converted in wave 2[39m[38;5;124m"[39m)
+
+[0;31mNotImplementedError[0m: daily_transaction_processing is converted in wave 2
+
+Error: Task daily_transaction_processing failed!
+Error:
+NotImplementedError: daily_transaction_processing is converted in wave 2
+Trace:
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNotImplementedError[0m                       Traceback (most recent call last)
+File [0;32m~/.ipykernel/3281/command--1-477832147:8[0m
+[1;32m      5[0m [38;5;28;01mdel[39;00m sys
+[1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
+[0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
+
+File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
+[1;32m      1[0m [38;5;124;03m"""Wave 2 placeholder for daily transaction processing."""[39;00m
+[0;32m----> 3[0m [38;5;28;01mraise[39;00m [38;5;167;01mNotImplementedError[39;00m([38;5;124m"[39m[38;5;124mdaily_transaction_processing is converted in wave 2[39m[38;5;124m"[39m)
+
+[0;31mNotImplementedError[0m: daily_transaction_processing is converted in wave 2
+Task daily_transaction_processing FAILED:
+NotImplementedError: daily_transaction_processing is converted in wave 2
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNotImplementedError[0m                       Traceback (most recent call last)
+File [0;32m~/.ipykernel/3732/command--1-477832147:8[0m
+[1;32m      5[0m [38;5;28;01mdel[39;00m sys
+[1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
+[0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
+
+File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
+[1;32m      1[0m [38;5;124;03m"""Wave 2 placeholder for daily transaction processing."""[39;00m
+[0;32m----> 3[0m [38;5;28;01mraise[39;00m [38;5;167;01mNotImplementedError[39;00m([38;5;124m"[39m[38;5;124mdaily_transaction_processing is converted in wave 2[39m[38;5;124m"[39m)
+
+[0;31mNotImplementedError[0m: daily_transaction_processing is converted in wave 2
+
+Error: Task daily_transaction_processing failed!
+Error:
+NotImplementedError: daily_transaction_processing is converted in wave 2
+Trace:
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNotImplementedError[0m                       Traceback (most recent call last)
+File [0;32m~/.ipykernel/3732/command--1-477832147:8[0m
+[1;32m      5[0m [38;5;28;01mdel[39;00m sys
+[1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
+[0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
+
+File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
+[1;32m      1[0m [38;5;124;03m"""Wave 2 placeholder for daily transaction processing."""[39;00m
+[0;32m----> 3[0m [38;5;28;01mraise[39;00m [38;5;167;01mNotImplementedError[39;00m([38;5;124m"[39m[38;5;124mdaily_transaction_processing is converted in wave 2[39m[38;5;124m"[39m)
+
+[0;31mNotImplementedError[0m: daily_transaction_processing is converted in wave 2
+Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task daily_transaction_processing failed with message: Workload failed, see run output for details. This caused all downstream tasks to get skipped.
+
+--- parent run details ---
+{
+  "cleanup_duration": 0,
+  "creator_user_name": "dhrov.subramanian@cognition.ai",
+  "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+  "end_time": 1788306018747,
+  "execution_duration": 0,
+  "job_id": 216001923865775,
+  "job_run_id": 230304745023138,
+  "number_in_job": 230304745023138,
+  "original_attempt_run_id": 230304745023138,
+  "run_duration": 62768,
+  "run_id": 230304745023138,
+  "run_name": "sas_legacy_run_daily_banking",
+  "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/230304745023138",
+  "run_type": "JOB_RUN",
+  "setup_duration": 0,
+  "start_time": 1788305955979,
+  "state": {
+    "life_cycle_state": "INTERNAL_ERROR",
+    "result_state": "FAILED",
+    "state_message": "Task daily_transaction_processing failed with message: Workload failed, see run output for details. This caused all downstream tasks to get skipped.",
+    "user_cancelled_or_timedout": false
+  },
+  "status": {
+    "state": "TERMINATED",
+    "termination_details": {
+      "code": "RUN_EXECUTION_ERROR",
+      "message": "Task daily_transaction_processing failed with message: Workload failed, see run output for details. This caused all downstream tasks to get skipped.",
+      "type": "CLIENT_ERROR"
+    }
+  },
+  "tasks": [
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788305956042,
+      "environment_key": "default",
+      "execution_duration": 0,
+      "run_id": 453940525798902,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/453940525798902",
+      "setup_duration": 0,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/load_customer_accounts.py"
+      },
+      "start_time": 1788305956042,
+      "state": {
+        "life_cycle_state": "SKIPPED",
+        "result_state": "DISABLED",
+        "state_message": "This task was not selected in the partial run.",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "DISABLED",
+          "message": "This task was not selected in the partial run.",
+          "type": "SUCCESS"
+        }
+      },
+      "task_key": "load_customer_accounts"
+    },
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "depends_on": [
+        {
+          "task_key": "daily_transaction_processing"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788306018550,
+      "environment_key": "default",
+      "execution_duration": 0,
+      "run_id": 759759372371714,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/759759372371714",
+      "setup_duration": 0,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/credit_risk_scoring.py"
+      },
+      "start_time": 1788306018550,
+      "state": {
+        "life_cycle_state": "SKIPPED",
+        "result_state": "DISABLED",
+        "state_message": "This task was not selected in the partial run.",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "DISABLED",
+          "message": "This task was not selected in the partial run.",
+          "type": "SUCCESS"
+        }
+      },
+      "task_key": "credit_risk_scoring"
+    },
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "depends_on": [
+        {
+          "task_key": "load_customer_accounts"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788305985018,
+      "environment_key": "default",
+      "execution_duration": 23000,
+      "run_id": 513110935918067,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/513110935918067",
+      "setup_duration": 5000,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+      },
+      "start_time": 1788305956041,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "FAILED",
+        "state_message": "Workload failed, see run output for details",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "RUN_EXECUTION_ERROR",
+          "message": "Workload failed, see run output for details",
+          "type": "CLIENT_ERROR"
+        }
+      },
+      "task_key": "daily_transaction_processing"
+    },
+    {
+      "attempt_number": 1,
+      "cleanup_duration": 0,
+      "depends_on": [
+        {
+          "task_key": "load_customer_accounts"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788306018159,
+      "environment_key": "default",
+      "execution_duration": 26000,
+      "run_id": 343757157778757,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/343757157778757",
+      "setup_duration": 5000,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+      },
+      "start_time": 1788305986425,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "FAILED",
+        "state_message": "Workload failed, see run output for details",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "RUN_EXECUTION_ERROR",
+          "message": "Workload failed, see run output for details",
+          "type": "CLIENT_ERROR"
+        }
+      },
+      "task_key": "daily_transaction_processing"
+    },
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "depends_on": [
+        {
+          "task_key": "credit_risk_scoring"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788306018616,
+      "environment_key": "default",
+      "execution_duration": 0,
+      "run_id": 497285757753711,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/497285757753711",
+      "setup_duration": 0,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py"
+      },
+      "start_time": 1788306018616,
+      "state": {
+        "life_cycle_state": "SKIPPED",
+        "result_state": "DISABLED",
+        "state_message": "This task was not selected in the partial run.",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "DISABLED",
+          "message": "This task was not selected in the partial run.",
+          "type": "SUCCESS"
+        }
+      },
+      "task_key": "monthly_regulatory_reporting"
+    }
+  ],
+  "trigger": "ONE_TIME"
+}
+
+--- task attempt 0 output ---
+{
+  "error": "NotImplementedError: daily_transaction_processing is converted in wave 2",
+  "error_trace": "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m\n\u001b[0;31mNotImplementedError\u001b[0m                       Traceback (most recent call last)\nFile \u001b[0;32m~/.ipykernel/3281/command--1-477832147:8\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[38;5;28;01mdel\u001b[39;00m sys\n\u001b[1;32m      7\u001b[0m \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mopen\u001b[39m(filename, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrb\u001b[39m\u001b[38;5;124m\"\u001b[39m) \u001b[38;5;28;01mas\u001b[39;00m f:\n\u001b[0;32m----\u003e 8\u001b[0m   exec(\u001b[38;5;28mcompile\u001b[39m(f\u001b[38;5;241m.\u001b[39mread(), filename, \u001b[38;5;124m'\u001b[39m\u001b[38;5;124mexec\u001b[39m\u001b[38;5;124m'\u001b[39m))\n\nFile \u001b[0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[38;5;124;03m\"\"\"Wave 2 placeholder for daily transaction processing.\"\"\"\u001b[39;00m\n\u001b[0;32m----\u003e 3\u001b[0m \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mNotImplementedError\u001b[39;00m(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mdaily_transaction_processing is converted in wave 2\u001b[39m\u001b[38;5;124m\"\u001b[39m)\n\n\u001b[0;31mNotImplementedError\u001b[0m: daily_transaction_processing is converted in wave 2",
+  "metadata": {
+    "cleanup_duration": 0,
+    "creator_user_name": "dhrov.subramanian@cognition.ai",
+    "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+    "end_time": 1788305985018,
+    "execution_duration": 23000,
+    "job_id": 216001923865775,
+    "job_run_id": 230304745023138,
+    "number_in_job": 513110935918067,
+    "original_attempt_run_id": 513110935918067,
+    "run_id": 513110935918067,
+    "run_name": "daily_transaction_processing",
+    "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/513110935918067",
+    "run_type": "JOB_RUN",
+    "setup_duration": 5000,
+    "start_time": 1788305956041,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "FAILED",
+      "state_message": "Workload failed, see run output for details",
+      "user_cancelled_or_timedout": false
+    },
+    "status": {
+      "state": "TERMINATED",
+      "termination_details": {
+        "code": "RUN_EXECUTION_ERROR",
+        "message": "Workload failed, see run output for details",
+        "type": "CLIENT_ERROR"
+      }
+    },
+    "tasks": [
+      {
+        "attempt_number": 0,
+        "cleanup_duration": 0,
+        "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+        "end_time": 1788305985018,
+        "environment_key": "default",
+        "execution_duration": 23000,
+        "run_id": 513110935918067,
+        "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/513110935918067",
+        "setup_duration": 5000,
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--report-month",
+            "202401",
+            "--region",
+            "ALL",
+            "--abort-on-err",
+            "Y"
+          ],
+          "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+        },
+        "start_time": 1788305956041,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "FAILED",
+          "state_message": "Workload failed, see run output for details",
+          "user_cancelled_or_timedout": false
+        },
+        "status": {
+          "state": "TERMINATED",
+          "termination_details": {
+            "code": "RUN_EXECUTION_ERROR",
+            "message": "Workload failed, see run output for details",
+            "type": "CLIENT_ERROR"
+          }
+        },
+        "task_key": "daily_transaction_processing"
+      }
+    ],
+    "trigger": "ONE_TIME"
+  }
+}
+
+--- task attempt 1 output ---
+{
+  "error": "NotImplementedError: daily_transaction_processing is converted in wave 2",
+  "error_trace": "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m\n\u001b[0;31mNotImplementedError\u001b[0m                       Traceback (most recent call last)\nFile \u001b[0;32m~/.ipykernel/3732/command--1-477832147:8\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[38;5;28;01mdel\u001b[39;00m sys\n\u001b[1;32m      7\u001b[0m \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mopen\u001b[39m(filename, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrb\u001b[39m\u001b[38;5;124m\"\u001b[39m) \u001b[38;5;28;01mas\u001b[39;00m f:\n\u001b[0;32m----\u003e 8\u001b[0m   exec(\u001b[38;5;28mcompile\u001b[39m(f\u001b[38;5;241m.\u001b[39mread(), filename, \u001b[38;5;124m'\u001b[39m\u001b[38;5;124mexec\u001b[39m\u001b[38;5;124m'\u001b[39m))\n\nFile \u001b[0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[38;5;124;03m\"\"\"Wave 2 placeholder for daily transaction processing.\"\"\"\u001b[39;00m\n\u001b[0;32m----\u003e 3\u001b[0m \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mNotImplementedError\u001b[39;00m(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mdaily_transaction_processing is converted in wave 2\u001b[39m\u001b[38;5;124m\"\u001b[39m)\n\n\u001b[0;31mNotImplementedError\u001b[0m: daily_transaction_processing is converted in wave 2",
+  "metadata": {
+    "cleanup_duration": 0,
+    "creator_user_name": "dhrov.subramanian@cognition.ai",
+    "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+    "end_time": 1788306018159,
+    "execution_duration": 26000,
+    "job_id": 216001923865775,
+    "job_run_id": 230304745023138,
+    "number_in_job": 343757157778757,
+    "original_attempt_run_id": 513110935918067,
+    "run_id": 343757157778757,
+    "run_name": "daily_transaction_processing",
+    "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/343757157778757",
+    "run_type": "JOB_RUN",
+    "setup_duration": 5000,
+    "start_time": 1788305986425,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "FAILED",
+      "state_message": "Workload failed, see run output for details",
+      "user_cancelled_or_timedout": false
+    },
+    "status": {
+      "state": "TERMINATED",
+      "termination_details": {
+        "code": "RUN_EXECUTION_ERROR",
+        "message": "Workload failed, see run output for details",
+        "type": "CLIENT_ERROR"
+      }
+    },
+    "tasks": [
+      {
+        "attempt_number": 1,
+        "cleanup_duration": 0,
+        "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+        "end_time": 1788306018159,
+        "environment_key": "default",
+        "execution_duration": 26000,
+        "run_id": 343757157778757,
+        "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/343757157778757",
+        "setup_duration": 5000,
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--report-month",
+            "202401",
+            "--region",
+            "ALL",
+            "--abort-on-err",
+            "Y"
+          ],
+          "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+        },
+        "start_time": 1788305986425,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "FAILED",
+          "state_message": "Workload failed, see run output for details",
+          "user_cancelled_or_timedout": false
+        },
+        "status": {
+          "state": "TERMINATED",
+          "termination_details": {
+            "code": "RUN_EXECUTION_ERROR",
+            "message": "Workload failed, see run output for details",
+            "type": "CLIENT_ERROR"
+          }
+        },
+        "task_key": "daily_transaction_processing"
+      }
+    ],
+    "trigger": "RETRY"
+  }
+}
