@@ -435,10 +435,11 @@ def t12(spec: TableSpec, xlsx_path: str | None) -> RuleResult:
         import openpyxl
 
         wb = openpyxl.load_workbook(xlsx_path, read_only=True)
-        n = len(wb.sheetnames)
+        expected = list(spec.xlsx_sheets) if spec.xlsx_sheets else 4
+        actual = wb.sheetnames
         return RuleResult(
-            "T-12", spec.name, None, "PASS" if n == 4 else "FAIL", 4, n,
-            f"workbook exists; sheets={wb.sheetnames}",
+            "T-12", spec.name, None, "PASS" if actual == expected else "FAIL", expected, actual,
+            f"workbook exists; sheets={actual}",
         )
     except Exception as exc:  # noqa: BLE001 - any load failure is a FAIL with the reason
         return RuleResult("T-12", spec.name, None, "FAIL", 4, None, f"workbook unreadable: {exc}")
