@@ -15,7 +15,7 @@
 
 ## Write targets registered
 
-`[PROPOSED]` Empty. Child sessions must register each target as `ow_tp.<schema>.<table>` here before loading it.
+`[PROPOSED]` Empty. Child sessions must register each target as `sas_legacy.<schema>.<table>` here before loading it.
 
 ## Baseline manifest
 

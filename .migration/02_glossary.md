@@ -6,7 +6,7 @@
 | PROPOSED | dataset / member | Delta table. |
 | PROPOSED | DATA step | PySpark or Databricks SQL, choosing SQL for set-based logic. |
 | PROPOSED | PROC SQL | Databricks SQL. |
-| PROPOSED | PROC FORMAT value / informat | Reference-table join to `ow_tp.sas_ref`. |
+| PROPOSED | PROC FORMAT value / informat | Reference-table join to `sas_legacy.sas_ref`. |
 | PROPOSED | macro | Python function in `dbx/sas_macros/`. |
 | PROPOSED | macro variable | Job parameter or widget. |
 | PROPOSED | `%include` | Python/module import or explicit task dependency. |

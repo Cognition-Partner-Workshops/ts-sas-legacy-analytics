@@ -37,5 +37,5 @@
 | D10-003 | D10 | Insurance seed data absent | `[FACT]` `Data/README.md:100-101` states insurance has no seed data. | Customer | OPEN | claims_processing; policy_valuation |
 | D10-004 | D10 | `ORA_DW.COST_OF_FUNDS` seed absent | `[FACT]` Explicitly listed in `03_recon_tolerances.md` §"Units convertible but NOT reconcilable"; source use is `Programs/Reports/customer_profitability.sas:8`. | Customer | OPEN | customer_profitability |
 | D10-005 | D10 | Control-M export absent | `[FACT]` No export exists in repo; Control-M schedule annotations are present at `BatchJobs/run_daily_banking.sas:6` and `run_daily_insurance.sas:4`. | Customer | OPEN | Both orchestrators |
-| D10-006 | D10 | Catalog `ow_tp` not provisioned | `[DISCOVERED]` `databricks catalogs get ow_tp` reported that the catalog does not exist; Devin can self-create it, gated on STOP A. | Devin | OPEN | Wave 0 |
+| D10-006 | D10 | Catalog `sas_legacy` not provisioned | `[DISCOVERED]` `databricks catalogs get sas_legacy` reported that the catalog does not exist; Devin can self-create it, gated on STOP A. | Devin | OPEN | Wave 0 |
 | D10-007 | D10 | Legacy output baseline absent | `[FACT]` R-0 in `03_recon_tolerances.md` §R-0 requires customer SAS outputs or an independent reference implementation. | Customer | OPEN | All RECON phases |

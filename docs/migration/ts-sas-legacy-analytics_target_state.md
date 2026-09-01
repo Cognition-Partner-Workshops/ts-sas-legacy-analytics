@@ -15,10 +15,10 @@ Legend for cites: `repo:` = this repository, `probe:` = live probe run in sessio
 | Target workspace | `DATABRICKS_DEMO_HOST` (secret name), workspace id 7474651138173478, metastore `55de74dc-…` (aws:us-west-2) | FACT `user:` + DISCOVERED `probe: databricks metastores current` |
 | Target credential | `DATABRICKS_DEMO_TOKEN` (secret name only). Identity is a workspace admin (groups: `users`, `admins`) → holds CREATE CATALOG on the metastore | DISCOVERED `probe: current-user me`, `SHOW GRANTS ON METASTORE` |
 | Compute | Serverless only. SQL: existing warehouse `Serverless Starter Warehouse` (id `565cd2fd713738c4`, serverless=true, RUNNING). Jobs: serverless job compute. **No clusters are ever created.** | FACT `user:` + DISCOVERED `probe: warehouses list` |
-| Unity Catalog layout | Catalog `ow_tp`; schemas `ow_tp.sas_bronze` (raw seed / feed landing as-is), `ow_tp.sas_silver` (STG_* and CURATED equivalents), `ow_tp.sas_gold` (REPORTS equivalents), `ow_tp.sas_ref` (format catalogs as reference tables), `ow_tp.sas_recon` (recon evidence tables). Libref → schema map is fixed below. | PROPOSED — user pinned catalog `ow_tp`; schema names are mine |
-| Catalog existence | **`ow_tp` does not exist today** in `DATABRICKS_DEMO_HOST` (`Error: Catalog 'ow_tp' does not exist`). Creatable by the migration identity. Creation is the first wave-0 action, gated on STOP A. | DISCOVERED `probe: catalogs get ow_tp` |
-| Shared-workspace rule | Everything created is prefixed/contained by `ow_tp` (catalog, jobs `ow_tp_sas_*`, secret scope `ow_tp`). Never touch `banking_analytics`, `migration_demo`, `de_demo_workspace`, `tsql_demo`, `redshift_src` or any unprefixed object. Never run DDL on a table another session may hold. | FACT (org knowledge note on the shared demo workspace) |
-| Libref → schema map | `ORA_DW`, `RAW_BANK`, `RAW_INS`, `TERA_DW` → `ow_tp.sas_bronze`; `STG_BANK`, `STG_INS`, `CURATED` → `ow_tp.sas_silver`; `REPORTS` → `ow_tp.sas_gold`; `BANKING`/`INSURANCE`/`COMMON` format libs → `ow_tp.sas_ref`; `ARCHIVE` → `ow_tp.sas_silver` with `archive_` prefix. Table names: legacy member name lower-cased, e.g. `STG_BANK.CUST_ACCOUNTS_DAILY` → `ow_tp.sas_silver.cust_accounts_daily`. | PROPOSED |
+| Unity Catalog layout | Catalog `sas_legacy`; schemas `sas_legacy.sas_bronze` (raw seed / feed landing as-is), `sas_legacy.sas_silver` (STG_* and CURATED equivalents), `sas_legacy.sas_gold` (REPORTS equivalents), `sas_legacy.sas_ref` (format catalogs as reference tables), `sas_legacy.sas_recon` (recon evidence tables). Libref → schema map is fixed below. | PROPOSED — user pinned catalog `sas_legacy`; schema names are mine |
+| Catalog existence | **`sas_legacy` does not exist today** in `DATABRICKS_DEMO_HOST` (`Error: Catalog 'sas_legacy' does not exist`). Creatable by the migration identity. Creation is the first wave-0 action, gated on STOP A. | DISCOVERED `probe: catalogs get sas_legacy` |
+| Shared-workspace rule | Everything created is prefixed/contained by `sas_legacy` (catalog, jobs `sas_legacy_*`, secret scope `sas_legacy`). Never touch `banking_analytics`, `migration_demo`, `de_demo_workspace`, `tsql_demo`, `redshift_src` or any unprefixed object. Never run DDL on a table another session may hold. | FACT (org knowledge note on the shared demo workspace) |
+| Libref → schema map | `ORA_DW`, `RAW_BANK`, `RAW_INS`, `TERA_DW` → `sas_legacy.sas_bronze`; `STG_BANK`, `STG_INS`, `CURATED` → `sas_legacy.sas_silver`; `REPORTS` → `sas_legacy.sas_gold`; `BANKING`/`INSURANCE`/`COMMON` format libs → `sas_legacy.sas_ref`; `ARCHIVE` → `sas_legacy.sas_silver` with `archive_` prefix. Table names: legacy member name lower-cased, e.g. `STG_BANK.CUST_ACCOUNTS_DAILY` → `sas_legacy.sas_silver.cust_accounts_daily`. | PROPOSED |
 | Code language policy | Databricks SQL for PROC SQL / set-based DATA steps; PySpark (Python) for row-sequential logic that has no clean SQL form (RETAIN/BY-group running balances → window functions first; hash-object lookups → broadcast joins; macro control flow → Python). One notebook or `.py` per legacy program; shared macros become a Python package `dbx/sas_macros/`. | PROPOSED |
 | Repo topology | Single repo, three roles: SOURCE = existing `Config/ Formats/ Macro/ Programs/ BatchJobs/ Data/` (read-only, never edited); TARGET = new `databricks/` (bundle, notebooks, `src/`, tests); DOCS = `docs/migration/` + `.migration/`. Existing `migration/wave1*` and `devin/*` branches are prior exploratory work and are **not** a reference implementation for this run. | PROPOSED (user excluded `uc-data-migration-sas-to-databricks` as a reference) |
 | Deployment | Databricks Asset Bundle at `databricks/databricks.yml`, target `demo`, serverless job compute; `databricks bundle validate` is a CI gate. | PROPOSED |
@@ -32,7 +32,7 @@ Legend for cites: `repo:` = this repository, `probe:` = live probe run in sessio
 
 | Field | Value | Status |
 |---|---|---|
-| Dialect policy | PROC SQL → Databricks SQL. `CALCULATED` → CTE or repeat expression. `"&date"d` literals → `DATE '...'` parameters. SAS date/datetime numerics → `DATE`/`TIMESTAMP`. `PUT(x, fmt.)` with custom format → join to `ow_tp.sas_ref.<format>` table; built-in formats → `date_format`/`format_number`. | PROPOSED |
+| Dialect policy | PROC SQL → Databricks SQL. `CALCULATED` → CTE or repeat expression. `"&date"d` literals → `DATE '...'` parameters. SAS date/datetime numerics → `DATE`/`TIMESTAMP`. `PUT(x, fmt.)` with custom format → join to `sas_legacy.sas_ref.<format>` table; built-in formats → `date_format`/`format_number`. | PROPOSED |
 | Function equivalence | `INTNX`/`INTCK` → `add_months`/`datediff`/`months_between` with explicit rounding rule; `INPUT`/`PUT` → `CAST`/`format`; `COALESCE` same; `SUM()` over missing → SAS ignores missing, Spark ignores NULL (same); **`MEAN`/`AVG` truncation and `ROUND` half-away-from-zero vs Spark HALF_UP: decided in `03_recon_tolerances.md`**. | PROPOSED |
 | Materialization | STG_*/CURATED → Delta tables (full rewrite per business_date partition); REPORTS → Delta tables (not views) because legacy exports them. | PROPOSED |
 | Output contract | Column names lower-snake; types per field dictionary produced in analysis; no SAS `format=` retained (formatting is presentation). | PROPOSED |
@@ -47,7 +47,7 @@ Legend for cites: `repo:` = this repository, `probe:` = live probe run in sessio
 | Reject / exception rows | Legacy reject datasets (`WORK.TXN_REJECTED`, `STG_BANK.ACCT_EXCEPTIONS`) become first-class silver tables with `reject_reason`; counts are recon metrics. | PROPOSED |
 | Restart semantics | Legacy `run_step` restartability → job task retry with the partition-overwrite/MERGE idempotency above; `ABORT_ON_ERR=Y` → task failure fails the run. | PROPOSED |
 | Parameterization | Job params `business_date`, `env`; `SAS_DATA_ROOT`-style paths disappear. | PROPOSED |
-| Logging | `%nobs` row-count logging → a `ow_tp.sas_recon.run_log` table row per task (table, rows_in, rows_out, rejected). | PROPOSED |
+| Logging | `%nobs` row-count logging → a `sas_legacy.sas_recon.run_log` table row per task (table, rows_in, rows_out, rejected). | PROPOSED |
 
 ## ORCHESTRATION profile
 
@@ -72,7 +72,7 @@ Legend for cites: `repo:` = this repository, `probe:` = live probe run in sessio
 |---|---|---|
 | What the model is | A fixed-coefficient logistic scorecard (model id `CRM-2023-Q4-v2`): hard-coded intercept, five WoE binnings, PD = 1/(1+exp(−logodds)), LGD/EAD rules, EL, rating bands 1–7. **No training, no PROC LOGISTIC, no random numbers.** | FACT `repo:Programs/Banking/credit_risk_scoring.sas:92-197` |
 | Partition | This is the only model-code unit. All other programs are data code. | FACT (grep of all programs) |
-| Target framework | PySpark/SQL re-expression of the scorecard, coefficients held in `ow_tp.sas_ref.scorecard_crm_2023_q4_v2` (versioned reference table), **not** MLflow-trained. MLflow model registry: N/A — nothing is trained. | PROPOSED |
+| Target framework | PySpark/SQL re-expression of the scorecard, coefficients held in `sas_legacy.sas_ref.scorecard_crm_2023_q4_v2` (versioned reference table), **not** MLflow-trained. MLflow model registry: N/A — nothing is trained. | PROPOSED |
 | Prediction-parity gate | Per `prediction-parity` skill; tolerance in `03_recon_tolerances.md` rows ML-1..ML-5. | PROPOSED tolerances |
 | Nondeterminism | Only `SCORE_TIMESTAMP = datetime()` (excluded from parity). `exp()` may differ in the last ulp between SAS and JVM; hence PD tolerance rather than exact match. | FACT (code) / PROPOSED (tolerance) |
 | Legacy bit-stability probe | **Could not be run**: no SAS runtime on this machine or in the repo's blueprint. By inspection the scorer is deterministic. Exact-match is therefore NOT promised; see `03_recon_tolerances.md` §ML. | DISCOVERED |
@@ -85,7 +85,7 @@ Legend for cites: `repo:` = this repository, `probe:` = live probe run in sessio
 |---|---|---|
 | Coexistence mechanism | **Exported snapshots** (`Data/csv/*` as committed) — there is no live Oracle/Teradata/SAS to federate to. Recon mode = **DEGRADED** (see tolerances file). | FACT `user:` "Seed data in Data/ is the recon baseline" |
 | Legacy output baseline | **Gap**: `Data/` holds *inputs* only; no SAS-produced output tables are committed, and SAS cannot run here. The legacy-side comparison values must come from one of: (a) the customer running `Data/bootstrap_local_env.sh` on a SAS host and committing the outputs under `Data/expected/` — **recommended**; (b) an independent reference implementation written by the recon session (not the migrating child) from the SAS source, with the caveat that both sides are then derived from the same reading of the code. | PROPOSED decision for STOP A |
-| Data target per legacy store | Oracle DW / Teradata extracts → bronze Delta (loaded from CSV via `COPY INTO`/`read_files` on a UC volume `ow_tp.sas_bronze.landing`); flat-file feeds → same; SAS datasets (STG/CURATED/REPORTS) → silver/gold Delta. | PROPOSED |
+| Data target per legacy store | Oracle DW / Teradata extracts → bronze Delta (loaded from CSV via `COPY INTO`/`read_files` on a UC volume `sas_legacy.sas_bronze.landing`); flat-file feeds → same; SAS datasets (STG/CURATED/REPORTS) → silver/gold Delta. | PROPOSED |
 | PII / masking | Seed data is synthetic; no masking rules. Insurance formats include policy/claim codes only. | DISCOVERED |
 | Sample-data fallback | Insurance programs have **no seed data** (`Data/README.md` "Known limitations"), `ORA_DW.COST_OF_FUNDS` (read by customer_profitability) and `TERA_DW.*` have no seed either → those units can be converted but not reconciled until data is supplied (D10). | FACT `repo:Data/README.md` |
 | Decommission criteria | Out of demo scope; recorded as N/A-for-now. | PROPOSED |
@@ -97,7 +97,7 @@ Legend for cites: `repo:` = this repository, `probe:` = live probe run in sessio
 
 ## Drift rules (what gets a PR rejected)
 1. Any diff under `Config/ Formats/ Macro/ Programs/ BatchJobs/ Data/`.
-2. Any UC object outside `ow_tp`, any cluster definition, any non-serverless compute.
+2. Any UC object outside `sas_legacy`, any cluster definition, any non-serverless compute.
 3. PR without a recon evidence block citing tolerance version.
 4. Changed coefficient, bin edge, or rating band in the scorecard.
 5. Hard-coded business date.

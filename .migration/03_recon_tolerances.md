@@ -16,7 +16,7 @@
 | (a) Customer-run SAS outputs | Run `Data/bootstrap_local_env.sh` on any Base SAS 9.4 host, commit `STG_BANK.*`, `CURATED.*`, `REPORTS.*` as CSV under `Data/expected/` (+ the printed row counts). Recon then diffs Databricks tables against genuine SAS output. | **Yes** — the only path that lets us call anything "matches legacy". |
 | (b) Independent reference implementation | The recon session (never the migrating child) writes a plain-Python oracle per program straight from the SAS source, runs it on `Data/csv`, and diffs the Databricks output against it. Two independent readings of the code agreeing is evidence, but both can share a misreading. | Fallback only; every report carries the caveat "reference-derived, not SAS-produced". |
 
-Until (a) or (b) is chosen, no unit can reach RECON_GREEN.
+**Decision (STOP A, DEC-004): option (b).** Every recon report carries the caveat "reference-derived, not SAS-produced"; option (a) remains open as an upgrade path if SAS outputs are later committed under `Data/expected/`.
 
 ## Table-level tolerances (data code: all programs except the scorer)
 
@@ -37,7 +37,7 @@ Population column says what each rate is computed over.
 | T-11 | Rounding rule | Target uses `ROUND(x, n)` with HALF_UP to mirror SAS `ROUND` (half away from zero) for non-negative values; negative-value half cases are flagged in the field dictionary and asserted explicitly. `AVG`: no truncation on either side (SAS `MEAN` and Spark `AVG` are both double). | all rounded columns | PROPOSED |
 | T-12 | Excel workbooks (`%export_xlsx`) | not reconciled; the gold table feeding them is. | n/a | PROPOSED |
 
-## ML-SCORING tolerances (credit_risk_scoring.sas → `ow_tp.sas_silver.risk_scores`, `risk_migration`, `ow_tp.sas_gold.risk_summary`)
+## ML-SCORING tolerances (credit_risk_scoring.sas → `sas_legacy.sas_silver.risk_scores`, `risk_migration`, `sas_legacy.sas_gold.risk_summary`)
 
 Scorer facts: fixed-coefficient logistic scorecard, deterministic by inspection (no RNG, no training). **Legacy bit-stability probe not run** (no SAS). Per playbook, exact match on `PD` is therefore not accepted as a tolerance; rank/band exactness plus a numeric tolerance is proposed instead.
 

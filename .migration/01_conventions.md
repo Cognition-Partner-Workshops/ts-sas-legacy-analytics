@@ -3,9 +3,9 @@
 | Status | Convention | Evidence |
 |---|---|---|
 | PROPOSED | Catalog, schema, table, and column names use lower_snake_case. | `docs/migration/ts-sas-legacy-analytics_target_state.md:19,22-23` |
-| PROPOSED | Jobs are named `ow_tp_sas_<program>`. | Target-state CORE; shared-workspace prefix rule. |
+| PROPOSED | Jobs are named `sas_legacy_<program>`. | Target-state CORE; shared-workspace prefix rule. |
 | PROPOSED | The Databricks Asset Bundle target is `demo`; validate with `databricks bundle validate`. | `docs/migration/ts-sas-legacy-analytics_target_state.md:25,27` |
-| PROPOSED | **Libref → schema:** `ORA_DW`, `RAW_BANK`, `RAW_INS`, `TERA_DW` → `ow_tp.sas_bronze`; `STG_BANK`, `STG_INS`, `CURATED` → `ow_tp.sas_silver`; `REPORTS` → `ow_tp.sas_gold`; `BANKING`/`INSURANCE`/`COMMON` format libs → `ow_tp.sas_ref`; `ARCHIVE` → `ow_tp.sas_silver` with `archive_` prefix. Table names: legacy member name lower-cased, e.g. `STG_BANK.CUST_ACCOUNTS_DAILY` → `ow_tp.sas_silver.cust_accounts_daily`. | PROPOSED, copied from target-state CORE. |
+| PROPOSED | **Libref → schema:** `ORA_DW`, `RAW_BANK`, `RAW_INS`, `TERA_DW` → `sas_legacy.sas_bronze`; `STG_BANK`, `STG_INS`, `CURATED` → `sas_legacy.sas_silver`; `REPORTS` → `sas_legacy.sas_gold`; `BANKING`/`INSURANCE`/`COMMON` format libs → `sas_legacy.sas_ref`; `ARCHIVE` → `sas_legacy.sas_silver` with `archive_` prefix. Table names: legacy member name lower-cased, e.g. `STG_BANK.CUST_ACCOUNTS_DAILY` → `sas_legacy.sas_silver.cust_accounts_daily`. | PROPOSED, copied from target-state CORE. |
 | FACT | Serverless only: the existing SQL warehouse and serverless job compute are allowed; never create clusters. | `docs/migration/ts-sas-legacy-analytics_target_state.md:18` |
 | PROPOSED | Use Databricks SQL for PROC SQL and set-based DATA steps; use PySpark only where row-sequential logic has no clean SQL form. Shared macros become `dbx/sas_macros/`. | `docs/migration/ts-sas-legacy-analytics_target_state.md:23` |
 | PROPOSED | Never edit `Config/`, `Formats/`, `Macro/`, `Programs/`, `BatchJobs/`, or `Data/`; never create unprefixed UC objects or DDL on shared tables; never use `SELECT *` into silver/gold without an explicit column list; never hard-code dates. | `docs/migration/ts-sas-legacy-analytics_target_state.md:24,29` |

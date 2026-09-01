@@ -5,8 +5,8 @@
 | Databricks workspace auth | WORKS | `[DISCOVERED]` `databricks current-user me` returned the admin identity (groups `users`, `admins`), workspace id `7474651138173478`. | D10-006 |
 | Serverless SQL warehouse | WORKS | `[DISCOVERED]` `Serverless Starter Warehouse`, id `565cd2fd713738c4`, was RUNNING; `SELECT current_metastore(), current_user(), 1` succeeded. | D10-006 |
 | Metastore | WORKS | `[DISCOVERED]` Metastore `55de74dc-f7c5-4f94-83fd-d79d5c8c473f`; identity holds CREATE CATALOG via admins. | D10-006 |
-| Catalog `ow_tp` | BLOCKED | `[DISCOVERED]` `databricks catalogs get ow_tp` → `Catalog 'ow_tp' does not exist`; self-creatable on STOP A. | D10-006 |
-| Write path to `ow_tp` | BLOCKED | `[PROPOSED]` Not tested because the catalog is absent; after creation test create/insert/drop of `ow_tp.sas_recon._preflight`. | D10-006 |
+| Catalog `sas_legacy` | BLOCKED | `[DISCOVERED]` `databricks catalogs get sas_legacy` → `Catalog 'sas_legacy' does not exist`; self-creatable on STOP A. | D10-006 |
+| Write path to `sas_legacy` | BLOCKED | `[PROPOSED]` Not tested because the catalog is absent; after creation test create/insert/drop of `sas_legacy.sas_recon._preflight`. | D10-006 |
 | UC volume / file upload path | BLOCKED | `[PROPOSED]` Not tested because the catalog is absent. | D10-006 |
 | Jobs API serverless read | WORKS | `[DISCOVERED]` Re-run `databricks jobs list --limit 1 -o json` succeeded and returned job id `220238957207364`; write access remains untested. | D10-006 |
 | Legacy SAS runtime | BLOCKED | `[DISCOVERED]` `which sas sas94` was empty; `Data/bootstrap_local_env.sh` requires Base SAS (`Data/README.md:47-56`). | D10-001 |

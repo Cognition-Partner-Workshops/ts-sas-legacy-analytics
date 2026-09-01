@@ -21,7 +21,7 @@
 | Code location | This repo, `main`. Runtime paths `/opt/sas/custom` (code) and `/data/sas` (data) per `Config/autoexec.sas`; no SAS server is reachable. | FACT / DISCOVERED |
 | Scope | Whole estate, including `Programs/Banking/credit_risk_scoring.sas` | FACT (kickoff) |
 | Recon baseline | `Data/csv/*` seed snapshots, business date 31JAN2024 (banking only; insurance has none) | FACT (kickoff, `Data/README.md`) |
-| Target | Shared demo workspace `DATABRICKS_DEMO_HOST` / `DATABRICKS_DEMO_TOKEN`, catalog `ow_tp`, serverless only | FACT (kickoff) |
+| Target | Shared demo workspace `DATABRICKS_DEMO_HOST` / `DATABRICKS_DEMO_TOKEN`, new dedicated catalog `sas_legacy` (renamed from `ow_tp` at STOP A, DEC-009), serverless only | FACT (kickoff + STOP A reply) |
 | Excluded reference | `uc-data-migration-sas-to-databricks` — must not be consulted. Pre-existing `migration/*`/`devin/*` branches in this repo are likewise not a reference. | FACT (kickoff) / PROPOSED |
 | Notifications | Slack DM to the requester (`D0BQP1XGJ07`) only, for STOPs, halts, wave closes. No channels, no per-task or per-child messages. | FACT (kickoff) |
 | Dialect skills attached | `sas-programs` (primary), `prediction-parity` (scorer), `recon-harness`, `dlt-pipelines` (consulted, not adopted — Jobs chosen) | FACT |
@@ -42,11 +42,11 @@
 
 ## STOP A decision list (each needs an explicit yes / change)
 
-1. **Profiles & layout** — target-state profiles as drafted; catalog `ow_tp` with schemas `sas_bronze / sas_silver / sas_silver / sas_gold / sas_ref / sas_recon` and the libref map. `ow_tp` does not exist yet; I create it as the first wave-0 action on approval.
+1. **Profiles & layout** — target-state profiles as drafted; catalog `sas_legacy` with schemas `sas_bronze / sas_silver / sas_gold / sas_ref / sas_recon` and the libref map. `sas_legacy` does not exist yet; I create it as the first wave-0 action on approval.
 2. **Compute** — serverless SQL warehouse `565cd2fd713738c4` + serverless job compute; Jobs (not DLT).
 3. **Tolerances v1** — table rules T-1..T-12 and scorer rules ML-1..ML-8 in `03_recon_tolerances.md`. Exact match on PD is *not* offered because legacy could not be run twice; ML-1 (band exact) + ML-2 (PD ≤1e-9) + ML-5 (rank preserved) is the proposal. **Who owns the scorer's tolerance?** If nobody, the scorer is scoped out until an owner is named.
-4. **Legacy baseline (R-0)** — (a) customer runs `Data/bootstrap_local_env.sh` on a SAS host and commits outputs to `Data/expected/`, or (b) independent Python reference implementation with caveat. Recommendation: (a).
-5. **Access posture** — acknowledged D10s: no SAS runtime; no Oracle/Teradata; no insurance seed; no `ORA_DW.COST_OF_FUNDS` seed; no Control-M export; `ow_tp` not yet provisioned (self-creatable). Insurance units and cost-of-funds P&L columns are convertible but not reconcilable until data arrives.
+4. **Legacy baseline (R-0)** — DECIDED: option (b), independent Python reference implementation with caveat (DEC-004).
+5. **Access posture** — acknowledged D10s: no SAS runtime; no Oracle/Teradata; no insurance seed; no `ORA_DW.COST_OF_FUNDS` seed; no Control-M export; `sas_legacy` not yet provisioned (self-creatable). Insurance units and cost-of-funds P&L columns are convertible but not reconcilable until data arrives.
 6. **Notification contract** — DM only, STOPs/halts/wave closes only. Confirm the same for child sessions.
 
 ## Hand-off
