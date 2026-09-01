@@ -1,0 +1,20 @@
+source-volume assertion (sas_bronze._manifest vs live, before run 1): bureau_scores 500/500 OK, payment_history 248/248 OK,
+collateral 114/114 OK; silver cust_accounts_daily (snapshot_date 2024-01-31) 466 OK; all three U3 targets absent pre-run (source_volume.txt)
+
+run 1 (ad hoc CLI, `python src/jobs/credit_risk_scoring.py --business-date 2024-01-31 --executor warehouse`, model_id=CRM-2023-Q4-v2)
+{'tbl': 'risk_scores', 'n': '236', 'n_ts': '1', 'checksum': '24737306322'}
+{'tbl': 'risk_migration', 'n': '195', 'n_ts': '0', 'checksum': '26208382025'}
+{'tbl': 'risk_summary', 'n': '12', 'n_ts': '0', 'checksum': '5113489794'}
+score_timestamp (run 1): 2026-09-01T23:38:31.292Z
+checksum = SUM(hash(all columns except score_timestamp; doubles rounded 9dp)); SQL in checksum.sql
+
+run 2 (serverless job sas_legacy_run_daily_banking job_id=216001923865775, run_id=730586794422400, task run_id=212819846015522,
+       `databricks bundle run -t dev sas_legacy_run_daily_banking --only credit_risk_scoring`, same business_date=2024-01-31; task SUCCESS)
+{'tbl': 'risk_scores', 'n': '236', 'n_ts': '1', 'checksum': '24737306322'}
+{'tbl': 'risk_migration', 'n': '195', 'n_ts': '0', 'checksum': '26208382025'}
+{'tbl': 'risk_summary', 'n': '12', 'n_ts': '0', 'checksum': '5113489794'}
+score_timestamp (run 2): 2026-09-01T23:41:13.068Z (single distinct value -> run-1 slice fully replaced)
+
+result: counts and checksums unchanged after re-run (INSERT ... REPLACE WHERE score_date for risk_scores/risk_migration;
+        INSERT OVERWRITE for risk_summary). risk_scores_woe_debug NOT materialised (no ML-1..ML-6 failure).
+fixture recon (run-1 rows exported to CSV, --mode fixture): PASS first pass, 0 FAIL; live recon: 1 run, PASS (recon.json / recon.summary.md).
