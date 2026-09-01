@@ -1,6 +1,6 @@
 {
   "cleanup_duration": 0,
-  "creator_user_name": "dhrov.subramanian@cognition.ai",
+  "creator_user_name": "<requester>",
   "effective_performance_target": "PERFORMANCE_OPTIMIZED",
   "end_time": 1788306545932,
   "execution_duration": 0,
@@ -52,7 +52,7 @@
           "--abort-on-err",
           "Y"
         ],
-        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/load_customer_accounts.py"
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/load_customer_accounts.py"
       },
       "start_time": 1788306474402,
       "state": {
@@ -98,7 +98,7 @@
           "--abort-on-err",
           "Y"
         ],
-        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/credit_risk_scoring.py"
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/credit_risk_scoring.py"
       },
       "start_time": 1788306474398,
       "state": {
@@ -144,7 +144,7 @@
           "--abort-on-err",
           "Y"
         ],
-        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
       },
       "start_time": 1788306474400,
       "state": {
@@ -190,7 +190,7 @@
           "--abort-on-err",
           "Y"
         ],
-        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py"
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py"
       },
       "start_time": 1788306474403,
       "state": {

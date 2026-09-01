@@ -11,14 +11,14 @@ File [0;32m~/.ipykernel/6273/command--1-4284959584:8[0m
 [1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
 [0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:404[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:404[0m
 [1;32m    400[0m     [38;5;28;01mreturn[39;00m [38;5;241m0[39m
 [1;32m    403[0m [38;5;28;01mif[39;00m [38;5;18m__name__[39m [38;5;241m==[39m [38;5;124m"[39m[38;5;124m__main__[39m[38;5;124m"[39m:
 [0;32m--> 404[0m     _rc [38;5;241m=[39m main()
 [1;32m    405[0m     [38;5;28;01mif[39;00m _rc:
 [1;32m    406[0m         [38;5;28;01mraise[39;00m [38;5;167;01mSystemExit[39;00m(_rc)
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:389[0m, in [0;36mmain[0;34m(argv)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:389[0m, in [0;36mmain[0;34m(argv)[0m
 [1;32m    386[0m     [38;5;28;01mdef[39;00m [38;5;21mfetch[39m(sql: [38;5;28mstr[39m) [38;5;241m-[39m[38;5;241m>[39m [38;5;28mlist[39m[[38;5;28mdict[39m[[38;5;28mstr[39m, [38;5;28mobject[39m]]:
 [1;32m    387[0m         [38;5;28;01mreturn[39;00m [row[38;5;241m.[39masDict(recursive[38;5;241m=[39m[38;5;28;01mTrue[39;00m) [38;5;28;01mfor[39;00m row [38;5;129;01min[39;00m spark[38;5;241m.[39msql(sql)[38;5;241m.[39mcollect()]
 [0;32m--> 389[0m     result [38;5;241m=[39m run(
@@ -34,14 +34,14 @@ File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/d
 [1;32m    399[0m )
 [1;32m    400[0m [38;5;28;01mreturn[39;00m [38;5;241m0[39m
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:326[0m, in [0;36mrun[0;34m(execute, fetch, report_month, business_date, workbook_path, write_sheet)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:326[0m, in [0;36mrun[0;34m(execute, fetch, report_month, business_date, workbook_path, write_sheet)[0m
 [1;32m    324[0m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m sheets_written [38;5;129;01mand[39;00m output[38;5;241m.[39mexists():
 [1;32m    325[0m         output[38;5;241m.[39munlink()
 [0;32m--> 326[0m     write_sheet(rows, [38;5;28mstr[39m(output), sheet)
 [1;32m    327[0m     sheets_written[38;5;241m.[39mappend(sheet)
 [1;32m    329[0m execute(capital_sql(rm))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/sas_macros/export_xlsx.py:36[0m, in [0;36mexport_xlsx[0;34m(rows, path, sheet, header)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/sas_macros/export_xlsx.py:36[0m, in [0;36mexport_xlsx[0;34m(rows, path, sheet, header)[0m
 [1;32m     34[0m [38;5;28;01mfor[39;00m record [38;5;129;01min[39;00m records:
 [1;32m     35[0m     worksheet[38;5;241m.[39mappend([record[38;5;241m.[39mget(key) [38;5;28;01mfor[39;00m key [38;5;129;01min[39;00m keys])
 [0;32m---> 36[0m workbook[38;5;241m.[39msave(output)
@@ -97,14 +97,14 @@ File [0;32m~/.ipykernel/6273/command--1-4284959584:8[0m
 [1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
 [0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:404[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:404[0m
 [1;32m    400[0m     [38;5;28;01mreturn[39;00m [38;5;241m0[39m
 [1;32m    403[0m [38;5;28;01mif[39;00m [38;5;18m__name__[39m [38;5;241m==[39m [38;5;124m"[39m[38;5;124m__main__[39m[38;5;124m"[39m:
 [0;32m--> 404[0m     _rc [38;5;241m=[39m main()
 [1;32m    405[0m     [38;5;28;01mif[39;00m _rc:
 [1;32m    406[0m         [38;5;28;01mraise[39;00m [38;5;167;01mSystemExit[39;00m(_rc)
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:389[0m, in [0;36mmain[0;34m(argv)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:389[0m, in [0;36mmain[0;34m(argv)[0m
 [1;32m    386[0m     [38;5;28;01mdef[39;00m [38;5;21mfetch[39m(sql: [38;5;28mstr[39m) [38;5;241m-[39m[38;5;241m>[39m [38;5;28mlist[39m[[38;5;28mdict[39m[[38;5;28mstr[39m, [38;5;28mobject[39m]]:
 [1;32m    387[0m         [38;5;28;01mreturn[39;00m [row[38;5;241m.[39masDict(recursive[38;5;241m=[39m[38;5;28;01mTrue[39;00m) [38;5;28;01mfor[39;00m row [38;5;129;01min[39;00m spark[38;5;241m.[39msql(sql)[38;5;241m.[39mcollect()]
 [0;32m--> 389[0m     result [38;5;241m=[39m run(
@@ -120,14 +120,14 @@ File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/d
 [1;32m    399[0m )
 [1;32m    400[0m [38;5;28;01mreturn[39;00m [38;5;241m0[39m
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:326[0m, in [0;36mrun[0;34m(execute, fetch, report_month, business_date, workbook_path, write_sheet)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:326[0m, in [0;36mrun[0;34m(execute, fetch, report_month, business_date, workbook_path, write_sheet)[0m
 [1;32m    324[0m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m sheets_written [38;5;129;01mand[39;00m output[38;5;241m.[39mexists():
 [1;32m    325[0m         output[38;5;241m.[39munlink()
 [0;32m--> 326[0m     write_sheet(rows, [38;5;28mstr[39m(output), sheet)
 [1;32m    327[0m     sheets_written[38;5;241m.[39mappend(sheet)
 [1;32m    329[0m execute(capital_sql(rm))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/sas_macros/export_xlsx.py:36[0m, in [0;36mexport_xlsx[0;34m(rows, path, sheet, header)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/sas_macros/export_xlsx.py:36[0m, in [0;36mexport_xlsx[0;34m(rows, path, sheet, header)[0m
 [1;32m     34[0m [38;5;28;01mfor[39;00m record [38;5;129;01min[39;00m records:
 [1;32m     35[0m     worksheet[38;5;241m.[39mappend([record[38;5;241m.[39mget(key) [38;5;28;01mfor[39;00m key [38;5;129;01min[39;00m keys])
 [0;32m---> 36[0m workbook[38;5;241m.[39msave(output)
@@ -180,14 +180,14 @@ File [0;32m~/.ipykernel/8683/command--1-4284959584:8[0m
 [1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
 [0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:404[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:404[0m
 [1;32m    400[0m     [38;5;28;01mreturn[39;00m [38;5;241m0[39m
 [1;32m    403[0m [38;5;28;01mif[39;00m [38;5;18m__name__[39m [38;5;241m==[39m [38;5;124m"[39m[38;5;124m__main__[39m[38;5;124m"[39m:
 [0;32m--> 404[0m     _rc [38;5;241m=[39m main()
 [1;32m    405[0m     [38;5;28;01mif[39;00m _rc:
 [1;32m    406[0m         [38;5;28;01mraise[39;00m [38;5;167;01mSystemExit[39;00m(_rc)
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:389[0m, in [0;36mmain[0;34m(argv)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:389[0m, in [0;36mmain[0;34m(argv)[0m
 [1;32m    386[0m     [38;5;28;01mdef[39;00m [38;5;21mfetch[39m(sql: [38;5;28mstr[39m) [38;5;241m-[39m[38;5;241m>[39m [38;5;28mlist[39m[[38;5;28mdict[39m[[38;5;28mstr[39m, [38;5;28mobject[39m]]:
 [1;32m    387[0m         [38;5;28;01mreturn[39;00m [row[38;5;241m.[39masDict(recursive[38;5;241m=[39m[38;5;28;01mTrue[39;00m) [38;5;28;01mfor[39;00m row [38;5;129;01min[39;00m spark[38;5;241m.[39msql(sql)[38;5;241m.[39mcollect()]
 [0;32m--> 389[0m     result [38;5;241m=[39m run(
@@ -203,14 +203,14 @@ File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/d
 [1;32m    399[0m )
 [1;32m    400[0m [38;5;28;01mreturn[39;00m [38;5;241m0[39m
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:326[0m, in [0;36mrun[0;34m(execute, fetch, report_month, business_date, workbook_path, write_sheet)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:326[0m, in [0;36mrun[0;34m(execute, fetch, report_month, business_date, workbook_path, write_sheet)[0m
 [1;32m    324[0m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m sheets_written [38;5;129;01mand[39;00m output[38;5;241m.[39mexists():
 [1;32m    325[0m         output[38;5;241m.[39munlink()
 [0;32m--> 326[0m     write_sheet(rows, [38;5;28mstr[39m(output), sheet)
 [1;32m    327[0m     sheets_written[38;5;241m.[39mappend(sheet)
 [1;32m    329[0m execute(capital_sql(rm))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/sas_macros/export_xlsx.py:36[0m, in [0;36mexport_xlsx[0;34m(rows, path, sheet, header)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/sas_macros/export_xlsx.py:36[0m, in [0;36mexport_xlsx[0;34m(rows, path, sheet, header)[0m
 [1;32m     34[0m [38;5;28;01mfor[39;00m record [38;5;129;01min[39;00m records:
 [1;32m     35[0m     worksheet[38;5;241m.[39mappend([record[38;5;241m.[39mget(key) [38;5;28;01mfor[39;00m key [38;5;129;01min[39;00m keys])
 [0;32m---> 36[0m workbook[38;5;241m.[39msave(output)
@@ -266,14 +266,14 @@ File [0;32m~/.ipykernel/8683/command--1-4284959584:8[0m
 [1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
 [0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:404[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:404[0m
 [1;32m    400[0m     [38;5;28;01mreturn[39;00m [38;5;241m0[39m
 [1;32m    403[0m [38;5;28;01mif[39;00m [38;5;18m__name__[39m [38;5;241m==[39m [38;5;124m"[39m[38;5;124m__main__[39m[38;5;124m"[39m:
 [0;32m--> 404[0m     _rc [38;5;241m=[39m main()
 [1;32m    405[0m     [38;5;28;01mif[39;00m _rc:
 [1;32m    406[0m         [38;5;28;01mraise[39;00m [38;5;167;01mSystemExit[39;00m(_rc)
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:389[0m, in [0;36mmain[0;34m(argv)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:389[0m, in [0;36mmain[0;34m(argv)[0m
 [1;32m    386[0m     [38;5;28;01mdef[39;00m [38;5;21mfetch[39m(sql: [38;5;28mstr[39m) [38;5;241m-[39m[38;5;241m>[39m [38;5;28mlist[39m[[38;5;28mdict[39m[[38;5;28mstr[39m, [38;5;28mobject[39m]]:
 [1;32m    387[0m         [38;5;28;01mreturn[39;00m [row[38;5;241m.[39masDict(recursive[38;5;241m=[39m[38;5;28;01mTrue[39;00m) [38;5;28;01mfor[39;00m row [38;5;129;01min[39;00m spark[38;5;241m.[39msql(sql)[38;5;241m.[39mcollect()]
 [0;32m--> 389[0m     result [38;5;241m=[39m run(
@@ -289,14 +289,14 @@ File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/d
 [1;32m    399[0m )
 [1;32m    400[0m [38;5;28;01mreturn[39;00m [38;5;241m0[39m
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:326[0m, in [0;36mrun[0;34m(execute, fetch, report_month, business_date, workbook_path, write_sheet)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py:326[0m, in [0;36mrun[0;34m(execute, fetch, report_month, business_date, workbook_path, write_sheet)[0m
 [1;32m    324[0m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m sheets_written [38;5;129;01mand[39;00m output[38;5;241m.[39mexists():
 [1;32m    325[0m         output[38;5;241m.[39munlink()
 [0;32m--> 326[0m     write_sheet(rows, [38;5;28mstr[39m(output), sheet)
 [1;32m    327[0m     sheets_written[38;5;241m.[39mappend(sheet)
 [1;32m    329[0m execute(capital_sql(rm))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/sas_macros/export_xlsx.py:36[0m, in [0;36mexport_xlsx[0;34m(rows, path, sheet, header)[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/sas_macros/export_xlsx.py:36[0m, in [0;36mexport_xlsx[0;34m(rows, path, sheet, header)[0m
 [1;32m     34[0m [38;5;28;01mfor[39;00m record [38;5;129;01min[39;00m records:
 [1;32m     35[0m     worksheet[38;5;241m.[39mappend([record[38;5;241m.[39mget(key) [38;5;28;01mfor[39;00m key [38;5;129;01min[39;00m keys])
 [0;32m---> 36[0m workbook[38;5;241m.[39msave(output)
