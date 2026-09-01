@@ -1,0 +1,2 @@
+statement 1: SUCCEEDED
+[['monthly_rwa', '59', '3053144690'], ['delinquency_aging', '70', '166863621'], ['llp_coverage', '6', '1673596314'], ['capital_adequacy', '1', '1819012045']]

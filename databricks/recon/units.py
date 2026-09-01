@@ -64,7 +64,8 @@ class TableSpec:
     ml: bool = False
     # ML-8 debug table (target side `<name>` ; reference `<name>.csv`)
     woe_debug: str | None = None
-    xlsx: bool = False  # T-12: existence + 4 sheets when --xlsx-path is given
+    xlsx: bool = False  # T-12: existence + expected workbook sheets when --xlsx-path is given
+    xlsx_sheets: tuple[str, ...] | None = None
 
 
 UNITS: dict[str, tuple[TableSpec, ...]] = {
@@ -209,25 +210,46 @@ UNITS: dict[str, tuple[TableSpec, ...]] = {
         TableSpec(
             "monthly_rwa",
             "sas_gold",
-            ("report_month", "account_type", "customer_segment"),
+            ("report_month", "account_type", "customer_segment", "risk_weight"),
             {"n_accounts": "T-3", "total_exposure": "T-4", "rwa": "T-4"},
             xlsx=True,
+            xlsx_sheets=("RWA", "Delinquency", "LLP_Coverage"),
         ),
         TableSpec(
             "delinquency_aging",
             "sas_gold",
             ("report_month", "account_type", "region_code", "delinq_bucket"),
+            {"n_accounts": "T-3", "total_balance": "T-4", "total_past_due": "T-4"},
         ),
         TableSpec(
             "llp_coverage",
             "sas_gold",
             ("report_month", "account_type"),
-            {"coverage_pct": "T-5", "npl_coverage_pct": "T-5"},
+            {
+                "n_loans": "T-3",
+                "gross_loans": "T-4",
+                "total_allowance": "T-4",
+                "coverage_pct": "T-5",
+                "npl_balance": "T-4",
+                "npl_coverage_pct": "T-5",
+            },
         ),
         TableSpec(
             "capital_adequacy",
             "sas_gold",
             ("report_month",),
+            {
+                "total_rwa": "T-4",
+                "cet1_capital": "T-4",
+                "tier1_capital": "T-4",
+                "total_capital": "T-4",
+                "cet1_ratio": "T-5",
+                "tier1_ratio": "T-5",
+                "total_capital_ratio": "T-5",
+                "cet1_status": "T-3",
+                "tier1_status": "T-3",
+                "total_capital_status": "T-3",
+            },
         ),
     ),
     "U5": (

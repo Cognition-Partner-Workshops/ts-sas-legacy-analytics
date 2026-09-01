@@ -1,0 +1,37 @@
+U4 idempotency evidence
+report_month=202401
+business_date=2024-01-31
+
+Run 1: warehouse CLI invocation
+run_id: n/a (local CLI invocation; see run1_stdout.txt)
+summary: monthly_regulatory_reporting: 8 statements, sheets=['RWA', 'Delinquency', 'LLP_Coverage'] path=/Volumes/sas_legacy/sas_bronze/landing/reports/REG_REPORT_202401.xlsx
+monthly_rwa: count=59 checksum=3053144690
+delinquency_aging: count=70 checksum=166863621
+llp_coverage: count=6 checksum=1673596314
+capital_adequacy: count=1 checksum=1819012045
+
+Run 2: serverless bundle job
+job_run_id: 885378395536755
+task_run_id: 854803810661801
+result_state: SUCCESS
+monthly_rwa: count=59 checksum=3053144690
+delinquency_aging: count=70 checksum=166863621
+llp_coverage: count=6 checksum=1673596314
+capital_adequacy: count=1 checksum=1819012045
+
+Checksum comparison: identical counts and checksums for all four tables.
+
+Reports directory before Run 2 (list_before_run2.txt):
+statement 1: SUCCEEDED
+No report rows were returned; the directory was empty before Run 2.
+
+Reports directory after Run 2 (list_after_run2.txt):
+statement 1: SUCCEEDED
+[['/Volumes/sas_legacy/sas_bronze/landing/reports/REG_REPORT_202401.xlsx', 'REG_REPORT_202401.xlsx', '11361', '1788306539000']]
+
+Workbook result: exactly one REG_REPORT_202401.xlsx exists after Run 2. The before/after evidence shows the workbook was created during this run rather than overwritten from a pre-existing listed object; modification-time change is therefore not applicable in this run window.
+
+## Run 3 (warehouse CLI, workbook-overwrite proof)
+before: FILE 11361 2026-09-01T23:48:59Z REG_REPORT_202401.xlsx
+after:  FILE 11284 2026-09-01T23:50:58Z REG_REPORT_202401.xlsx   (single file, overwritten, no duplicate)
+checksum.sql: monthly_rwa 59 3053144690 | delinquency_aging 70 166863621 | llp_coverage 6 1673596314 | capital_adequacy 1 1819012045 (identical to runs 1-2)
