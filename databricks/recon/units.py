@@ -38,6 +38,12 @@ ACCT_EXCEPTIONS_COLUMNS: tuple[str, ...] = (
     "snapshot_date", "load_timestamp",
 )
 
+TXN_FEED_COLUMNS: tuple[str, ...] = (
+    "transaction_id", "account_id", "transaction_date", "transaction_type",
+    "transaction_amount", "channel", "merchant_category", "description", "post_date",
+    "currency_code",
+)
+
 
 @dataclass(frozen=True)
 class TableSpec:
@@ -92,7 +98,6 @@ UNITS: dict[str, tuple[TableSpec, ...]] = {
             "daily_transactions",
             "sas_silver",
             ("transaction_id",),
-            {"running_balance": "T-4"},
         ),
         TableSpec(
             "running_balances",
@@ -108,13 +113,35 @@ UNITS: dict[str, tuple[TableSpec, ...]] = {
                 "avg_txn_amt": "T-6",
                 "std_txn_amt": "T-6",
                 "anomaly_type": "T-3",
+                "pre_txn_balance": "T-4",
+                "post_txn_balance": "T-4",
+                "running_balance": "T-4",
+                "transaction_amount": "T-4",
+                "risk_rating": "T-3",
+                "merchant_category": "T-3",
+                "transaction_date": "T-3",
+                "post_date": "T-3",
             },
         ),
         TableSpec(
             "txn_rejected",
             "sas_silver",
-            ("transaction_id",),
-            t9_group="reject_reason",
+            TXN_FEED_COLUMNS,
+            {
+                "transaction_amount": "T-4",
+                "transaction_date": "T-3",
+                "post_date": "T-3",
+                "merchant_category": "T-3",
+            },
+            multiset=True,
+            distinct_keys=("account_id",),
+            t9_unexercised=(
+                "DEC-015 (a): literal SAS output has no REJECT_REASON column "
+                "(the DROP statement applies to every OUTPUT data set of the validation step, AMB-02); "
+                "T-9 per-reject-rule count has no grouping column and is declared unexercised. "
+                "Full-row multiset match (T-2) is the substitute; 2 rows carry a blank transaction_id. "
+                "Owner: requester; severity medium; gate: close before STOP E via REQ-05 or production-schema export."
+            ),
         ),
     ),
     "U3": (
