@@ -14,7 +14,7 @@ File [0;32m~/.ipykernel/3281/command--1-477832147:8[0m
 [1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
 [0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
 [1;32m      1[0m [38;5;124;03m"""Wave 2 placeholder for daily transaction processing."""[39;00m
 [0;32m----> 3[0m [38;5;28;01mraise[39;00m [38;5;167;01mNotImplementedError[39;00m([38;5;124m"[39m[38;5;124mdaily_transaction_processing is converted in wave 2[39m[38;5;124m"[39m)
 
@@ -31,7 +31,7 @@ File [0;32m~/.ipykernel/3281/command--1-477832147:8[0m
 [1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
 [0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
 [1;32m      1[0m [38;5;124;03m"""Wave 2 placeholder for daily transaction processing."""[39;00m
 [0;32m----> 3[0m [38;5;28;01mraise[39;00m [38;5;167;01mNotImplementedError[39;00m([38;5;124m"[39m[38;5;124mdaily_transaction_processing is converted in wave 2[39m[38;5;124m"[39m)
 
@@ -45,7 +45,7 @@ File [0;32m~/.ipykernel/3732/command--1-477832147:8[0m
 [1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
 [0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
 [1;32m      1[0m [38;5;124;03m"""Wave 2 placeholder for daily transaction processing."""[39;00m
 [0;32m----> 3[0m [38;5;28;01mraise[39;00m [38;5;167;01mNotImplementedError[39;00m([38;5;124m"[39m[38;5;124mdaily_transaction_processing is converted in wave 2[39m[38;5;124m"[39m)
 
@@ -62,7 +62,7 @@ File [0;32m~/.ipykernel/3732/command--1-477832147:8[0m
 [1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
 [0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
 
-File [0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3[0m
 [1;32m      1[0m [38;5;124;03m"""Wave 2 placeholder for daily transaction processing."""[39;00m
 [0;32m----> 3[0m [38;5;28;01mraise[39;00m [38;5;167;01mNotImplementedError[39;00m([38;5;124m"[39m[38;5;124mdaily_transaction_processing is converted in wave 2[39m[38;5;124m"[39m)
 
@@ -72,7 +72,7 @@ Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task daily_tra
 --- parent run details ---
 {
   "cleanup_duration": 0,
-  "creator_user_name": "dhrov.subramanian@cognition.ai",
+  "creator_user_name": "<requester>",
   "effective_performance_target": "PERFORMANCE_OPTIMIZED",
   "end_time": 1788306018747,
   "execution_duration": 0,
@@ -124,7 +124,7 @@ Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task daily_tra
           "--abort-on-err",
           "Y"
         ],
-        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/load_customer_accounts.py"
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/load_customer_accounts.py"
       },
       "start_time": 1788305956042,
       "state": {
@@ -170,7 +170,7 @@ Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task daily_tra
           "--abort-on-err",
           "Y"
         ],
-        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/credit_risk_scoring.py"
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/credit_risk_scoring.py"
       },
       "start_time": 1788306018550,
       "state": {
@@ -216,7 +216,7 @@ Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task daily_tra
           "--abort-on-err",
           "Y"
         ],
-        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
       },
       "start_time": 1788305956041,
       "state": {
@@ -262,7 +262,7 @@ Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task daily_tra
           "--abort-on-err",
           "Y"
         ],
-        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
       },
       "start_time": 1788305986425,
       "state": {
@@ -308,7 +308,7 @@ Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task daily_tra
           "--abort-on-err",
           "Y"
         ],
-        "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py"
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py"
       },
       "start_time": 1788306018616,
       "state": {
@@ -334,10 +334,10 @@ Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task daily_tra
 --- task attempt 0 output ---
 {
   "error": "NotImplementedError: daily_transaction_processing is converted in wave 2",
-  "error_trace": "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m\n\u001b[0;31mNotImplementedError\u001b[0m                       Traceback (most recent call last)\nFile \u001b[0;32m~/.ipykernel/3281/command--1-477832147:8\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[38;5;28;01mdel\u001b[39;00m sys\n\u001b[1;32m      7\u001b[0m \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mopen\u001b[39m(filename, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrb\u001b[39m\u001b[38;5;124m\"\u001b[39m) \u001b[38;5;28;01mas\u001b[39;00m f:\n\u001b[0;32m----\u003e 8\u001b[0m   exec(\u001b[38;5;28mcompile\u001b[39m(f\u001b[38;5;241m.\u001b[39mread(), filename, \u001b[38;5;124m'\u001b[39m\u001b[38;5;124mexec\u001b[39m\u001b[38;5;124m'\u001b[39m))\n\nFile \u001b[0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[38;5;124;03m\"\"\"Wave 2 placeholder for daily transaction processing.\"\"\"\u001b[39;00m\n\u001b[0;32m----\u003e 3\u001b[0m \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mNotImplementedError\u001b[39;00m(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mdaily_transaction_processing is converted in wave 2\u001b[39m\u001b[38;5;124m\"\u001b[39m)\n\n\u001b[0;31mNotImplementedError\u001b[0m: daily_transaction_processing is converted in wave 2",
+  "error_trace": "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m\n\u001b[0;31mNotImplementedError\u001b[0m                       Traceback (most recent call last)\nFile \u001b[0;32m~/.ipykernel/3281/command--1-477832147:8\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[38;5;28;01mdel\u001b[39;00m sys\n\u001b[1;32m      7\u001b[0m \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mopen\u001b[39m(filename, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrb\u001b[39m\u001b[38;5;124m\"\u001b[39m) \u001b[38;5;28;01mas\u001b[39;00m f:\n\u001b[0;32m----\u003e 8\u001b[0m   exec(\u001b[38;5;28mcompile\u001b[39m(f\u001b[38;5;241m.\u001b[39mread(), filename, \u001b[38;5;124m'\u001b[39m\u001b[38;5;124mexec\u001b[39m\u001b[38;5;124m'\u001b[39m))\n\nFile \u001b[0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[38;5;124;03m\"\"\"Wave 2 placeholder for daily transaction processing.\"\"\"\u001b[39;00m\n\u001b[0;32m----\u003e 3\u001b[0m \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mNotImplementedError\u001b[39;00m(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mdaily_transaction_processing is converted in wave 2\u001b[39m\u001b[38;5;124m\"\u001b[39m)\n\n\u001b[0;31mNotImplementedError\u001b[0m: daily_transaction_processing is converted in wave 2",
   "metadata": {
     "cleanup_duration": 0,
-    "creator_user_name": "dhrov.subramanian@cognition.ai",
+    "creator_user_name": "<requester>",
     "effective_performance_target": "PERFORMANCE_OPTIMIZED",
     "end_time": 1788305985018,
     "execution_duration": 23000,
@@ -387,7 +387,7 @@ Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task daily_tra
             "--abort-on-err",
             "Y"
           ],
-          "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
         },
         "start_time": 1788305956041,
         "state": {
@@ -414,10 +414,10 @@ Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task daily_tra
 --- task attempt 1 output ---
 {
   "error": "NotImplementedError: daily_transaction_processing is converted in wave 2",
-  "error_trace": "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m\n\u001b[0;31mNotImplementedError\u001b[0m                       Traceback (most recent call last)\nFile \u001b[0;32m~/.ipykernel/3732/command--1-477832147:8\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[38;5;28;01mdel\u001b[39;00m sys\n\u001b[1;32m      7\u001b[0m \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mopen\u001b[39m(filename, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrb\u001b[39m\u001b[38;5;124m\"\u001b[39m) \u001b[38;5;28;01mas\u001b[39;00m f:\n\u001b[0;32m----\u003e 8\u001b[0m   exec(\u001b[38;5;28mcompile\u001b[39m(f\u001b[38;5;241m.\u001b[39mread(), filename, \u001b[38;5;124m'\u001b[39m\u001b[38;5;124mexec\u001b[39m\u001b[38;5;124m'\u001b[39m))\n\nFile \u001b[0;32m/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[38;5;124;03m\"\"\"Wave 2 placeholder for daily transaction processing.\"\"\"\u001b[39;00m\n\u001b[0;32m----\u003e 3\u001b[0m \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mNotImplementedError\u001b[39;00m(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mdaily_transaction_processing is converted in wave 2\u001b[39m\u001b[38;5;124m\"\u001b[39m)\n\n\u001b[0;31mNotImplementedError\u001b[0m: daily_transaction_processing is converted in wave 2",
+  "error_trace": "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m\n\u001b[0;31mNotImplementedError\u001b[0m                       Traceback (most recent call last)\nFile \u001b[0;32m~/.ipykernel/3732/command--1-477832147:8\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[38;5;28;01mdel\u001b[39;00m sys\n\u001b[1;32m      7\u001b[0m \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mopen\u001b[39m(filename, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrb\u001b[39m\u001b[38;5;124m\"\u001b[39m) \u001b[38;5;28;01mas\u001b[39;00m f:\n\u001b[0;32m----\u003e 8\u001b[0m   exec(\u001b[38;5;28mcompile\u001b[39m(f\u001b[38;5;241m.\u001b[39mread(), filename, \u001b[38;5;124m'\u001b[39m\u001b[38;5;124mexec\u001b[39m\u001b[38;5;124m'\u001b[39m))\n\nFile \u001b[0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py:3\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[38;5;124;03m\"\"\"Wave 2 placeholder for daily transaction processing.\"\"\"\u001b[39;00m\n\u001b[0;32m----\u003e 3\u001b[0m \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mNotImplementedError\u001b[39;00m(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mdaily_transaction_processing is converted in wave 2\u001b[39m\u001b[38;5;124m\"\u001b[39m)\n\n\u001b[0;31mNotImplementedError\u001b[0m: daily_transaction_processing is converted in wave 2",
   "metadata": {
     "cleanup_duration": 0,
-    "creator_user_name": "dhrov.subramanian@cognition.ai",
+    "creator_user_name": "<requester>",
     "effective_performance_target": "PERFORMANCE_OPTIMIZED",
     "end_time": 1788306018159,
     "execution_duration": 26000,
@@ -467,7 +467,7 @@ Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task daily_tra
             "--abort-on-err",
             "Y"
           ],
-          "python_file": "/Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
         },
         "start_time": 1788305986425,
         "state": {
