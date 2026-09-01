@@ -163,7 +163,7 @@ SELECT
   SUM(current_balance) AS total_exposure,
   SUM(current_balance * risk_weight) AS rwa
 FROM scored
-GROUP BY '{rm}', account_type, customer_segment, risk_weight"""
+GROUP BY account_type, customer_segment, risk_weight"""
 
 
 def delinquency_sql(report_month: str, month_end: date | str) -> str:
@@ -202,7 +202,7 @@ SELECT
   SUM(current_balance) AS total_balance,
   SUM(past_due_amount) AS total_past_due
 FROM scored
-GROUP BY '{rm}', account_type, region_code, delinq_bucket"""
+GROUP BY account_type, region_code, delinq_bucket"""
 
 
 def llp_sql(report_month: str, month_end: date | str) -> str:
