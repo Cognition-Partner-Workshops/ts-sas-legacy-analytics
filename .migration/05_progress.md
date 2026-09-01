@@ -19,15 +19,23 @@
 
 ## Baseline manifest
 
-`[DISCOVERED]` `Data/csv/` exists but currently contains no `*.csv` files, so there are no file rows to record. The intended banking layout is documented in `Data/README.md:15-35`; the manifest must be repopulated if the seed files are restored.
+`[DISCOVERED]` Banking seed snapshots, business date 31JAN2024 (`Data/README.md`). Insurance: none. Curated `DAILY_TRANSACTIONS.csv` is a 90-day history *input* (pre-existing CURATED state), not a legacy output.
 
 | Filename | Data rows (wc -l minus 1) | SHA-256 |
 |---|---:|---|
-| `[DISCOVERED]` None present | n/a | n/a |
+| `Data/csv/curated/DAILY_TRANSACTIONS.csv` | 18293 | `f31519447f5e2df2be283dc8dcf7c46e1fd3175ac235205abd97418739cbdbe5` |
+| `Data/csv/oracle_dw/BUREAU_SCORES.csv` | 500 | `989f8077cc84b3dfe3daf2a6fc5f5a995d49cd8e4a911831b4f3f6e9ffe5025c` |
+| `Data/csv/oracle_dw/COLLATERAL.csv` | 114 | `fbdc1cf8b38d43e18c26a2e34b70616a19cf0637be1447f95a7d49f6b6b9bb6b` |
+| `Data/csv/oracle_dw/CUST_ACCOUNTS.csv` | 487 | `30d762718cc7f15d7659f6734df28dbaf36532ebf5323a422ffeed49068c8b13` |
+| `Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv` | 250 | `2050f727d3065926b7b3b047f6967150f16488d1acdfc20d384133b01019182b` |
+| `Data/csv/oracle_dw/LOAN_DETAILS.csv` | 248 | `0eba231eb28d31ea2e4df7e0ee61e5b37f7e74fbcee5f6968627d0207730a1f7` |
+| `Data/csv/oracle_dw/PAYMENT_HISTORY.csv` | 248 | `f745b79820420ca2ac870ae14992dde704d24e2e1e7942aebedd896f66c9f396` |
+| `Data/csv/raw_bank/DAILY_RATES.csv` | 455 | `d61d8a5310a9c40530c07ef73bfed9b3e748a5a59fcc0a34581b7303b5490d6a` |
+| `Data/csv/raw_bank/TXN_FEED_20240131.csv` | 622 | `0bebabbc3e4a8a4e799d51afccb2e0e1388bbce9b72ebc056b241f131c8e82b6` |
 
 | Status | Current repository commit |
 |---|---|
-| `[DISCOVERED]` | `1aa30f77a68bf810cdbaf6c4b1eb4610a5792945` |
+| `[DISCOVERED]` | `2c985b279f9127e805d38645c3d8faa7689fbe99` (branch migration/00-setup; Data/ unchanged since main) |
 
 ## Circuit breaker
 
