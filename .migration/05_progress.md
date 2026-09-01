@@ -1,6 +1,6 @@
 # Migration Progress
 
-`[FACT]` State: setup complete; awaiting STOP A. No downstream phase starts before STOP A.
+`[FACT]` State: setup DONE, STOP A approved 2026-09-01 (DEC-010). Inventory may begin.
 
 | Pipeline | Setup | Inventory | Analysis | Convert | Recon | Cutover |
 |---|---|---|---|---|---|---|

@@ -1,6 +1,6 @@
 # Migration Context — ts-sas-legacy-analytics → Databricks
 
-**State:** SETUP COMPLETE, awaiting STOP A. Nothing downstream (inventory, analysis, conversion) may start before STOP A is confirmed.
+**State:** STOP A APPROVED (2026-09-01, DEC-010). Handed off to `!dbx_migrate_pipeline`; inventory may begin.
 
 ## Sources of truth (read in this order)
 1. `docs/migration/ts-sas-legacy-analytics_target_state.md` — the target state; every conversion decision cites it.
@@ -40,14 +40,14 @@
 - Dual-run mechanism: **none live**. Legacy cannot be executed here. Comparison = Databricks output vs. legacy baseline per `03_recon_tolerances.md` §R-0 (customer-supplied SAS outputs preferred; independent reference implementation as fallback). Recon mode DEGRADED.
 - Prediction parity: routed to `03_recon_tolerances.md` §ML. Legacy bit-stability probe **not run** (no SAS) → exact match not promised.
 
-## STOP A decision list (each needs an explicit yes / change)
+## STOP A decision list (all approved 2026-09-01; see 06_decisions.md)
 
 1. **Profiles & layout** — target-state profiles as drafted; catalog `sas_legacy` with schemas `sas_bronze / sas_silver / sas_gold / sas_ref / sas_recon` and the libref map. `sas_legacy` does not exist yet; I create it as the first wave-0 action on approval.
 2. **Compute** — serverless SQL warehouse `565cd2fd713738c4` + serverless job compute; Jobs (not DLT).
-3. **Tolerances v1** — table rules T-1..T-12 and scorer rules ML-1..ML-8 in `03_recon_tolerances.md`. Exact match on PD is *not* offered because legacy could not be run twice; ML-1 (band exact) + ML-2 (PD ≤1e-9) + ML-5 (rank preserved) is the proposal. **Who owns the scorer's tolerance?** If nobody, the scorer is scoped out until an owner is named.
+3. **Tolerances v1** — table rules T-1..T-12 and scorer rules ML-1..ML-8 in `03_recon_tolerances.md`, approved; scorer tolerance owned by the requester (DEC-010).
 4. **Legacy baseline (R-0)** — DECIDED: option (b), independent Python reference implementation with caveat (DEC-004).
 5. **Access posture** — acknowledged D10s: no SAS runtime; no Oracle/Teradata; no insurance seed; no `ORA_DW.COST_OF_FUNDS` seed; no Control-M export; `sas_legacy` not yet provisioned (self-creatable). Insurance units and cost-of-funds P&L columns are convertible but not reconcilable until data arrives.
 6. **Notification contract** — DM only, STOPs/halts/wave closes only. Confirm the same for child sessions.
 
 ## Hand-off
-On STOP A confirmation: invoke `!dbx_migrate_pipeline` with this workspace. Do not begin inventory, analysis, or conversion in this session.
+STOP A confirmed; `!dbx_migrate_pipeline` invoked with this workspace. Front-door session did no inventory, analysis, or conversion.

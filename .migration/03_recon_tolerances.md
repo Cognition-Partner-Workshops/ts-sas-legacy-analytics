@@ -1,6 +1,6 @@
 # Reconciliation Tolerances — THE parity contract
 
-**Version:** v1-PROPOSED (2026-09-01). Becomes v1 (FACT) only on explicit STOP A approval. Every recon report cites the version it was judged against.
+**Version:** v1 (approved at STOP A, 2026-09-01, by the requester; DEC-010). Every recon report cites the version it was judged against.
 
 ## Recon mode: DEGRADED (snapshot baseline)
 
@@ -24,18 +24,18 @@ Population column says what each rate is computed over.
 
 | ID | Data type / check | Tolerance | Population | Status |
 |---|---|---|---|---|
-| T-1 | Row count per output table (per business_date) | exact (0 difference) | every silver/gold table | PROPOSED |
-| T-2 | Business-key set (e.g. `ACCOUNT_ID`, `TXN_ID`, `ACCOUNT_ID+SNAPSHOT_DATE`) | exact set equality, both directions | every keyed table | PROPOSED |
-| T-3 | Integers, codes, flags, strings, dates | exact; strings compared after `rtrim` (SAS pads char); case preserved | all columns of those types | PROPOSED |
-| T-4 | Currency / balance amounts (`*_BALANCE`, `*_AMOUNT`, `EAD`, `EXPECTED_LOSS`, `RWA`, `CAPITAL_*`) | abs diff ≤ 0.005 per row (i.e. equal at 2 dp) | all rows | PROPOSED |
-| T-5 | Ratios / percentages (`UTILIZATION_PCT`, `LTV`, loss ratios, coverage ratios, NIM) | abs diff ≤ 1e-6 | all rows | PROPOSED |
-| T-6 | Statistical outputs (z-scores, means, std in `TXN_ANOMALIES`) | abs diff ≤ 1e-6; anomaly *flag* exact | all rows | PROPOSED |
-| T-7 | Timestamps generated at run time (`*_TIMESTAMP`, `LOAD_DTTM`, `SCORE_TIMESTAMP`) | excluded from comparison; presence/non-null checked | all rows | PROPOSED |
-| T-8 | Aggregates per table (SUM of every numeric column, COUNT DISTINCT of every key) | same tolerances as the column's row rule | every table | PROPOSED |
-| T-9 | Reject / exception counts (`TXN_REJECTED` by reject rule, `ACCT_EXCEPTIONS` by `EXCEPTION_TYPE`) | exact | every reject rule / exception type | PROPOSED |
-| T-10 | Ordering | none required; tables compared as sets. Legacy `RUNNING_BALANCES` order-dependence is handled by comparing on the explicit `(ACCOUNT_ID, TXN_DATE, TXN_ID)` key. | n/a | PROPOSED |
-| T-11 | Rounding rule | Target uses `ROUND(x, n)` with HALF_UP to mirror SAS `ROUND` (half away from zero) for non-negative values; negative-value half cases are flagged in the field dictionary and asserted explicitly. `AVG`: no truncation on either side (SAS `MEAN` and Spark `AVG` are both double). | all rounded columns | PROPOSED |
-| T-12 | Excel workbooks (`%export_xlsx`) | not reconciled; the gold table feeding them is. | n/a | PROPOSED |
+| T-1 | Row count per output table (per business_date) | exact (0 difference) | every silver/gold table | APPROVED v1 |
+| T-2 | Business-key set (e.g. `ACCOUNT_ID`, `TXN_ID`, `ACCOUNT_ID+SNAPSHOT_DATE`) | exact set equality, both directions | every keyed table | APPROVED v1 |
+| T-3 | Integers, codes, flags, strings, dates | exact; strings compared after `rtrim` (SAS pads char); case preserved | all columns of those types | APPROVED v1 |
+| T-4 | Currency / balance amounts (`*_BALANCE`, `*_AMOUNT`, `EAD`, `EXPECTED_LOSS`, `RWA`, `CAPITAL_*`) | abs diff ≤ 0.005 per row (i.e. equal at 2 dp) | all rows | APPROVED v1 |
+| T-5 | Ratios / percentages (`UTILIZATION_PCT`, `LTV`, loss ratios, coverage ratios, NIM) | abs diff ≤ 1e-6 | all rows | APPROVED v1 |
+| T-6 | Statistical outputs (z-scores, means, std in `TXN_ANOMALIES`) | abs diff ≤ 1e-6; anomaly *flag* exact | all rows | APPROVED v1 |
+| T-7 | Timestamps generated at run time (`*_TIMESTAMP`, `LOAD_DTTM`, `SCORE_TIMESTAMP`) | excluded from comparison; presence/non-null checked | all rows | APPROVED v1 |
+| T-8 | Aggregates per table (SUM of every numeric column, COUNT DISTINCT of every key) | same tolerances as the column's row rule | every table | APPROVED v1 |
+| T-9 | Reject / exception counts (`TXN_REJECTED` by reject rule, `ACCT_EXCEPTIONS` by `EXCEPTION_TYPE`) | exact | every reject rule / exception type | APPROVED v1 |
+| T-10 | Ordering | none required; tables compared as sets. Legacy `RUNNING_BALANCES` order-dependence is handled by comparing on the explicit `(ACCOUNT_ID, TXN_DATE, TXN_ID)` key. | n/a | APPROVED v1 |
+| T-11 | Rounding rule | Target uses `ROUND(x, n)` with HALF_UP to mirror SAS `ROUND` (half away from zero) for non-negative values; negative-value half cases are flagged in the field dictionary and asserted explicitly. `AVG`: no truncation on either side (SAS `MEAN` and Spark `AVG` are both double). | all rounded columns | APPROVED v1 |
+| T-12 | Excel workbooks (`%export_xlsx`) | not reconciled; the gold table feeding them is. | n/a | APPROVED v1 |
 
 ## ML-SCORING tolerances (credit_risk_scoring.sas → `sas_legacy.sas_silver.risk_scores`, `risk_migration`, `sas_legacy.sas_gold.risk_summary`)
 
@@ -43,22 +43,22 @@ Scorer facts: fixed-coefficient logistic scorecard, deterministic by inspection 
 
 | ID | Metric | Tolerance | Population | Status |
 |---|---|---|---|---|
-| ML-1 | `NEW_RISK_RATING` (band 1–7) | exact per account | all scored accounts (types MTG, AUTO, PERS, CC, LOC, HELC) | PROPOSED |
-| ML-2 | `PD` | abs diff ≤ 1e-9 per account (covers `exp()` last-ulp differences; a real bin or coefficient error is ≥1e-3) | all scored accounts | PROPOSED |
-| ML-3 | `LGD`, `EAD` | `LGD` abs ≤ 1e-9; `EAD` abs ≤ 0.005 | all scored accounts | PROPOSED |
-| ML-4 | `EXPECTED_LOSS` | abs ≤ 0.01 per account; SUM over table abs ≤ 0.05 | all scored accounts | PROPOSED |
-| ML-5 | Rank order of `PD` | Spearman ρ = 1.0 (ties allowed; scorecard produces discrete PD values) | all scored accounts | PROPOSED |
-| ML-6 | `MIGRATION_DIRECTION`, `PREV_RATING`, `CURR_RATING` | exact | all rows of `risk_migration` | PROPOSED |
-| ML-7 | Band-edge cases | accounts whose `PD` lies within 1e-9 of a rating edge (0.005, 0.01, 0.03, 0.07, 0.15, 0.30) are listed explicitly in the report; none expected on seed data | scored accounts | PROPOSED |
-| ML-8 | Feature parity first | `WOE_*` intermediates (dropped by legacy) are materialised in a debug table on the target side and compared against the reference when any ML-1..ML-6 row fails | scored accounts | PROPOSED |
+| ML-1 | `NEW_RISK_RATING` (band 1–7) | exact per account | all scored accounts (types MTG, AUTO, PERS, CC, LOC, HELC) | APPROVED v1 |
+| ML-2 | `PD` | abs diff ≤ 1e-9 per account (covers `exp()` last-ulp differences; a real bin or coefficient error is ≥1e-3) | all scored accounts | APPROVED v1 |
+| ML-3 | `LGD`, `EAD` | `LGD` abs ≤ 1e-9; `EAD` abs ≤ 0.005 | all scored accounts | APPROVED v1 |
+| ML-4 | `EXPECTED_LOSS` | abs ≤ 0.01 per account; SUM over table abs ≤ 0.05 | all scored accounts | APPROVED v1 |
+| ML-5 | Rank order of `PD` | Spearman ρ = 1.0 (ties allowed; scorecard produces discrete PD values) | all scored accounts | APPROVED v1 |
+| ML-6 | `MIGRATION_DIRECTION`, `PREV_RATING`, `CURR_RATING` | exact | all rows of `risk_migration` | APPROVED v1 |
+| ML-7 | Band-edge cases | accounts whose `PD` lies within 1e-9 of a rating edge (0.005, 0.01, 0.03, 0.07, 0.15, 0.30) are listed explicitly in the report; none expected on seed data | scored accounts | APPROVED v1 |
+| ML-8 | Feature parity first | `WOE_*` intermediates (dropped by legacy) are materialised in a debug table on the target side and compared against the reference when any ML-1..ML-6 row fails | scored accounts | APPROVED v1 |
 
-Business owner for the parity tolerance: **unnamed** — the kickoff named no model owner. STOP A asks the requester to either own ML-1..ML-8 or scope the scorer out until an owner does. No scoring job enters scope without a user-owned tolerance.
+Business owner for the parity tolerance: **the requester** (STOP A, DEC-010). No scoring job enters scope without a user-owned tolerance.
 
 ## Recon economics
 
 | Item | Value | Status |
 |---|---|---|
-| Row-diff size tier | Full row-level diff up to 5,000,000 rows per table; above that, keyed stratified sample (1% or 100k rows, whichever larger) + full aggregates. Seed data is entirely below the tier. | PROPOSED |
+| Row-diff size tier | Full row-level diff up to 5,000,000 rows per table; above that, keyed stratified sample (1% or 100k rows, whichever larger) + full aggregates. Seed data is entirely below the tier. | APPROVED v1 |
 | Legacy-query concurrency cap | N/A — no live legacy engine. Reference-implementation runs are local. | DISCOVERED |
 | Target-side recon compute | serverless SQL warehouse `565cd2fd713738c4` only | FACT |
 
