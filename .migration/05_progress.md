@@ -50,6 +50,10 @@ Register each target as `sas_legacy.<schema>.<table>` here before loading it; ha
 |---|---|
 | `[DISCOVERED]` | `2c985b279f9127e805d38645c3d8faa7689fbe99` (branch migration/00-setup; Data/ unchanged since main) |
 
+## W0-R independent reference build
+
+`[FACT]` W0-R DONE (branch `migration/02-wave0-reference`, mode DEGRADED, DEC-004 option b). Literal Python re-expression of the 5 SAS units in `docs/migration/recon/reference_impl/`; 14 reference tables + `manifest.json` in `docs/migration/recon/reference/` (caveat `reference-derived, not SAS-produced`; all 9 seed sha256 above re-verified). Populations: cust_accounts_daily 466, acct_exceptions 32, daily_transactions 18903, running_balances 610, txn_anomalies 46, txn_rejected 12, risk_scores 236, risk_migration 195, risk_summary 12, monthly_rwa 59, delinquency_aging 70, llp_coverage 6, capital_adequacy 1, archive_batch_history 4. Self-checks: 28 pytest passed, regeneration byte-identical. 13 ambiguities in `reference_impl/AMBIGUITIES.md`; AMB-01/02/03 (multi-output DATA-step `DROP`, `PROC APPEND FORCE`) change the `acct_exceptions`/`txn_rejected`/`daily_transactions` column sets versus T-9/§6 and need a DEC before the recon gate; AMB-07 makes the §6 `monthly_rwa` key non-unique (add `risk_weight`).
+
 ## Circuit breaker
 
 `[PROPOSED]` Halt the wave after 3 failures of the same class.
