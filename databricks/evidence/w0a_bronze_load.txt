@@ -1,0 +1,27 @@
+<repo>/Data/csv/oracle_dw/CUST_ACCOUNTS.csv -> dbfs:/Volumes/sas_legacy/sas_bronze/landing/seed/CUST_ACCOUNTS.csv
+<repo>/Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv -> dbfs:/Volumes/sas_legacy/sas_bronze/landing/seed/CUST_DEMOGRAPHICS.csv
+<repo>/Data/csv/oracle_dw/BUREAU_SCORES.csv -> dbfs:/Volumes/sas_legacy/sas_bronze/landing/seed/BUREAU_SCORES.csv
+<repo>/Data/csv/oracle_dw/PAYMENT_HISTORY.csv -> dbfs:/Volumes/sas_legacy/sas_bronze/landing/seed/PAYMENT_HISTORY.csv
+<repo>/Data/csv/oracle_dw/COLLATERAL.csv -> dbfs:/Volumes/sas_legacy/sas_bronze/landing/seed/COLLATERAL.csv
+<repo>/Data/csv/oracle_dw/LOAN_DETAILS.csv -> dbfs:/Volumes/sas_legacy/sas_bronze/landing/seed/LOAN_DETAILS.csv
+<repo>/Data/csv/raw_bank/DAILY_RATES.csv -> dbfs:/Volumes/sas_legacy/sas_bronze/landing/seed/DAILY_RATES.csv
+<repo>/Data/csv/raw_bank/TXN_FEED_20240131.csv -> dbfs:/Volumes/sas_legacy/sas_bronze/landing/seed/TXN_FEED_20240131.csv
+<repo>/Data/csv/curated/DAILY_TRANSACTIONS.csv -> dbfs:/Volumes/sas_legacy/sas_bronze/landing/seed/DAILY_TRANSACTIONS.csv
+cust_accounts: 487 (expected 487)
+cust_demographics: 250 (expected 250)
+bureau_scores: 500 (expected 500)
+payment_history: 248 (expected 248)
+collateral: 114 (expected 114)
+loan_details: 248 (expected 248)
+daily_rates: 455 (expected 455)
+txn_feed_20240131: 622 (expected 622)
+daily_transactions_hist: 18293 (expected 18293)
+manifest BUREAU_SCORES.csv: 500
+manifest COLLATERAL.csv: 114
+manifest CUST_ACCOUNTS.csv: 487
+manifest CUST_DEMOGRAPHICS.csv: 250
+manifest DAILY_RATES.csv: 455
+manifest DAILY_TRANSACTIONS.csv: 18293
+manifest LOAN_DETAILS.csv: 248
+manifest PAYMENT_HISTORY.csv: 248
+manifest TXN_FEED_20240131.csv: 622

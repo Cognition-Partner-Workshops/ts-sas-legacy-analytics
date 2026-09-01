@@ -1,0 +1,56 @@
+name: dbx-migration
+
+on:
+  push:
+    paths:
+      - "databricks/**"
+      - ".github/workflows/dbx-migration.yml"
+  pull_request:
+    paths:
+      - "databricks/**"
+      - ".github/workflows/dbx-migration.yml"
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install -e 'databricks[dev]'
+      - name: Lint
+        run: ruff check databricks
+      - name: Test
+        run: pytest databricks/tests -q
+
+  bundle-validate:
+    needs: lint-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Databricks credentials
+        id: creds
+        env:
+          DBX_HOST: ${{ secrets.DATABRICKS_DEMO_HOST }}
+          DBX_TOKEN: ${{ secrets.DATABRICKS_DEMO_TOKEN }}
+        run: |
+          if [ -n "$DBX_HOST" ] && [ -n "$DBX_TOKEN" ]; then
+            echo "has_creds=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_creds=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Install Databricks CLI
+        if: steps.creds.outputs.has_creds == 'true'
+        uses: databricks/setup-cli@main
+      - name: Validate bundle
+        if: steps.creds.outputs.has_creds == 'true'
+        working-directory: databricks
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_DEMO_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_DEMO_TOKEN }}
+        run: databricks bundle validate -t dev
+      - name: Skip bundle validation
+        if: steps.creds.outputs.has_creds != 'true'
+        run: echo "skipped: secrets not configured"

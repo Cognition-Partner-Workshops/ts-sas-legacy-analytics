@@ -1,0 +1,30 @@
+statement 1: SUCCEEDED
+statement 2: SUCCEEDED
+[['12', '12']]
+statement 3: SUCCEEDED
+statement 4: SUCCEEDED
+[['9', '9']]
+statement 5: SUCCEEDED
+statement 6: SUCCEEDED
+[['8', '8']]
+statement 7: SUCCEEDED
+statement 8: SUCCEEDED
+[['11', '11']]
+statement 9: SUCCEEDED
+statement 10: SUCCEEDED
+[['7', '7']]
+statement 11: SUCCEEDED
+statement 12: SUCCEEDED
+[['8', '8']]
+statement 13: SUCCEEDED
+statement 14: SUCCEEDED
+[['8', '8']]
+statement 15: SUCCEEDED
+statement 16: SUCCEEDED
+[['7', '7']]
+statement 17: SUCCEEDED
+statement 18: SUCCEEDED
+[['9', '9']]
+statement 19: SUCCEEDED
+statement 20: SUCCEEDED
+[['9', '9']]

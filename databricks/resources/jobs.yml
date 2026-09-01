@@ -1,0 +1,92 @@
+resources:
+  jobs:
+    sas_legacy_run_daily_banking:
+      name: sas_legacy_run_daily_banking
+      environments:
+        - environment_key: default
+          spec:
+            client: "2"
+      schedule:
+        quartz_cron_expression: "0 45 5 * * ?"
+        timezone_id: UTC
+        pause_status: PAUSED
+      tasks:
+        - task_key: load_customer_accounts
+          spark_python_task:
+            python_file: ../src/jobs/load_customer_accounts.py
+            parameters:
+              - --business-date
+              - ${var.business_date}
+              - --report-month
+              - ${var.report_month}
+              - --region
+              - ${var.region}
+              - --abort-on-err
+              - ${var.abort_on_err}
+          environment_key: default
+        - task_key: daily_transaction_processing
+          depends_on:
+            - task_key: load_customer_accounts
+          spark_python_task:
+            python_file: ../src/jobs/daily_transaction_processing.py
+            parameters:
+              - --business-date
+              - ${var.business_date}
+              - --report-month
+              - ${var.report_month}
+              - --region
+              - ${var.region}
+              - --abort-on-err
+              - ${var.abort_on_err}
+          environment_key: default
+        - task_key: credit_risk_scoring
+          depends_on:
+            - task_key: daily_transaction_processing
+          spark_python_task:
+            python_file: ../src/jobs/credit_risk_scoring.py
+            parameters:
+              - --business-date
+              - ${var.business_date}
+              - --report-month
+              - ${var.report_month}
+              - --region
+              - ${var.region}
+              - --abort-on-err
+              - ${var.abort_on_err}
+          environment_key: default
+        - task_key: monthly_regulatory_reporting
+          depends_on:
+            - task_key: credit_risk_scoring
+          spark_python_task:
+            python_file: ../src/jobs/monthly_regulatory_reporting.py
+            parameters:
+              - --business-date
+              - ${var.business_date}
+              - --report-month
+              - ${var.report_month}
+              - --region
+              - ${var.region}
+              - --abort-on-err
+              - ${var.abort_on_err}
+          environment_key: default
+
+    sas_legacy_recon:
+      name: sas_legacy_recon
+      environments:
+        - environment_key: default
+          spec:
+            client: "2"
+      tasks:
+        - task_key: run_recon
+          spark_python_task:
+            python_file: ../recon/run_recon.py
+            parameters:
+              - --unit
+              - U1
+              - --mode
+              - live
+              - --business-date
+              - ${var.business_date}
+              - --out
+              - /tmp/recon
+          environment_key: default
