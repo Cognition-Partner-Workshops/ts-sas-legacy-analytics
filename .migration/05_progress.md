@@ -1,22 +1,34 @@
 # Migration Progress
 
-`[FACT]` State: setup DONE; STOP A re-confirmed 2026-09-01 (this session). Inventory DONE (`docs/migration/ts-sas-legacy-analytics_estate_inventory.md`); STOP B APPROVED 2026-09-01 → active pipeline **P1 banking-core** (DEC-012). P1 analysis + plan DONE (`docs/migration/ts-sas-legacy-analytics_P1_banking_core_{analysis,plan}.md`); **STOP C pending**. Coverage 144 = 9 + 16 + 82 + 37; completeness UNVERIFIABLE.
+`[FACT]` State: setup DONE; STOP A re-confirmed 2026-09-01 (this session). Inventory DONE (`docs/migration/ts-sas-legacy-analytics_estate_inventory.md`); STOP B APPROVED 2026-09-01 → active pipeline **P1 banking-core** (DEC-012). P1 analysis + plan DONE (`docs/migration/ts-sas-legacy-analytics_P1_banking_core_{analysis,plan}.md`); STOP C APPROVED 2026-09-01 (DEC-013/014). **Wave 0 in progress** (W0-A scaffolding, W0-R reference build). Coverage 144 = 9 + 16 + 82 + 37; completeness UNVERIFIABLE.
 
 | Pipeline | Setup | Inventory | Analysis | Convert | Recon | Cutover |
 |---|---|---|---|---|---|---|
-| `[FACT]` P1 shared-objects (wave 0) | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[FACT]` P1 banking / `load_customer_accounts` | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[FACT]` P1 banking / `daily_transaction_processing` | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[FACT]` P1 banking / `credit_risk_scoring` | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[FACT]` P1 banking / `monthly_regulatory_reporting` | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
-| `[FACT]` P1 banking / `run_daily_banking` (orchestrator) | DONE | DONE | DONE (plan pending STOP C) | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 shared-objects (wave 0) | DONE | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 banking / `load_customer_accounts` | DONE | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 banking / `daily_transaction_processing` | DONE | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 banking / `credit_risk_scoring` | DONE | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 banking / `monthly_regulatory_reporting` | DONE | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED |
+| `[FACT]` P1 banking / `run_daily_banking` (orchestrator) | DONE | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED |
 | `[PROPOSED]` P3 insurance / `claims_processing` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
 | `[PROPOSED]` P3 insurance / `policy_valuation` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
 | `[PROPOSED]` P2 reports / `customer_profitability` | DONE | DONE | NOT STARTED | NOT STARTED | NOT STARTED | NOT STARTED |
 
 ## Write targets registered
 
-`[PROPOSED]` Empty. Child sessions must register each target as `sas_legacy.<schema>.<table>` here before loading it.
+Register each target as `sas_legacy.<schema>.<table>` here before loading it; halt on collision.
+
+| Target | Owner (wave/batch) | Registered |
+|---|---|---|
+| catalog `sas_legacy`; schemas `sas_bronze sas_silver sas_gold sas_ref sas_recon`; volume `sas_bronze.landing` | W0-A | 2026-09-01 |
+| `sas_bronze.cust_accounts`, `cust_demographics`, `bureau_scores`, `payment_history`, `collateral`, `loan_details`, `daily_rates`, `txn_feed_20240131`, `daily_transactions_hist`, `_manifest` | W0-A | 2026-09-01 |
+| `sas_ref.fmt_*` (9 banking formats), `sas_ref.fmt_registry` | W0-A | 2026-09-01 |
+| `sas_recon.run_log` | W0-A | 2026-09-01 |
+| `sas_silver.cust_accounts_daily`, `sas_silver.acct_exceptions` | W1 B1 (U1) | reserved |
+| `sas_silver.daily_transactions`, `running_balances`, `txn_anomalies`, `txn_rejected` | W2 B2 (U2) | reserved |
+| `sas_silver.risk_scores`, `risk_migration`; `sas_gold.risk_summary` | W2 B3 (U3) | reserved |
+| `sas_gold.monthly_rwa`, `delinquency_aging`, `llp_coverage`, `capital_adequacy`; volume path `landing/reports/` | W2 B4 (U4) | reserved |
+| `sas_silver.archive_batch_history`; job `sas_legacy_run_daily_banking` | W3 B5 (U5) | reserved |
 
 ## Baseline manifest
 

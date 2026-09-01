@@ -46,9 +46,9 @@
 | D7-INV-001 | D7 | Last-run evidence gap | `[FACT]` `Logs/` covers only `load_customer_accounts` and `daily_transaction_processing` (2024-01-15); no run evidence for units 3-7 or orchestrators. | Customer | UNDECIDED | credit_risk_scoring; monthly_regulatory_reporting; customer_profitability; insurance units |
 | D10-INV-001 | D10 | Estate completeness | `[FACT]` `autoexec.sas:14` and all `%include`s point at `/opt/sas/...` server paths outside the repo; no `sasautos` listing, metadata export, or scheduler job list exists. Completeness UNVERIFIABLE. | Customer | UNDECIDED | Whole estate |
 
-## P1 plan decisions (2026-09-01, DEC-013, PROPOSED pending STOP C)
+## P1 plan decisions (2026-09-01, DEC-013, APPROVED at STOP C 2026-09-01)
 
-Full contract/routing/cutover/decommission columns are in `docs/migration/ts-sas-legacy-analytics_P1_banking_core_plan.md` §1; status here flips from PROPOSED to DECIDED when STOP C is approved.
+Full contract/routing/cutover/decommission columns are in `docs/migration/ts-sas-legacy-analytics_P1_banking_core_plan.md` §1; STOP C approved 2026-09-01: PROPOSED-* below reads as DECIDED / DEFERRED / ACCEPTED.
 
 | ID | Decision | Status | Request |
 |---|---|---|---|
