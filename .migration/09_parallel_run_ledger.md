@@ -8,6 +8,7 @@
 | Recon job | `sas_legacy_recon`, job id `1058116656072070`, bundle target `dev`, 5 independent serverless tasks `recon_U1`..`recon_U5` (no `depends_on`, `max_concurrent_runs: 1`) |
 | Cadence | `0 15 6 * * ?` UTC (06:15 daily), `UNPAUSED`; reads silver/gold, writes only `sas_recon.run_log` |
 | Legacy trigger authority | Control-M; `sas_legacy_run_daily_banking` (job `216001923865775`) stays `PAUSED` until STOP E |
+| STOP E | DEFERRED 2026-09-02 (DEC-018): continue coexistence until REQ-05 SAS-produced recon PASS and GREEN clock 5/5 |
 | Exit criterion | 5 consecutive GREEN cycles **and** REQ-05 SAS-produced recon (upgrade from `snapshot` tier), or user acceptance at STOP E |
 | Cost per cycle (observed) | ~5.3–6.1 serverless task-minutes (5 tasks x ~60–70 s) + 42 warehouse statements on `565cd2fd713738c4` (45 when a task retries) |
 | Alerting | WEBHOOK: NOT WIRED (creating a notification destination needs workspace-admin; `notification-destinations list` is empty). Remediation is carried by the daily Devin automation "sas_legacy P1 coexistence: recon ledger + remediation" (D5-004) |
