@@ -1,0 +1,84 @@
+{
+  "logs": "# recon U5 2024-01-31 — PASS\nmode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id 0a73f95c-1978-4fd4-bd9e-2267f5884a48\nreference manifest sha256: aea7c04a35b6171c343a1eedc45bb509402b746864a6e111ac6608d154625cc7\n\n| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |\n|---|---|---|---|---|---|---|---|---|\n| archive_batch_history | row_level | 4 | 4 | 13 | 0 | 2 | 0 | - |\n\nwarehouse statements: 3, elapsed_s: 1.6\n\n",
+  "logs_truncated": false,
+  "metadata": {
+    "cleanup_duration": 0,
+    "creator_user_name": "<requester>",
+    "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+    "end_time": 1788310451816,
+    "execution_duration": 67000,
+    "job_id": 1058116656072070,
+    "job_parameters": [
+      {
+        "default": "2024-01-31",
+        "name": "business_date"
+      }
+    ],
+    "job_run_id": 876111316294946,
+    "number_in_job": 430308938465434,
+    "original_attempt_run_id": 430308938465434,
+    "run_id": 430308938465434,
+    "run_name": "recon_U5",
+    "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/1058116656072070/run/430308938465434",
+    "run_type": "JOB_RUN",
+    "setup_duration": 4000,
+    "start_time": 1788310380426,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "SUCCESS",
+      "state_message": "",
+      "user_cancelled_or_timedout": false
+    },
+    "status": {
+      "state": "TERMINATED",
+      "termination_details": {
+        "code": "SUCCESS",
+        "message": "",
+        "type": "SUCCESS"
+      }
+    },
+    "tasks": [
+      {
+        "attempt_number": 0,
+        "cleanup_duration": 0,
+        "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+        "end_time": 1788310451816,
+        "environment_key": "default",
+        "execution_duration": 67000,
+        "run_id": 430308938465434,
+        "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/1058116656072070/run/430308938465434",
+        "setup_duration": 4000,
+        "spark_python_task": {
+          "parameters": [
+            "--unit",
+            "U5",
+            "--mode",
+            "live",
+            "--business-date",
+            "{{job.parameters.business_date}}",
+            "--out",
+            "/tmp/recon/U5"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py"
+        },
+        "start_time": 1788310380426,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "SUCCESS",
+          "state_message": "",
+          "user_cancelled_or_timedout": false
+        },
+        "status": {
+          "state": "TERMINATED",
+          "termination_details": {
+            "code": "SUCCESS",
+            "message": "",
+            "type": "SUCCESS"
+          }
+        },
+        "task_key": "recon_U5"
+      }
+    ],
+    "trigger": "ONE_TIME"
+  }
+}

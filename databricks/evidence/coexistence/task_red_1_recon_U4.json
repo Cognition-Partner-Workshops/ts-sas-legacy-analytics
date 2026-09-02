@@ -1,0 +1,87 @@
+{
+  "logs": "recon output dir: /tmp/sas_legacy_recon_U4_n0jdiblq\n# recon U4 2024-02-29 — PASS\nmode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id 89a8b059-475d-4ec1-baf6-4536723ee381\nreference manifest sha256: aea7c04a35b6171c343a1eedc45bb509402b746864a6e111ac6608d154625cc7\nxlsx: /Volumes/sas_legacy/sas_bronze/landing/reports/REG_REPORT_202401.xlsx sha256=850d6d21a24f963fe65a1b88f8b5422fed9a7b55d5aa977aef12b5311e2d4e86\n\n| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |\n|---|---|---|---|---|---|---|---|---|\n| monthly_rwa | row_level | 59 | 59 | 16 | 0 | 1 | 0 | - |\n| delinquency_aging | row_level | 70 | 70 | 14 | 0 | 2 | 0 | - |\n| llp_coverage | row_level | 6 | 6 | 18 | 0 | 2 | 0 | - |\n| capital_adequacy | row_level | 1 | 1 | 22 | 0 | 2 | 0 | - |\n\nwarehouse statements: 12, elapsed_s: 6.2\n\n",
+  "logs_truncated": false,
+  "metadata": {
+    "cleanup_duration": 1000,
+    "creator_user_name": "<requester>",
+    "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+    "end_time": 1788310993719,
+    "execution_duration": 70000,
+    "job_id": 1058116656072070,
+    "job_parameters": [
+      {
+        "default": "2024-01-31",
+        "name": "business_date",
+        "value": "2024-02-29"
+      }
+    ],
+    "job_run_id": 1063912159259719,
+    "number_in_job": 161339127993917,
+    "original_attempt_run_id": 161339127993917,
+    "run_id": 161339127993917,
+    "run_name": "recon_U4",
+    "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/1058116656072070/run/161339127993917",
+    "run_type": "JOB_RUN",
+    "setup_duration": 5000,
+    "start_time": 1788310917662,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "SUCCESS",
+      "state_message": "",
+      "user_cancelled_or_timedout": false
+    },
+    "status": {
+      "state": "TERMINATED",
+      "termination_details": {
+        "code": "SUCCESS",
+        "message": "",
+        "type": "SUCCESS"
+      }
+    },
+    "tasks": [
+      {
+        "attempt_number": 0,
+        "cleanup_duration": 1000,
+        "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+        "end_time": 1788310993719,
+        "environment_key": "default",
+        "execution_duration": 70000,
+        "run_id": 161339127993917,
+        "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/1058116656072070/run/161339127993917",
+        "setup_duration": 5000,
+        "spark_python_task": {
+          "parameters": [
+            "--unit",
+            "U4",
+            "--mode",
+            "live",
+            "--business-date",
+            "{{job.parameters.business_date}}",
+            "--out",
+            "/tmp/recon/U4",
+            "--xlsx-path",
+            "/Volumes/sas_legacy/sas_bronze/landing/reports/REG_REPORT_202401.xlsx"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py"
+        },
+        "start_time": 1788310917662,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "SUCCESS",
+          "state_message": "",
+          "user_cancelled_or_timedout": false
+        },
+        "status": {
+          "state": "TERMINATED",
+          "termination_details": {
+            "code": "SUCCESS",
+            "message": "",
+            "type": "SUCCESS"
+          }
+        },
+        "task_key": "recon_U4"
+      }
+    ],
+    "trigger": "ONE_TIME"
+  }
+}

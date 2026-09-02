@@ -1,0 +1,156 @@
+{
+  "created_time": 1788302211903,
+  "creator_user_name": "<requester>",
+  "job_id": 1058116656072070,
+  "run_as_user_name": "<requester>",
+  "settings": {
+    "deployment": {
+      "kind": "BUNDLE",
+      "metadata_file_path": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/state/metadata.json"
+    },
+    "edit_mode": "UI_LOCKED",
+    "email_notifications": {
+      "no_alert_for_skipped_runs": true
+    },
+    "environments": [
+      {
+        "environment_key": "default",
+        "spec": {
+          "client": "2",
+          "dependencies": [
+            "openpyxl==3.1.5",
+            "databricks-sdk==0.63.0"
+          ]
+        }
+      }
+    ],
+    "format": "MULTI_TASK",
+    "max_concurrent_runs": 1,
+    "name": "sas_legacy_recon",
+    "parameters": [
+      {
+        "default": "2024-01-31",
+        "name": "business_date"
+      }
+    ],
+    "queue": {
+      "enabled": true
+    },
+    "schedule": {
+      "pause_status": "UNPAUSED",
+      "quartz_cron_expression": "0 15 6 * * ?",
+      "timezone_id": "UTC"
+    },
+    "tasks": [
+      {
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--unit",
+            "U1",
+            "--mode",
+            "live",
+            "--business-date",
+            "{{job.parameters.business_date}}",
+            "--out",
+            "/tmp/recon/U1"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py"
+        },
+        "task_key": "recon_U1",
+        "timeout_seconds": 0
+      },
+      {
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--unit",
+            "U2",
+            "--mode",
+            "live",
+            "--business-date",
+            "{{job.parameters.business_date}}",
+            "--out",
+            "/tmp/recon/U2"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py"
+        },
+        "task_key": "recon_U2",
+        "timeout_seconds": 0
+      },
+      {
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--unit",
+            "U3",
+            "--mode",
+            "live",
+            "--business-date",
+            "{{job.parameters.business_date}}",
+            "--out",
+            "/tmp/recon/U3"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py"
+        },
+        "task_key": "recon_U3",
+        "timeout_seconds": 0
+      },
+      {
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--unit",
+            "U4",
+            "--mode",
+            "live",
+            "--business-date",
+            "{{job.parameters.business_date}}",
+            "--out",
+            "/tmp/recon/U4",
+            "--xlsx-path",
+            "/Volumes/sas_legacy/sas_bronze/landing/reports/REG_REPORT_202401.xlsx"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py"
+        },
+        "task_key": "recon_U4",
+        "timeout_seconds": 0
+      },
+      {
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--unit",
+            "U5",
+            "--mode",
+            "live",
+            "--business-date",
+            "{{job.parameters.business_date}}",
+            "--out",
+            "/tmp/recon/U5"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py"
+        },
+        "task_key": "recon_U5",
+        "timeout_seconds": 0
+      }
+    ],
+    "timeout_seconds": 0,
+    "webhook_notifications": {}
+  }
+}

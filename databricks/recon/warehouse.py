@@ -25,15 +25,29 @@ class Warehouse:
         token = (
             token or os.environ.get("DATABRICKS_DEMO_TOKEN") or os.environ.get("DATABRICKS_TOKEN")
         )
+        self._s = requests.Session()
         if not host or not token:
+            try:
+                from databricks.sdk import WorkspaceClient
+
+                config = WorkspaceClient().config
+                host = host or config.host
+                self._s.headers.update(config.authenticate())
+            except Exception as exc:
+                raise WarehouseError(
+                    "Databricks credentials missing: set DATABRICKS_DEMO_HOST and "
+                    "DATABRICKS_DEMO_TOKEN"
+                ) from exc
+        if not host or (not token and "Authorization" not in self._s.headers):
             raise WarehouseError(
-                "Databricks credentials missing: set DATABRICKS_DEMO_HOST and DATABRICKS_DEMO_TOKEN"
+                "Databricks credentials missing: set DATABRICKS_DEMO_HOST and "
+                "DATABRICKS_DEMO_TOKEN"
             )
         self.base = host.rstrip("/")
         if not self.base.startswith("http"):
             self.base = "https://" + self.base
-        self._s = requests.Session()
-        self._s.headers["Authorization"] = f"Bearer {token}"
+        if token:
+            self._s.headers["Authorization"] = f"Bearer {token}"
         self.statements = 0
         self.elapsed_s = 0.0
 
