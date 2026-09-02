@@ -192,3 +192,51 @@ WEBHOOK: NOT WIRED (workspace-admin needed to create a destination; list returne
 [
   
 ]
+
+## redeploy (cycle 4, DEC-017 reference correction)
+Name: sas_legacy
+Target: dev
+Workspace:
+  User: <requester>
+  Path: /Workspace/Users/<requester>/.bundle/sas_legacy/dev
+
+Validation OK!
+Uploading bundle files to /Workspace/Users/<requester>/.bundle/sas_legacy/dev/files...
+Files: 39 uploaded, 0 deleted
+Resources: 0 created, 0 changed, 0 deleted, 2 unchanged
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+KeyError: 'tasks'
+Error: unknown flag: --overwrite
+
+Usage:
+  databricks workspace export SOURCE_PATH [flags]
+
+Flags:
+      --file string           Path on the local file system to save exported file at.
+      --format ExportFormat   This specifies the format of the exported file. Supported values: [
+                                AUTO,
+                                DBC,
+                                HTML,
+                                JUPYTER,
+                                RAW,
+                                R_MARKDOWN,
+                                SOURCE,
+                              ]
+  -h, --help                  help for export
+
+Global Flags:
+      --debug            enable debug logging
+  -o, --output type      output type: text or json (default text)
+  -p, --profile string   ~/.databrickscfg profile
+  -t, --target string    bundle target to use (if applicable)
+
+sha256sum: evidence/coexistence/deployed_manifest_cycle_4.json: No such file or directory
+deployed reference manifest sha256: 
+sas_legacy_run_daily_banking schedule.pause_status: PAUSED
+
+## manifest export correction (cycle 4)
+deployed reference manifest sha256: 
+
+## manifest export correction (cycle 4, SOURCE)
+deployed reference manifest sha256: 39cca40cb55d9c26a63e9c0da9fe934f7b22b3931f470a3342b7e95ae1e3c3ed
