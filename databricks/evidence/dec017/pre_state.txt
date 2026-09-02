@@ -1,0 +1,4 @@
+pre-run state (before DEC-017 re-run), warehouse 565cd2fd713738c4:
+{'tbl': 'risk_scores', 'n': '236', 'n_ts': '1', 'checksum': '6697560892', 'model_ids': 'CRM-2023-Q4-v2'}
+{'tbl': 'risk_migration', 'n': '195', 'n_ts': '0', 'checksum': '26208382025', 'model_ids': None}
+{'tbl': 'risk_summary', 'n': '12', 'n_ts': '0', 'checksum': '5113489794', 'model_ids': None}

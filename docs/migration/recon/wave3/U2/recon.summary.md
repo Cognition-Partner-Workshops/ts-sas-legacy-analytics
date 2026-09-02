@@ -1,0 +1,12 @@
+# recon U2 2024-01-31 — PASS
+mode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id b2108112-4f67-4bb2-9250-4dab0733e025
+reference manifest sha256: aea7c04a35b6171c343a1eedc45bb509402b746864a6e111ac6608d154625cc7
+
+| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |
+|---|---|---|---|---|---|---|---|---|
+| daily_transactions | row_level | 18903 | 18903 | 15 | 0 | 2 | 0 | - |
+| running_balances | row_level | 610 | 610 | 8 | 0 | 2 | 0 | - |
+| txn_anomalies | row_level | 46 | 46 | 35 | 0 | 2 | 0 | - |
+| txn_rejected | row_level | 12 | 12 | 6 | 0 | 2 | 1 | - |
+
+warehouse statements: 12, elapsed_s: 10.0

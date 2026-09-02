@@ -1,0 +1,18 @@
+harness self-test (live, references absent):
+reference missing: directory <repo>/docs/migration/recon/reference does not exist (W0-R output not present)
+exit=2
+
+harness self-test (fixture, U3):
+# recon U3 2024-01-31 — PASS
+mode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id 130db61e-97b1-4806-8441-53191c2da1e4
+reference manifest sha256: af3ea458d9532524c39d9cdb03cb543815bb035ba26b3dd9c439c4e9a876acc9
+
+| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | failing rules |
+|---|---|---|---|---|---|---|---|
+| risk_scores | row_level | 3 | 3 | 18 | 0 | 4 | - |
+| risk_migration | row_level | 2 | 2 | 8 | 0 | 3 | - |
+| risk_summary | row_level | 3 | 3 | 11 | 0 | 2 | - |
+
+warehouse statements: 0, elapsed_s: 0.0
+
+exit=0

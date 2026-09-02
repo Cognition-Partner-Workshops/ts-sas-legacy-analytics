@@ -1,0 +1,84 @@
+{
+  "logs": "recon output dir: /tmp/sas_legacy_recon_U3_uwi23mua\n# recon U3 2024-01-31 — PASS\nmode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id 32c88cb6-1bff-4ba0-9dfa-d895bf780ab8\nreference manifest sha256: 39cca40cb55d9c26a63e9c0da9fe934f7b22b3931f470a3342b7e95ae1e3c3ed\n\n| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |\n|---|---|---|---|---|---|---|---|---|\n| risk_scores | row_level | 236 | 236 | 65 | 0 | 4 | 0 | - |\n| risk_migration | row_level | 195 | 195 | 15 | 0 | 4 | 0 | - |\n| risk_summary | row_level | 12 | 12 | 16 | 0 | 2 | 0 | - |\n\nwarehouse statements: 9, elapsed_s: 5.0\n\n",
+  "logs_truncated": false,
+  "metadata": {
+    "cleanup_duration": 0,
+    "creator_user_name": "<requester>",
+    "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+    "end_time": 1788311606503,
+    "execution_duration": 63000,
+    "job_id": 1058116656072070,
+    "job_parameters": [
+      {
+        "default": "2024-01-31",
+        "name": "business_date"
+      }
+    ],
+    "job_run_id": 371352986351516,
+    "number_in_job": 730141322280522,
+    "original_attempt_run_id": 730141322280522,
+    "run_id": 730141322280522,
+    "run_name": "recon_U3",
+    "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/1058116656072070/run/730141322280522",
+    "run_type": "JOB_RUN",
+    "setup_duration": 5000,
+    "start_time": 1788311537517,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "SUCCESS",
+      "state_message": "",
+      "user_cancelled_or_timedout": false
+    },
+    "status": {
+      "state": "TERMINATED",
+      "termination_details": {
+        "code": "SUCCESS",
+        "message": "",
+        "type": "SUCCESS"
+      }
+    },
+    "tasks": [
+      {
+        "attempt_number": 0,
+        "cleanup_duration": 0,
+        "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+        "end_time": 1788311606503,
+        "environment_key": "default",
+        "execution_duration": 63000,
+        "run_id": 730141322280522,
+        "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/1058116656072070/run/730141322280522",
+        "setup_duration": 5000,
+        "spark_python_task": {
+          "parameters": [
+            "--unit",
+            "U3",
+            "--mode",
+            "live",
+            "--business-date",
+            "{{job.parameters.business_date}}",
+            "--out",
+            "/tmp/recon/U3"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py"
+        },
+        "start_time": 1788311537517,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "SUCCESS",
+          "state_message": "",
+          "user_cancelled_or_timedout": false
+        },
+        "status": {
+          "state": "TERMINATED",
+          "termination_details": {
+            "code": "SUCCESS",
+            "message": "",
+            "type": "SUCCESS"
+          }
+        },
+        "task_key": "recon_U3"
+      }
+    ],
+    "trigger": "ONE_TIME"
+  }
+}

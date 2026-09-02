@@ -1,0 +1,7 @@
+post-run state (after DEC-017 re-run, ad hoc CLI --executor warehouse, business_date 2024-01-31):
+{'tbl': 'risk_scores', 'n': '236', 'n_ts': '1', 'checksum': '6697560892', 'model_ids': 'CRM-2023-Q4-V2'}
+{'tbl': 'risk_migration', 'n': '195', 'n_ts': '0', 'checksum': '26208382025', 'model_ids': None}
+{'tbl': 'risk_summary', 'n': '12', 'n_ts': '0', 'checksum': '5113489794', 'model_ids': None}
+SELECT DISTINCT model_id FROM sas_legacy.sas_silver.risk_scores -> [{'model_id': 'CRM-2023-Q4-V2'}]
+score_timestamp: [{'ts': '2026-09-02T00:52:18.256Z'}]
+woe_debug table exists: []

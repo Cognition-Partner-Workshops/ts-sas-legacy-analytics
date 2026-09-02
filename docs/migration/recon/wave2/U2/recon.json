@@ -1,0 +1,982 @@
+{
+  "run_id": "2a8d9a21-480e-4e61-a696-b4e887ce827b",
+  "run_ts": "2026-09-01T23:57:40Z",
+  "unit": "U2",
+  "business_date": "2024-01-31",
+  "mode": "DEGRADED",
+  "execution_mode": "live",
+  "caveat": "reference-derived, not SAS-produced",
+  "tolerances_version": "v1",
+  "reference_manifest_sha256": "aea7c04a35b6171c343a1eedc45bb509402b746864a6e111ac6608d154625cc7",
+  "reference_manifest": {
+    "caveat": "reference-derived, not SAS-produced",
+    "mode": "DEGRADED (snapshot Data/csv; no SAS runtime; results apply to the seed snapshot, not production)",
+    "tolerance_version": "v1 (.migration/03_recon_tolerances.md)",
+    "business_date": "2024-01-31",
+    "report_month": "202401",
+    "batch_id": "BANK_20240131_000000",
+    "runtime_sentinels": {
+      "timestamp": "2024-01-31T00:00:00",
+      "duration": 0
+    },
+    "source_commit": "00ef7f735ae7659bdd5edbb2537d6f4f56184418",
+    "source_commit_scope": "last commit touching Programs, BatchJobs, Config, Formats, Macro, Data/",
+    "generator": "python -m reference_impl.run_all --business-date 2024-01-31 --report-month 202401",
+    "outputs": {
+      "cust_accounts_daily.csv": {
+        "sas_table": "STG_BANK.CUST_ACCOUNTS_DAILY",
+        "rows": 466,
+        "sha256": "089212a2b752d2a1c35c390b616c88e89740cca8c852b91763e2662628a12232"
+      },
+      "acct_exceptions.csv": {
+        "sas_table": "STG_BANK.ACCT_EXCEPTIONS",
+        "rows": 32,
+        "sha256": "19fdf2d6c8a0f5f01791e9db0727b28459e1a27c623bc5901a470ef2e1033e3d"
+      },
+      "daily_transactions.csv": {
+        "sas_table": "CURATED.DAILY_TRANSACTIONS",
+        "rows": 18903,
+        "sha256": "252fd814d13b8ea7a45a909f39be7f862edde29af66bc643b6284e3203c79d39"
+      },
+      "running_balances.csv": {
+        "sas_table": "CURATED.RUNNING_BALANCES",
+        "rows": 610,
+        "sha256": "ce43808d60ce4a465295e6743f286d77067322d4cf42de7d9cb77467c124c36d"
+      },
+      "txn_anomalies.csv": {
+        "sas_table": "CURATED.TXN_ANOMALIES",
+        "rows": 46,
+        "sha256": "a72dfc09809f14f16e42424a4564e069e3ec655c52b166ba860efe7f04fb80c7"
+      },
+      "txn_rejected.csv": {
+        "sas_table": "WORK.TXN_REJECTED",
+        "rows": 12,
+        "sha256": "4d395a57218ace675869dca3cdf95ca3f0de188f833e90ddff68434aad8b73a4"
+      },
+      "risk_scores.csv": {
+        "sas_table": "CURATED.RISK_SCORES",
+        "rows": 236,
+        "sha256": "e112a246b4c01c2341e80109b8eece8b58a7da14962890c9d400f08bde5b31e8"
+      },
+      "risk_migration.csv": {
+        "sas_table": "CURATED.RISK_MIGRATION",
+        "rows": 195,
+        "sha256": "6b834b8fb392a1b352d3ed14cb4e00b7814e0e412bad00705242ad6a06249376"
+      },
+      "risk_summary.csv": {
+        "sas_table": "REPORTS.RISK_SUMMARY",
+        "rows": 12,
+        "sha256": "f5e53068169729bd41a198056489de08be830e90631b96b21c243ad65109c3f1"
+      },
+      "monthly_rwa.csv": {
+        "sas_table": "REPORTS.MONTHLY_RWA",
+        "rows": 59,
+        "sha256": "a42fc6e768a3be11a9ecbe039648427c39c347c3be4d5dc7d15c1f08eba9bd0b"
+      },
+      "delinquency_aging.csv": {
+        "sas_table": "REPORTS.DELINQUENCY_AGING",
+        "rows": 70,
+        "sha256": "b12070c4d8415b2b65484bf4137a64b8ec95e9a57c0e7493d6e5abb571db1be8"
+      },
+      "llp_coverage.csv": {
+        "sas_table": "REPORTS.LLP_COVERAGE",
+        "rows": 6,
+        "sha256": "579e28a02ba439afcaff7e7f9be0b68634b8f8392f874b7e29c8ffb0b629efb5"
+      },
+      "capital_adequacy.csv": {
+        "sas_table": "REPORTS.CAPITAL_ADEQUACY",
+        "rows": 1,
+        "sha256": "4c55af7c2cd220d68afa19fce3e9771ef66c09ba00dc37ad292b7e7dcd479a94"
+      },
+      "archive_batch_history.csv": {
+        "sas_table": "ARCHIVE.BATCH_HISTORY",
+        "rows": 4,
+        "sha256": "f05c5ae508eec22315ef22a7826071bcd32fc1e4871e67a16ee2aeb8a5173c81"
+      }
+    },
+    "alternates": {
+      "alternates/acct_exceptions__with_code.csv": {
+        "rows": 32,
+        "sha256": "d0e3a0deaa577c67efd62eb9cb94873b7982dd7671338575998bb28766a6740d"
+      },
+      "alternates/txn_rejected__with_reason.csv": {
+        "rows": 12,
+        "sha256": "b1aab52a083f28cbcc024a03e43582714f1079f55f3b2695346d20968e0fa18c"
+      },
+      "alternates/daily_transactions__appended_rows_wide.csv": {
+        "rows": 610,
+        "sha256": "e342bc29c1dad0d8383728f64c25ece76112b9b9efdcef9cb9428a497b55cf41"
+      },
+      "alternates/risk_scores__woe_debug.csv": {
+        "rows": 236,
+        "sha256": "efd17e952fa0de1851e3443f37016ed2dee89d4495ce53f6843dad74e60d5bc1"
+      }
+    },
+    "inputs": {
+      "Data/csv/curated/DAILY_TRANSACTIONS.csv": {
+        "sas_table": "CURATED.DAILY_TRANSACTIONS",
+        "rows": 18293,
+        "sha256": "f31519447f5e2df2be283dc8dcf7c46e1fd3175ac235205abd97418739cbdbe5",
+        "used": true
+      },
+      "Data/csv/oracle_dw/BUREAU_SCORES.csv": {
+        "sas_table": "ORA_DW.BUREAU_SCORES",
+        "rows": 500,
+        "sha256": "989f8077cc84b3dfe3daf2a6fc5f5a995d49cd8e4a911831b4f3f6e9ffe5025c",
+        "used": true
+      },
+      "Data/csv/oracle_dw/COLLATERAL.csv": {
+        "sas_table": "ORA_DW.COLLATERAL",
+        "rows": 114,
+        "sha256": "fbdc1cf8b38d43e18c26a2e34b70616a19cf0637be1447f95a7d49f6b6b9bb6b",
+        "used": true
+      },
+      "Data/csv/oracle_dw/CUST_ACCOUNTS.csv": {
+        "sas_table": "ORA_DW.CUST_ACCOUNTS",
+        "rows": 487,
+        "sha256": "30d762718cc7f15d7659f6734df28dbaf36532ebf5323a422ffeed49068c8b13",
+        "used": true
+      },
+      "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv": {
+        "sas_table": "ORA_DW.CUST_DEMOGRAPHICS",
+        "rows": 250,
+        "sha256": "2050f727d3065926b7b3b047f6967150f16488d1acdfc20d384133b01019182b",
+        "used": true
+      },
+      "Data/csv/oracle_dw/LOAN_DETAILS.csv": {
+        "sas_table": "ORA_DW.LOAN_DETAILS",
+        "rows": 248,
+        "sha256": "0eba231eb28d31ea2e4df7e0ee61e5b37f7e74fbcee5f6968627d0207730a1f7",
+        "used": true
+      },
+      "Data/csv/oracle_dw/PAYMENT_HISTORY.csv": {
+        "sas_table": "ORA_DW.PAYMENT_HISTORY",
+        "rows": 248,
+        "sha256": "f745b79820420ca2ac870ae14992dde704d24e2e1e7942aebedd896f66c9f396",
+        "used": true
+      },
+      "Data/csv/raw_bank/DAILY_RATES.csv": {
+        "sas_table": "RAW_BANK.DAILY_RATES",
+        "rows": 455,
+        "sha256": "d61d8a5310a9c40530c07ef73bfed9b3e748a5a59fcc0a34581b7303b5490d6a",
+        "used": false
+      },
+      "Data/csv/raw_bank/TXN_FEED_20240131.csv": {
+        "sas_table": "RAW_BANK.TXN_FEED_20240131",
+        "rows": 622,
+        "sha256": "0bebabbc3e4a8a4e799d51afccb2e0e1388bbce9b72ebc056b241f131c8e82b6",
+        "used": true
+      }
+    }
+  },
+  "overall": "PASS",
+  "counts": {
+    "PASS": 64,
+    "FAIL": 0,
+    "NOT_APPLICABLE": 4,
+    "INFO": 4,
+    "DECLARED-UNEXERCISED": 1
+  },
+  "warehouse": {
+    "statements": 12,
+    "elapsed_s": 5.917150497436523
+  },
+  "tables": [
+    {
+      "table": "daily_transactions",
+      "schema": "sas_silver",
+      "keys": [
+        "transaction_id"
+      ],
+      "tier": "row_level",
+      "rows_reference": 18903,
+      "rows_target": 18903,
+      "results": [
+        {
+          "rule": "T-1",
+          "table": "daily_transactions",
+          "column": null,
+          "verdict": "PASS",
+          "reference": 18903,
+          "target": 18903,
+          "detail": "row count exact",
+          "examples": []
+        },
+        {
+          "rule": "T-2",
+          "table": "daily_transactions",
+          "column": "transaction_id",
+          "verdict": "PASS",
+          "reference": 18903,
+          "target": 18903,
+          "detail": "missing_in_target=0 extra_in_target=0 dup_keys_ref=0 dup_keys_target=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "daily_transactions",
+          "column": "account_id",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=18903 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "daily_transactions",
+          "column": "transaction_date",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=18903 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "daily_transactions",
+          "column": "transaction_type",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=18903 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-4",
+          "table": "daily_transactions",
+          "column": "transaction_amount",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=18903 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "daily_transactions",
+          "column": "channel",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=18903 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "daily_transactions",
+          "column": "merchant_category",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=18903 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "daily_transactions",
+          "column": "description",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=18903 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "daily_transactions",
+          "column": "post_date",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=18903 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "daily_transactions",
+          "column": "currency_code",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=18903 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "daily_transactions",
+          "column": "transaction_amount",
+          "verdict": "PASS",
+          "reference": "8231436.81",
+          "target": "8231436.81",
+          "detail": "SUM(transaction_amount) under T-4 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "daily_transactions",
+          "column": "merchant_category",
+          "verdict": "PASS",
+          "reference": "96212110",
+          "target": "9.621211E7",
+          "detail": "SUM(merchant_category) under T-3 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "daily_transactions",
+          "column": "transaction_id",
+          "verdict": "PASS",
+          "reference": "18903",
+          "target": "18903",
+          "detail": "COUNT(DISTINCT transaction_id) exact",
+          "examples": []
+        },
+        {
+          "rule": "T-10",
+          "table": "daily_transactions",
+          "column": null,
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "compared as sets keyed on (transaction_id); no ordering asserted",
+          "examples": []
+        },
+        {
+          "rule": "T-11",
+          "table": "daily_transactions",
+          "column": null,
+          "verdict": "INFO",
+          "reference": null,
+          "target": null,
+          "detail": "rounding rule (ROUND HALF_UP, AVG untruncated) is a converted-code rule; its effect is judged by the T-4/T-5 row rules above",
+          "examples": []
+        },
+        {
+          "rule": "T-12",
+          "table": "daily_transactions",
+          "column": null,
+          "verdict": "NOT_APPLICABLE",
+          "reference": null,
+          "target": null,
+          "detail": "no workbook",
+          "examples": []
+        }
+      ]
+    },
+    {
+      "table": "running_balances",
+      "schema": "sas_silver",
+      "keys": [
+        "account_id",
+        "transaction_date",
+        "transaction_id"
+      ],
+      "tier": "row_level",
+      "rows_reference": 610,
+      "rows_target": 610,
+      "results": [
+        {
+          "rule": "T-1",
+          "table": "running_balances",
+          "column": null,
+          "verdict": "PASS",
+          "reference": 610,
+          "target": 610,
+          "detail": "row count exact",
+          "examples": []
+        },
+        {
+          "rule": "T-2",
+          "table": "running_balances",
+          "column": "account_id,transaction_date,transaction_id",
+          "verdict": "PASS",
+          "reference": 610,
+          "target": 610,
+          "detail": "missing_in_target=0 extra_in_target=0 dup_keys_ref=0 dup_keys_target=0",
+          "examples": []
+        },
+        {
+          "rule": "T-4",
+          "table": "running_balances",
+          "column": "running_balance",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=610 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "running_balances",
+          "column": "running_balance",
+          "verdict": "PASS",
+          "reference": "49551238.139999999860433",
+          "target": "49551238.14",
+          "detail": "SUM(running_balance) under T-4 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "running_balances",
+          "column": "account_id",
+          "verdict": "PASS",
+          "reference": "320",
+          "target": "320",
+          "detail": "COUNT(DISTINCT account_id) exact",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "running_balances",
+          "column": "transaction_date",
+          "verdict": "PASS",
+          "reference": "1",
+          "target": "1",
+          "detail": "COUNT(DISTINCT transaction_date) exact",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "running_balances",
+          "column": "transaction_id",
+          "verdict": "PASS",
+          "reference": "610",
+          "target": "610",
+          "detail": "COUNT(DISTINCT transaction_id) exact",
+          "examples": []
+        },
+        {
+          "rule": "T-10",
+          "table": "running_balances",
+          "column": null,
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "compared as sets keyed on (account_id, transaction_date, transaction_id); no ordering asserted",
+          "examples": []
+        },
+        {
+          "rule": "T-11",
+          "table": "running_balances",
+          "column": null,
+          "verdict": "INFO",
+          "reference": null,
+          "target": null,
+          "detail": "rounding rule (ROUND HALF_UP, AVG untruncated) is a converted-code rule; its effect is judged by the T-4/T-5 row rules above",
+          "examples": []
+        },
+        {
+          "rule": "T-12",
+          "table": "running_balances",
+          "column": null,
+          "verdict": "NOT_APPLICABLE",
+          "reference": null,
+          "target": null,
+          "detail": "no workbook",
+          "examples": []
+        }
+      ]
+    },
+    {
+      "table": "txn_anomalies",
+      "schema": "sas_silver",
+      "keys": [
+        "transaction_id"
+      ],
+      "tier": "row_level",
+      "rows_reference": 46,
+      "rows_target": 46,
+      "results": [
+        {
+          "rule": "T-1",
+          "table": "txn_anomalies",
+          "column": null,
+          "verdict": "PASS",
+          "reference": 46,
+          "target": 46,
+          "detail": "row count exact",
+          "examples": []
+        },
+        {
+          "rule": "T-2",
+          "table": "txn_anomalies",
+          "column": "transaction_id",
+          "verdict": "PASS",
+          "reference": 46,
+          "target": 46,
+          "detail": "missing_in_target=0 extra_in_target=0 dup_keys_ref=0 dup_keys_target=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "account_id",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "transaction_date",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "transaction_type",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-4",
+          "table": "txn_anomalies",
+          "column": "transaction_amount",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "channel",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "merchant_category",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "description",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "post_date",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "currency_code",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "account_type",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "customer_id",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "customer_segment",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "region_code",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "branch_id",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-4",
+          "table": "txn_anomalies",
+          "column": "pre_txn_balance",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-4",
+          "table": "txn_anomalies",
+          "column": "post_txn_balance",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "risk_rating",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-4",
+          "table": "txn_anomalies",
+          "column": "running_balance",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-6",
+          "table": "txn_anomalies",
+          "column": "avg_txn_amt",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-6",
+          "table": "txn_anomalies",
+          "column": "std_txn_amt",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-6",
+          "table": "txn_anomalies",
+          "column": "z_score",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-3",
+          "table": "txn_anomalies",
+          "column": "anomaly_type",
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "rows_compared=46 mismatches=0",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_anomalies",
+          "column": "transaction_amount",
+          "verdict": "PASS",
+          "reference": "2001846.23",
+          "target": "2001846.23",
+          "detail": "SUM(transaction_amount) under T-4 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_anomalies",
+          "column": "merchant_category",
+          "verdict": "PASS",
+          "reference": "223639",
+          "target": "223639.0",
+          "detail": "SUM(merchant_category) under T-3 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_anomalies",
+          "column": "pre_txn_balance",
+          "verdict": "PASS",
+          "reference": "1328141.75",
+          "target": "1328141.75",
+          "detail": "SUM(pre_txn_balance) under T-4 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_anomalies",
+          "column": "post_txn_balance",
+          "verdict": "PASS",
+          "reference": "-660628.84000000000582",
+          "target": "-660628.84",
+          "detail": "SUM(post_txn_balance) under T-4 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_anomalies",
+          "column": "risk_rating",
+          "verdict": "PASS",
+          "reference": "144",
+          "target": "144",
+          "detail": "SUM(risk_rating) under T-3 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_anomalies",
+          "column": "running_balance",
+          "verdict": "PASS",
+          "reference": "-676308.68000000000443",
+          "target": "-676308.68",
+          "detail": "SUM(running_balance) under T-4 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_anomalies",
+          "column": "avg_txn_amt",
+          "verdict": "PASS",
+          "reference": "12391.70447034430607",
+          "target": "12391.704470344306",
+          "detail": "SUM(avg_txn_amt) under T-6 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_anomalies",
+          "column": "std_txn_amt",
+          "verdict": "PASS",
+          "reference": "20719.36894224338907",
+          "target": "20719.36894224339",
+          "detail": "SUM(std_txn_amt) under T-6 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_anomalies",
+          "column": "z_score",
+          "verdict": "PASS",
+          "reference": "2069.48323134783937304",
+          "target": "2069.4832313478396",
+          "detail": "SUM(z_score) under T-6 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_anomalies",
+          "column": "transaction_id",
+          "verdict": "PASS",
+          "reference": "46",
+          "target": "46",
+          "detail": "COUNT(DISTINCT transaction_id) exact",
+          "examples": []
+        },
+        {
+          "rule": "T-10",
+          "table": "txn_anomalies",
+          "column": null,
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "compared as sets keyed on (transaction_id); no ordering asserted",
+          "examples": []
+        },
+        {
+          "rule": "T-11",
+          "table": "txn_anomalies",
+          "column": null,
+          "verdict": "INFO",
+          "reference": null,
+          "target": null,
+          "detail": "rounding rule (ROUND HALF_UP, AVG untruncated) is a converted-code rule; its effect is judged by the T-4/T-5 row rules above",
+          "examples": []
+        },
+        {
+          "rule": "T-12",
+          "table": "txn_anomalies",
+          "column": null,
+          "verdict": "NOT_APPLICABLE",
+          "reference": null,
+          "target": null,
+          "detail": "no workbook",
+          "examples": []
+        }
+      ]
+    },
+    {
+      "table": "txn_rejected",
+      "schema": "sas_silver",
+      "keys": [
+        "transaction_id",
+        "account_id",
+        "transaction_date",
+        "transaction_type",
+        "transaction_amount",
+        "channel",
+        "merchant_category",
+        "description",
+        "post_date",
+        "currency_code"
+      ],
+      "tier": "row_level",
+      "rows_reference": 12,
+      "rows_target": 12,
+      "results": [
+        {
+          "rule": "T-1",
+          "table": "txn_rejected",
+          "column": null,
+          "verdict": "PASS",
+          "reference": 12,
+          "target": 12,
+          "detail": "row count exact",
+          "examples": []
+        },
+        {
+          "rule": "T-2",
+          "table": "txn_rejected",
+          "column": "*",
+          "verdict": "PASS",
+          "reference": {
+            "rows": 12,
+            "distinct_rows": 12
+          },
+          "target": {
+            "rows": 12,
+            "distinct_rows": 12
+          },
+          "detail": "full-row multiset equality (DEC-015 (a)); missing_in_target=0 extra_in_target=0; T-7 columns excluded, T-4/T-5 at tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_rejected",
+          "column": "transaction_amount",
+          "verdict": "PASS",
+          "reference": "65264893.97",
+          "target": "65264893.97",
+          "detail": "SUM(transaction_amount) under T-4 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_rejected",
+          "column": "merchant_category",
+          "verdict": "PASS",
+          "reference": "40567",
+          "target": "40567.0",
+          "detail": "SUM(merchant_category) under T-3 tolerance",
+          "examples": []
+        },
+        {
+          "rule": "T-8",
+          "table": "txn_rejected",
+          "column": "account_id",
+          "verdict": "PASS",
+          "reference": "10",
+          "target": "10",
+          "detail": "COUNT(DISTINCT account_id) exact",
+          "examples": []
+        },
+        {
+          "rule": "T-9",
+          "table": "txn_rejected",
+          "column": null,
+          "verdict": "DECLARED-UNEXERCISED",
+          "reference": null,
+          "target": null,
+          "detail": "DEC-015 (a): literal SAS output has no REJECT_REASON column (the DROP statement applies to every OUTPUT data set of the validation step, AMB-02); T-9 per-reject-rule count has no grouping column and is declared unexercised. Full-row multiset match (T-2) is the substitute; 2 rows carry a blank transaction_id. Owner: requester; severity medium; gate: close before STOP E via REQ-05 or production-schema export.",
+          "examples": []
+        },
+        {
+          "rule": "T-10",
+          "table": "txn_rejected",
+          "column": null,
+          "verdict": "PASS",
+          "reference": null,
+          "target": null,
+          "detail": "compared as full-row multiset; no ordering asserted",
+          "examples": []
+        },
+        {
+          "rule": "T-11",
+          "table": "txn_rejected",
+          "column": null,
+          "verdict": "INFO",
+          "reference": null,
+          "target": null,
+          "detail": "rounding rule (ROUND HALF_UP, AVG untruncated) is a converted-code rule; its effect is judged by the T-4/T-5 row rules above",
+          "examples": []
+        },
+        {
+          "rule": "T-12",
+          "table": "txn_rejected",
+          "column": null,
+          "verdict": "NOT_APPLICABLE",
+          "reference": null,
+          "target": null,
+          "detail": "no workbook",
+          "examples": []
+        }
+      ]
+    }
+  ],
+  "summary": "# recon U2 2024-01-31 \u2014 PASS\nmode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id 2a8d9a21-480e-4e61-a696-b4e887ce827b\nreference manifest sha256: aea7c04a35b6171c343a1eedc45bb509402b746864a6e111ac6608d154625cc7\n\n| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |\n|---|---|---|---|---|---|---|---|---|\n| daily_transactions | row_level | 18903 | 18903 | 15 | 0 | 2 | 0 | - |\n| running_balances | row_level | 610 | 610 | 8 | 0 | 2 | 0 | - |\n| txn_anomalies | row_level | 46 | 46 | 35 | 0 | 2 | 0 | - |\n| txn_rejected | row_level | 12 | 12 | 6 | 0 | 2 | 1 | - |\n\nwarehouse statements: 12, elapsed_s: 5.9\n"
+}

@@ -1,0 +1,178 @@
+resources:
+  jobs:
+    sas_legacy_run_daily_banking:
+      name: sas_legacy_run_daily_banking
+      environments:
+        - environment_key: default
+          spec:
+            client: "2"
+            dependencies:
+              - openpyxl==3.1.5
+              - databricks-sdk==0.63.0
+      max_concurrent_runs: 1
+      schedule:
+        quartz_cron_expression: "0 45 5 * * ?"
+        timezone_id: UTC
+        pause_status: PAUSED
+      tasks:
+        - task_key: load_customer_accounts
+          spark_python_task:
+            python_file: ../src/jobs/load_customer_accounts.py
+            parameters:
+              - --business-date
+              - ${var.business_date}
+              - --report-month
+              - ${var.report_month}
+              - --region
+              - ${var.region}
+              - --abort-on-err
+              - ${var.abort_on_err}
+          environment_key: default
+        - task_key: daily_transaction_processing
+          depends_on:
+            - task_key: load_customer_accounts
+          spark_python_task:
+            python_file: ../src/jobs/daily_transaction_processing.py
+            parameters:
+              - --business-date
+              - ${var.business_date}
+              - --report-month
+              - ${var.report_month}
+              - --region
+              - ${var.region}
+              - --abort-on-err
+              - ${var.abort_on_err}
+          environment_key: default
+        - task_key: credit_risk_scoring
+          depends_on:
+            - task_key: daily_transaction_processing
+          spark_python_task:
+            python_file: ../src/jobs/credit_risk_scoring.py
+            parameters:
+              - --business-date
+              - ${var.business_date}
+              - --report-month
+              - ${var.report_month}
+              - --region
+              - ${var.region}
+              - --abort-on-err
+              - ${var.abort_on_err}
+          environment_key: default
+        - task_key: monthly_regulatory_reporting
+          depends_on:
+            - task_key: credit_risk_scoring
+          spark_python_task:
+            python_file: ../src/jobs/monthly_regulatory_reporting.py
+            parameters:
+              - --business-date
+              - ${var.business_date}
+              - --report-month
+              - ${var.report_month}
+              - --region
+              - ${var.region}
+              - --abort-on-err
+              - ${var.abort_on_err}
+          environment_key: default
+        - task_key: batch_summary
+          depends_on:
+            - task_key: load_customer_accounts
+            - task_key: daily_transaction_processing
+            - task_key: credit_risk_scoring
+            - task_key: monthly_regulatory_reporting
+          run_if: ALL_DONE
+          spark_python_task:
+            python_file: ../src/jobs/run_daily_banking.py
+            parameters:
+              - --business-date
+              - ${var.business_date}
+              - --run-id
+              - "{{job.run_id}}"
+          environment_key: default
+
+    sas_legacy_recon:
+      name: sas_legacy_recon
+      environments:
+        - environment_key: default
+          spec:
+            client: "2"
+            dependencies:
+              - openpyxl==3.1.5
+              - databricks-sdk==0.63.0
+      max_concurrent_runs: 1
+      schedule:
+        quartz_cron_expression: "0 15 6 * * ?"
+        timezone_id: UTC
+        pause_status: UNPAUSED
+      email_notifications:
+        no_alert_for_skipped_runs: true
+      parameters:
+        - name: business_date
+          default: ${var.business_date}
+      tasks:
+        - task_key: recon_U1
+          spark_python_task:
+            python_file: ../recon/run_recon.py
+            parameters:
+              - --unit
+              - U1
+              - --mode
+              - live
+              - --business-date
+              - "{{job.parameters.business_date}}"
+              - --out
+              - /tmp/recon/U1
+          environment_key: default
+        - task_key: recon_U2
+          spark_python_task:
+            python_file: ../recon/run_recon.py
+            parameters:
+              - --unit
+              - U2
+              - --mode
+              - live
+              - --business-date
+              - "{{job.parameters.business_date}}"
+              - --out
+              - /tmp/recon/U2
+          environment_key: default
+        - task_key: recon_U3
+          spark_python_task:
+            python_file: ../recon/run_recon.py
+            parameters:
+              - --unit
+              - U3
+              - --mode
+              - live
+              - --business-date
+              - "{{job.parameters.business_date}}"
+              - --out
+              - /tmp/recon/U3
+          environment_key: default
+        - task_key: recon_U4
+          spark_python_task:
+            python_file: ../recon/run_recon.py
+            parameters:
+              - --unit
+              - U4
+              - --mode
+              - live
+              - --business-date
+              - "{{job.parameters.business_date}}"
+              - --out
+              - /tmp/recon/U4
+              - --xlsx-path
+              - /Volumes/sas_legacy/sas_bronze/landing/reports/REG_REPORT_202401.xlsx
+          environment_key: default
+        - task_key: recon_U5
+          spark_python_task:
+            python_file: ../recon/run_recon.py
+            parameters:
+              - --unit
+              - U5
+              - --mode
+              - live
+              - --business-date
+              - "{{job.parameters.business_date}}"
+              - --out
+              - /tmp/recon/U5
+          environment_key: default

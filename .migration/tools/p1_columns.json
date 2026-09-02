@@ -1,0 +1,2873 @@
+{
+  "repository": "/home/ubuntu/repos/ts-sas-legacy-analytics",
+  "scope": [
+    "Programs/Banking/load_customer_accounts.sas",
+    "Programs/Banking/daily_transaction_processing.sas",
+    "Programs/Banking/credit_risk_scoring.sas",
+    "Programs/Banking/monthly_regulatory_reporting.sas",
+    "BatchJobs/run_daily_banking.sas"
+  ],
+  "tables": [
+    {
+      "table": "STG_BANK.CUST_ACCOUNTS_DAILY",
+      "created_or_appended_by": [
+        "Programs/Banking/load_customer_accounts.sas:82"
+      ],
+      "columns": [
+        {
+          "name": "ACCOUNT_ID",
+          "expression": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_ID",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.ACCOUNT_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "key_reason": "ON / WHERE",
+          "source": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "ACCOUNT_ID",
+            "sample": "A00000001"
+          }
+        },
+        {
+          "name": "CUSTOMER_ID",
+          "expression": "ORA_DW.CUST_ACCOUNTS.CUSTOMER_ID",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.CUSTOMER_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "key_reason": "ON / WHERE",
+          "source": "ORA_DW.CUST_ACCOUNTS.CUSTOMER_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "CUSTOMER_ID",
+            "sample": "C0000001"
+          }
+        },
+        {
+          "name": "ACCOUNT_TYPE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_TYPE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.ACCOUNT_TYPE",
+          "format": "$ACCTTYPE.",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_TYPE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "ACCOUNT_TYPE",
+            "sample": "CC"
+          }
+        },
+        {
+          "name": "ACCOUNT_STATUS",
+          "expression": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_STATUS",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.ACCOUNT_STATUS",
+          "format": "$ACCTSTAT.",
+          "key": true,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "key_reason": "ON / WHERE",
+          "source": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_STATUS",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "ACCOUNT_STATUS",
+            "sample": "A"
+          }
+        },
+        {
+          "name": "OPEN_DATE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.OPEN_DATE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.OPEN_DATE",
+          "format": "DATE9.",
+          "key": true,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "key_reason": "ON / WHERE",
+          "source": "ORA_DW.CUST_ACCOUNTS.OPEN_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "OPEN_DATE",
+            "sample": "27NOV2011"
+          }
+        },
+        {
+          "name": "CLOSE_DATE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.CLOSE_DATE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.CLOSE_DATE",
+          "format": "DATE9.",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.CLOSE_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "CLOSE_DATE",
+            "sample": ""
+          }
+        },
+        {
+          "name": "CURRENT_BALANCE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.CURRENT_BALANCE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.CURRENT_BALANCE",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.CURRENT_BALANCE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "CURRENT_BALANCE",
+            "sample": "880.19"
+          }
+        },
+        {
+          "name": "AVAILABLE_BALANCE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.AVAILABLE_BALANCE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.AVAILABLE_BALANCE",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.AVAILABLE_BALANCE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "AVAILABLE_BALANCE",
+            "sample": "619.81"
+          }
+        },
+        {
+          "name": "CREDIT_LIMIT",
+          "expression": "ORA_DW.CUST_ACCOUNTS.CREDIT_LIMIT",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.CREDIT_LIMIT",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.CREDIT_LIMIT",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "CREDIT_LIMIT",
+            "sample": "1500.00"
+          }
+        },
+        {
+          "name": "INTEREST_RATE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.INTEREST_RATE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.INTEREST_RATE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.INTEREST_RATE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "INTEREST_RATE",
+            "sample": "0.2009"
+          }
+        },
+        {
+          "name": "BRANCH_ID",
+          "expression": "ORA_DW.CUST_ACCOUNTS.BRANCH_ID",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.BRANCH_ID",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.BRANCH_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "BRANCH_ID",
+            "sample": "B015"
+          }
+        },
+        {
+          "name": "OFFICER_ID",
+          "expression": "ORA_DW.CUST_ACCOUNTS.OFFICER_ID",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.OFFICER_ID",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.OFFICER_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "OFFICER_ID",
+            "sample": "O0088"
+          }
+        },
+        {
+          "name": "LAST_ACTIVITY_DATE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.LAST_ACTIVITY_DATE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.LAST_ACTIVITY_DATE",
+          "format": "DATE9.",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.LAST_ACTIVITY_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "LAST_ACTIVITY_DATE",
+            "sample": "03NOV2023"
+          }
+        },
+        {
+          "name": "FIRST_NAME",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.FIRST_NAME",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.FIRST_NAME",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.FIRST_NAME",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "FIRST_NAME",
+            "sample": "Linda"
+          }
+        },
+        {
+          "name": "LAST_NAME",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.LAST_NAME",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.LAST_NAME",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.LAST_NAME",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "LAST_NAME",
+            "sample": "Lopez"
+          }
+        },
+        {
+          "name": "SSN_HASH",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.SSN_HASH",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.SSN_HASH",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.SSN_HASH",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "SSN_HASH",
+            "sample": "a47401f094a96eef71465948a306129a"
+          }
+        },
+        {
+          "name": "DATE_OF_BIRTH",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.DATE_OF_BIRTH",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.DATE_OF_BIRTH",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.DATE_OF_BIRTH",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "DATE_OF_BIRTH",
+            "sample": "12AUG1958"
+          }
+        },
+        {
+          "name": "CUSTOMER_SEGMENT",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.CUSTOMER_SEGMENT",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.CUSTOMER_SEGMENT",
+          "format": "$CUSTSEG.",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.CUSTOMER_SEGMENT",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "CUSTOMER_SEGMENT",
+            "sample": "SMB"
+          }
+        },
+        {
+          "name": "RISK_RATING",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.RISK_RATING",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.RISK_RATING",
+          "format": "RISKRATE.",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.RISK_RATING",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "RISK_RATING",
+            "sample": "5"
+          }
+        },
+        {
+          "name": "REGION_CODE",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.REGION_CODE",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.REGION_CODE",
+          "format": "$REGION.",
+          "key": true,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "key_reason": "ON / WHERE",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.REGION_CODE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "REGION_CODE",
+            "sample": "MW"
+          }
+        },
+        {
+          "name": "PRIMARY_EMAIL",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.PRIMARY_EMAIL",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.PRIMARY_EMAIL",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.PRIMARY_EMAIL",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "PRIMARY_EMAIL",
+            "sample": "linda.lopez1@example.com"
+          }
+        },
+        {
+          "name": "PHONE_NUMBER",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.PHONE_NUMBER",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.PHONE_NUMBER",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.PHONE_NUMBER",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "PHONE_NUMBER",
+            "sample": "555-943-3892"
+          }
+        },
+        {
+          "name": "ACCT_AGE_MONTHS",
+          "expression": "intck('month', OPEN_DATE, \"&run_date\"d)",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:100",
+          "evidence": "FACT"
+        },
+        {
+          "name": "DAYS_INACTIVE",
+          "expression": "\"&run_date\"d - LAST_ACTIVITY_DATE",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:103",
+          "evidence": "FACT"
+        },
+        {
+          "name": "UTILIZATION_PCT",
+          "expression": "(CURRENT_BALANCE / CREDIT_LIMIT) * 100",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:107",
+          "evidence": "FACT"
+        },
+        {
+          "name": "DORMANCY_FLAG",
+          "expression": "'Y' / 'N'",
+          "sas_type": "char$1",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:113",
+          "evidence": "FACT"
+        },
+        {
+          "name": "HIGH_BALANCE_FLAG",
+          "expression": "'Y' / 'N'",
+          "sas_type": "char$1",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:119",
+          "evidence": "FACT"
+        },
+        {
+          "name": "SNAPSHOT_DATE",
+          "expression": "\"&run_date\"d",
+          "sas_type": "num (SAS date)",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:150",
+          "evidence": "FACT"
+        },
+        {
+          "name": "LOAD_TIMESTAMP",
+          "expression": "datetime()",
+          "sas_type": "num (SAS datetime)",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:151",
+          "evidence": "FACT"
+        }
+      ]
+    },
+    {
+      "table": "STG_BANK.ACCT_EXCEPTIONS",
+      "created_or_appended_by": [
+        "Programs/Banking/load_customer_accounts.sas:168"
+      ],
+      "columns": [
+        {
+          "name": "ACCOUNT_ID",
+          "expression": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_ID",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.ACCOUNT_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "key_reason": "ON / WHERE",
+          "source": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "ACCOUNT_ID",
+            "sample": "A00000001"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "CUSTOMER_ID",
+          "expression": "ORA_DW.CUST_ACCOUNTS.CUSTOMER_ID",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.CUSTOMER_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "key_reason": "ON / WHERE",
+          "source": "ORA_DW.CUST_ACCOUNTS.CUSTOMER_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "CUSTOMER_ID",
+            "sample": "C0000001"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "ACCOUNT_TYPE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_TYPE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.ACCOUNT_TYPE",
+          "format": "$ACCTTYPE.",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_TYPE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "ACCOUNT_TYPE",
+            "sample": "CC"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "ACCOUNT_STATUS",
+          "expression": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_STATUS",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.ACCOUNT_STATUS",
+          "format": "$ACCTSTAT.",
+          "key": true,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "key_reason": "ON / WHERE",
+          "source": "ORA_DW.CUST_ACCOUNTS.ACCOUNT_STATUS",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "ACCOUNT_STATUS",
+            "sample": "A"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "OPEN_DATE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.OPEN_DATE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.OPEN_DATE",
+          "format": "DATE9.",
+          "key": true,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "key_reason": "ON / WHERE",
+          "source": "ORA_DW.CUST_ACCOUNTS.OPEN_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "OPEN_DATE",
+            "sample": "27NOV2011"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "CLOSE_DATE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.CLOSE_DATE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.CLOSE_DATE",
+          "format": "DATE9.",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.CLOSE_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "CLOSE_DATE",
+            "sample": ""
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "CURRENT_BALANCE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.CURRENT_BALANCE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.CURRENT_BALANCE",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.CURRENT_BALANCE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "CURRENT_BALANCE",
+            "sample": "880.19"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "AVAILABLE_BALANCE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.AVAILABLE_BALANCE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.AVAILABLE_BALANCE",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.AVAILABLE_BALANCE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "AVAILABLE_BALANCE",
+            "sample": "619.81"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "CREDIT_LIMIT",
+          "expression": "ORA_DW.CUST_ACCOUNTS.CREDIT_LIMIT",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.CREDIT_LIMIT",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.CREDIT_LIMIT",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "CREDIT_LIMIT",
+            "sample": "1500.00"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "INTEREST_RATE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.INTEREST_RATE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.INTEREST_RATE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.INTEREST_RATE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "INTEREST_RATE",
+            "sample": "0.2009"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "BRANCH_ID",
+          "expression": "ORA_DW.CUST_ACCOUNTS.BRANCH_ID",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.BRANCH_ID",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.BRANCH_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "BRANCH_ID",
+            "sample": "B015"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "OFFICER_ID",
+          "expression": "ORA_DW.CUST_ACCOUNTS.OFFICER_ID",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.OFFICER_ID",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.OFFICER_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "OFFICER_ID",
+            "sample": "O0088"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "LAST_ACTIVITY_DATE",
+          "expression": "ORA_DW.CUST_ACCOUNTS.LAST_ACTIVITY_DATE",
+          "sas_type": "carried from ORA_DW.CUST_ACCOUNTS.LAST_ACTIVITY_DATE",
+          "format": "DATE9.",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_ACCOUNTS.LAST_ACTIVITY_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_ACCOUNTS.csv",
+            "column": "LAST_ACTIVITY_DATE",
+            "sample": "03NOV2023"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "FIRST_NAME",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.FIRST_NAME",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.FIRST_NAME",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.FIRST_NAME",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "FIRST_NAME",
+            "sample": "Linda"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "LAST_NAME",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.LAST_NAME",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.LAST_NAME",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.LAST_NAME",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "LAST_NAME",
+            "sample": "Lopez"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "SSN_HASH",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.SSN_HASH",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.SSN_HASH",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.SSN_HASH",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "SSN_HASH",
+            "sample": "a47401f094a96eef71465948a306129a"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "DATE_OF_BIRTH",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.DATE_OF_BIRTH",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.DATE_OF_BIRTH",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.DATE_OF_BIRTH",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "DATE_OF_BIRTH",
+            "sample": "12AUG1958"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "CUSTOMER_SEGMENT",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.CUSTOMER_SEGMENT",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.CUSTOMER_SEGMENT",
+          "format": "$CUSTSEG.",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.CUSTOMER_SEGMENT",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "CUSTOMER_SEGMENT",
+            "sample": "SMB"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "RISK_RATING",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.RISK_RATING",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.RISK_RATING",
+          "format": "RISKRATE.",
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.RISK_RATING",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "RISK_RATING",
+            "sample": "5"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "REGION_CODE",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.REGION_CODE",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.REGION_CODE",
+          "format": "$REGION.",
+          "key": true,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "key_reason": "ON / WHERE",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.REGION_CODE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "REGION_CODE",
+            "sample": "MW"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "PRIMARY_EMAIL",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.PRIMARY_EMAIL",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.PRIMARY_EMAIL",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.PRIMARY_EMAIL",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "PRIMARY_EMAIL",
+            "sample": "linda.lopez1@example.com"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "PHONE_NUMBER",
+          "expression": "ORA_DW.CUST_DEMOGRAPHICS.PHONE_NUMBER",
+          "sas_type": "carried from ORA_DW.CUST_DEMOGRAPHICS.PHONE_NUMBER",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:85",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.CUST_DEMOGRAPHICS.PHONE_NUMBER",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/CUST_DEMOGRAPHICS.csv",
+            "column": "PHONE_NUMBER",
+            "sample": "555-943-3892"
+          },
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "ACCT_AGE_MONTHS",
+          "expression": "intck('month', OPEN_DATE, \"&run_date\"d)",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:100",
+          "evidence": "FACT",
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "DAYS_INACTIVE",
+          "expression": "\"&run_date\"d - LAST_ACTIVITY_DATE",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:103",
+          "evidence": "FACT",
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "UTILIZATION_PCT",
+          "expression": "(CURRENT_BALANCE / CREDIT_LIMIT) * 100",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:107",
+          "evidence": "FACT",
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "DORMANCY_FLAG",
+          "expression": "'Y' / 'N'",
+          "sas_type": "char$1",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:113",
+          "evidence": "FACT",
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "HIGH_BALANCE_FLAG",
+          "expression": "'Y' / 'N'",
+          "sas_type": "char$1",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:119",
+          "evidence": "FACT",
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "SNAPSHOT_DATE",
+          "expression": "\"&run_date\"d",
+          "sas_type": "num (SAS date)",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:150",
+          "evidence": "FACT",
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        },
+        {
+          "name": "LOAD_TIMESTAMP",
+          "expression": "datetime()",
+          "sas_type": "num (SAS datetime)",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/load_customer_accounts.sas:151",
+          "evidence": "FACT",
+          "note": "Exception output shares the compiled DATA-step PDV; values assigned after early OUTPUT may be missing."
+        }
+      ],
+      "note": "WORK.ACCT_EXCEPTIONS is output at lines 129/138/146, then inserted with SELECT *; the compiled PDV determines column order."
+    },
+    {
+      "table": "CURATED.DAILY_TRANSACTIONS",
+      "created_or_appended_by": [
+        "Programs/Banking/daily_transaction_processing.sas:207"
+      ],
+      "columns": [
+        {
+          "name": "TRANSACTION_ID",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "key_reason": "ON / ORDER BY / BY",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_ID",
+            "sample": "T000000001"
+          }
+        },
+        {
+          "name": "ACCOUNT_ID",
+          "expression": "RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "key_reason": "ON / ORDER BY / BY",
+          "source": "RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "ACCOUNT_ID",
+            "sample": "A00000004"
+          }
+        },
+        {
+          "name": "TRANSACTION_DATE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "key_reason": "ON / ORDER BY / BY",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_DATE",
+            "sample": "31JAN2024"
+          }
+        },
+        {
+          "name": "TRANSACTION_TYPE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_TYPE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_TYPE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_TYPE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_TYPE",
+            "sample": "REF"
+          }
+        },
+        {
+          "name": "TRANSACTION_AMOUNT",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_AMOUNT",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_AMOUNT",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_AMOUNT",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_AMOUNT",
+            "sample": "1804.93"
+          }
+        },
+        {
+          "name": "CHANNEL",
+          "expression": "RAW_BANK.TXN_FEED_20240131.CHANNEL",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.CHANNEL",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.CHANNEL",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "CHANNEL",
+            "sample": "WIRE"
+          }
+        },
+        {
+          "name": "MERCHANT_CATEGORY",
+          "expression": "RAW_BANK.TXN_FEED_20240131.MERCHANT_CATEGORY",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.MERCHANT_CATEGORY",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.MERCHANT_CATEGORY",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "MERCHANT_CATEGORY",
+            "sample": "4900"
+          }
+        },
+        {
+          "name": "DESCRIPTION",
+          "expression": "RAW_BANK.TXN_FEED_20240131.DESCRIPTION",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.DESCRIPTION",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.DESCRIPTION",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "DESCRIPTION",
+            "sample": "REF MOBILE REF714480"
+          }
+        },
+        {
+          "name": "POST_DATE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.POST_DATE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.POST_DATE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.POST_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "POST_DATE",
+            "sample": "31JAN2024"
+          }
+        },
+        {
+          "name": "CURRENCY_CODE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.CURRENCY_CODE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.CURRENCY_CODE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.CURRENCY_CODE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "CURRENCY_CODE",
+            "sample": "USD"
+          }
+        },
+        {
+          "name": "ACCOUNT_TYPE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE"
+        },
+        {
+          "name": "CUSTOMER_ID",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_ID",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_ID",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_ID"
+        },
+        {
+          "name": "CUSTOMER_SEGMENT",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT"
+        },
+        {
+          "name": "REGION_CODE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE"
+        },
+        {
+          "name": "BRANCH_ID",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.BRANCH_ID",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.BRANCH_ID",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.BRANCH_ID"
+        },
+        {
+          "name": "PRE_TXN_BALANCE",
+          "expression": "a.CURRENT_BALANCE as PRE_TXN_BALANCE",
+          "sas_type": "num",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:114",
+          "evidence": "FACT"
+        },
+        {
+          "name": "POST_TXN_BALANCE",
+          "expression": "case ... end as POST_TXN_BALANCE",
+          "sas_type": "num",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:123",
+          "evidence": "FACT"
+        },
+        {
+          "name": "RISK_RATING",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.RISK_RATING",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.RISK_RATING",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:124",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.RISK_RATING"
+        },
+        {
+          "name": "RUNNING_BALANCE",
+          "expression": "RUNNING_BALANCE = PRE_TXN_BALANCE + signed TRANSACTION_AMOUNT",
+          "sas_type": "num",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:141",
+          "evidence": "FACT",
+          "note": "Retained and updated in BY ACCOUNT_ID TRANSACTION_DATE TRANSACTION_ID order."
+        }
+      ]
+    },
+    {
+      "table": "CURATED.RUNNING_BALANCES",
+      "created_or_appended_by": [
+        "Programs/Banking/daily_transaction_processing.sas:222"
+      ],
+      "columns": [
+        {
+          "name": "ACCOUNT_ID",
+          "expression": "RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:224",
+          "evidence": "INFERRED",
+          "key_reason": "BY",
+          "source": "RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "ACCOUNT_ID",
+            "sample": "A00000004"
+          }
+        },
+        {
+          "name": "TRANSACTION_DATE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:224",
+          "evidence": "INFERRED",
+          "key_reason": "BY",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_DATE",
+            "sample": "31JAN2024"
+          }
+        },
+        {
+          "name": "TRANSACTION_ID",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:224",
+          "evidence": "INFERRED",
+          "key_reason": "BY",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_ID",
+            "sample": "T000000001"
+          }
+        },
+        {
+          "name": "RUNNING_BALANCE",
+          "expression": "RUNNING_BALANCE",
+          "sas_type": "num",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:224",
+          "evidence": "FACT",
+          "note": "Value is carried from WORK.TXN_WITH_BALANCE after retained BY-group calculation."
+        }
+      ]
+    },
+    {
+      "table": "CURATED.TXN_ANOMALIES",
+      "created_or_appended_by": [
+        "Programs/Banking/daily_transaction_processing.sas:214"
+      ],
+      "columns": [
+        {
+          "name": "TRANSACTION_ID",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "key_reason": "ON / ORDER BY / BY",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_ID",
+            "sample": "T000000001"
+          }
+        },
+        {
+          "name": "ACCOUNT_ID",
+          "expression": "RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "key_reason": "ON / ORDER BY / BY",
+          "source": "RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "ACCOUNT_ID",
+            "sample": "A00000004"
+          }
+        },
+        {
+          "name": "TRANSACTION_DATE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "key_reason": "ON / ORDER BY / BY",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_DATE",
+            "sample": "31JAN2024"
+          }
+        },
+        {
+          "name": "TRANSACTION_TYPE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_TYPE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_TYPE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_TYPE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_TYPE",
+            "sample": "REF"
+          }
+        },
+        {
+          "name": "TRANSACTION_AMOUNT",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_AMOUNT",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_AMOUNT",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_AMOUNT",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_AMOUNT",
+            "sample": "1804.93"
+          }
+        },
+        {
+          "name": "CHANNEL",
+          "expression": "RAW_BANK.TXN_FEED_20240131.CHANNEL",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.CHANNEL",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.CHANNEL",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "CHANNEL",
+            "sample": "WIRE"
+          }
+        },
+        {
+          "name": "MERCHANT_CATEGORY",
+          "expression": "RAW_BANK.TXN_FEED_20240131.MERCHANT_CATEGORY",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.MERCHANT_CATEGORY",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.MERCHANT_CATEGORY",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "MERCHANT_CATEGORY",
+            "sample": "4900"
+          }
+        },
+        {
+          "name": "DESCRIPTION",
+          "expression": "RAW_BANK.TXN_FEED_20240131.DESCRIPTION",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.DESCRIPTION",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.DESCRIPTION",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "DESCRIPTION",
+            "sample": "REF MOBILE REF714480"
+          }
+        },
+        {
+          "name": "POST_DATE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.POST_DATE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.POST_DATE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.POST_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "POST_DATE",
+            "sample": "31JAN2024"
+          }
+        },
+        {
+          "name": "CURRENCY_CODE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.CURRENCY_CODE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.CURRENCY_CODE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.CURRENCY_CODE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "CURRENCY_CODE",
+            "sample": "USD"
+          }
+        },
+        {
+          "name": "ACCOUNT_TYPE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE"
+        },
+        {
+          "name": "CUSTOMER_ID",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_ID",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_ID",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_ID"
+        },
+        {
+          "name": "CUSTOMER_SEGMENT",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT"
+        },
+        {
+          "name": "REGION_CODE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE"
+        },
+        {
+          "name": "BRANCH_ID",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.BRANCH_ID",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.BRANCH_ID",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:107",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.BRANCH_ID"
+        },
+        {
+          "name": "PRE_TXN_BALANCE",
+          "expression": "a.CURRENT_BALANCE as PRE_TXN_BALANCE",
+          "sas_type": "num",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:114",
+          "evidence": "FACT"
+        },
+        {
+          "name": "POST_TXN_BALANCE",
+          "expression": "case ... end as POST_TXN_BALANCE",
+          "sas_type": "num",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:123",
+          "evidence": "FACT"
+        },
+        {
+          "name": "RISK_RATING",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.RISK_RATING",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.RISK_RATING",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:124",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.RISK_RATING"
+        },
+        {
+          "name": "RUNNING_BALANCE",
+          "expression": "RUNNING_BALANCE = PRE_TXN_BALANCE + signed TRANSACTION_AMOUNT",
+          "sas_type": "num",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:141",
+          "evidence": "FACT",
+          "note": "Retained and updated in BY ACCOUNT_ID TRANSACTION_DATE TRANSACTION_ID order."
+        },
+        {
+          "name": "AVG_TXN_AMT",
+          "expression": "mean(abs(TRANSACTION_AMOUNT)) as AVG_TXN_AMT",
+          "sas_type": "num (aggregate)",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:163",
+          "evidence": "FACT"
+        },
+        {
+          "name": "STD_TXN_AMT",
+          "expression": "std(abs(TRANSACTION_AMOUNT)) as STD_TXN_AMT",
+          "sas_type": "num (aggregate)",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:164",
+          "evidence": "FACT"
+        },
+        {
+          "name": "Z_SCORE",
+          "expression": "(abs(e.TRANSACTION_AMOUNT) - s.AVG_TXN_AMT) / s.STD_TXN_AMT",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:182",
+          "evidence": "FACT"
+        },
+        {
+          "name": "ANOMALY_TYPE",
+          "expression": "case ... end as ANOMALY_TYPE",
+          "sas_type": "char$20",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:191",
+          "evidence": "FACT"
+        }
+      ]
+    },
+    {
+      "table": "WORK.TXN_REJECTED",
+      "created_or_appended_by": [
+        "Programs/Banking/daily_transaction_processing.sas:45"
+      ],
+      "columns": [
+        {
+          "name": "TRANSACTION_ID",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:37",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_ID",
+            "sample": "T000000001"
+          }
+        },
+        {
+          "name": "ACCOUNT_ID",
+          "expression": "RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:37",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.ACCOUNT_ID",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "ACCOUNT_ID",
+            "sample": "A00000004"
+          }
+        },
+        {
+          "name": "TRANSACTION_DATE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:37",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_DATE",
+            "sample": "31JAN2024"
+          }
+        },
+        {
+          "name": "TRANSACTION_TYPE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_TYPE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_TYPE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:37",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_TYPE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_TYPE",
+            "sample": "REF"
+          }
+        },
+        {
+          "name": "TRANSACTION_AMOUNT",
+          "expression": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_AMOUNT",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.TRANSACTION_AMOUNT",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:37",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.TRANSACTION_AMOUNT",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "TRANSACTION_AMOUNT",
+            "sample": "1804.93"
+          }
+        },
+        {
+          "name": "CHANNEL",
+          "expression": "RAW_BANK.TXN_FEED_20240131.CHANNEL",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.CHANNEL",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:37",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.CHANNEL",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "CHANNEL",
+            "sample": "WIRE"
+          }
+        },
+        {
+          "name": "MERCHANT_CATEGORY",
+          "expression": "RAW_BANK.TXN_FEED_20240131.MERCHANT_CATEGORY",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.MERCHANT_CATEGORY",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:37",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.MERCHANT_CATEGORY",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "MERCHANT_CATEGORY",
+            "sample": "4900"
+          }
+        },
+        {
+          "name": "DESCRIPTION",
+          "expression": "RAW_BANK.TXN_FEED_20240131.DESCRIPTION",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.DESCRIPTION",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:37",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.DESCRIPTION",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "DESCRIPTION",
+            "sample": "REF MOBILE REF714480"
+          }
+        },
+        {
+          "name": "POST_DATE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.POST_DATE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.POST_DATE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:37",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.POST_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "POST_DATE",
+            "sample": "31JAN2024"
+          }
+        },
+        {
+          "name": "CURRENCY_CODE",
+          "expression": "RAW_BANK.TXN_FEED_20240131.CURRENCY_CODE",
+          "sas_type": "carried from RAW_BANK.TXN_FEED_20240131.CURRENCY_CODE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:37",
+          "evidence": "INFERRED",
+          "source": "RAW_BANK.TXN_FEED_20240131.CURRENCY_CODE",
+          "csv_evidence": {
+            "csv": "Data/csv/raw_bank/TXN_FEED_20240131.csv",
+            "column": "CURRENCY_CODE",
+            "sample": "USD"
+          }
+        },
+        {
+          "name": "REJECT_REASON",
+          "expression": "length REJECT_REASON $200",
+          "sas_type": "char$200",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/daily_transaction_processing.sas:50",
+          "evidence": "FACT"
+        }
+      ],
+      "note": "Reject dataset is created by the two-target DATA step and removed in cleanup; it is not appended to a permanent table."
+    },
+    {
+      "table": "CURATED.RISK_SCORES",
+      "created_or_appended_by": [
+        "Programs/Banking/credit_risk_scoring.sas:231"
+      ],
+      "columns": [
+        {
+          "name": "ACCOUNT_ID",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_ID",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "key_reason": "ON",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_ID"
+        },
+        {
+          "name": "CUSTOMER_ID",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_ID",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "key_reason": "ON",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_ID"
+        },
+        {
+          "name": "ACCOUNT_TYPE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE"
+        },
+        {
+          "name": "CURRENT_BALANCE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.CURRENT_BALANCE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.CURRENT_BALANCE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.CURRENT_BALANCE"
+        },
+        {
+          "name": "CREDIT_LIMIT",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.CREDIT_LIMIT",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.CREDIT_LIMIT",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.CREDIT_LIMIT"
+        },
+        {
+          "name": "ACCT_AGE_MONTHS",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCT_AGE_MONTHS",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.ACCT_AGE_MONTHS",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCT_AGE_MONTHS"
+        },
+        {
+          "name": "DAYS_INACTIVE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.DAYS_INACTIVE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.DAYS_INACTIVE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.DAYS_INACTIVE"
+        },
+        {
+          "name": "UTILIZATION_PCT",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.UTILIZATION_PCT",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.UTILIZATION_PCT",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.UTILIZATION_PCT"
+        },
+        {
+          "name": "CUSTOMER_SEGMENT",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT"
+        },
+        {
+          "name": "REGION_CODE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE"
+        },
+        {
+          "name": "FICO_SCORE",
+          "expression": "ORA_DW.BUREAU_SCORES.FICO_SCORE",
+          "sas_type": "carried from ORA_DW.BUREAU_SCORES.FICO_SCORE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.BUREAU_SCORES.FICO_SCORE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/BUREAU_SCORES.csv",
+            "column": "FICO_SCORE",
+            "sample": "538"
+          }
+        },
+        {
+          "name": "VANTAGE_SCORE",
+          "expression": "ORA_DW.BUREAU_SCORES.VANTAGE_SCORE",
+          "sas_type": "carried from ORA_DW.BUREAU_SCORES.VANTAGE_SCORE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.BUREAU_SCORES.VANTAGE_SCORE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/BUREAU_SCORES.csv",
+            "column": "VANTAGE_SCORE",
+            "sample": "518"
+          }
+        },
+        {
+          "name": "BUREAU_INQS_6MO",
+          "expression": "ORA_DW.BUREAU_SCORES.BUREAU_INQS_6MO",
+          "sas_type": "carried from ORA_DW.BUREAU_SCORES.BUREAU_INQS_6MO",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.BUREAU_SCORES.BUREAU_INQS_6MO",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/BUREAU_SCORES.csv",
+            "column": "BUREAU_INQS_6MO",
+            "sample": "0"
+          }
+        },
+        {
+          "name": "BUREAU_TRADES_OPEN",
+          "expression": "ORA_DW.BUREAU_SCORES.BUREAU_TRADES_OPEN",
+          "sas_type": "carried from ORA_DW.BUREAU_SCORES.BUREAU_TRADES_OPEN",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.BUREAU_SCORES.BUREAU_TRADES_OPEN",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/BUREAU_SCORES.csv",
+            "column": "BUREAU_TRADES_OPEN",
+            "sample": "23"
+          }
+        },
+        {
+          "name": "BUREAU_DEROGS",
+          "expression": "ORA_DW.BUREAU_SCORES.BUREAU_DEROGS",
+          "sas_type": "carried from ORA_DW.BUREAU_SCORES.BUREAU_DEROGS",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.BUREAU_SCORES.BUREAU_DEROGS",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/BUREAU_SCORES.csv",
+            "column": "BUREAU_DEROGS",
+            "sample": "0"
+          }
+        },
+        {
+          "name": "BUREAU_UTIL_PCT",
+          "expression": "ORA_DW.BUREAU_SCORES.BUREAU_UTIL_PCT",
+          "sas_type": "carried from ORA_DW.BUREAU_SCORES.BUREAU_UTIL_PCT",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.BUREAU_SCORES.BUREAU_UTIL_PCT",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/BUREAU_SCORES.csv",
+            "column": "BUREAU_UTIL_PCT",
+            "sample": "14.46"
+          }
+        },
+        {
+          "name": "BUREAU_OLDEST_TRADE_MO",
+          "expression": "ORA_DW.BUREAU_SCORES.BUREAU_OLDEST_TRADE_MO",
+          "sas_type": "carried from ORA_DW.BUREAU_SCORES.BUREAU_OLDEST_TRADE_MO",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.BUREAU_SCORES.BUREAU_OLDEST_TRADE_MO",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/BUREAU_SCORES.csv",
+            "column": "BUREAU_OLDEST_TRADE_MO",
+            "sample": "167"
+          }
+        },
+        {
+          "name": "PMT_ONTIME_12MO",
+          "expression": "ORA_DW.PAYMENT_HISTORY.PMT_ONTIME_12MO",
+          "sas_type": "carried from ORA_DW.PAYMENT_HISTORY.PMT_ONTIME_12MO",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.PAYMENT_HISTORY.PMT_ONTIME_12MO",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/PAYMENT_HISTORY.csv",
+            "column": "PMT_ONTIME_12MO",
+            "sample": "7"
+          }
+        },
+        {
+          "name": "PMT_LATE_30_12MO",
+          "expression": "ORA_DW.PAYMENT_HISTORY.PMT_LATE_30_12MO",
+          "sas_type": "carried from ORA_DW.PAYMENT_HISTORY.PMT_LATE_30_12MO",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.PAYMENT_HISTORY.PMT_LATE_30_12MO",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/PAYMENT_HISTORY.csv",
+            "column": "PMT_LATE_30_12MO",
+            "sample": "5"
+          }
+        },
+        {
+          "name": "PMT_LATE_60_12MO",
+          "expression": "ORA_DW.PAYMENT_HISTORY.PMT_LATE_60_12MO",
+          "sas_type": "carried from ORA_DW.PAYMENT_HISTORY.PMT_LATE_60_12MO",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.PAYMENT_HISTORY.PMT_LATE_60_12MO",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/PAYMENT_HISTORY.csv",
+            "column": "PMT_LATE_60_12MO",
+            "sample": "3"
+          }
+        },
+        {
+          "name": "PMT_LATE_90_12MO",
+          "expression": "ORA_DW.PAYMENT_HISTORY.PMT_LATE_90_12MO",
+          "sas_type": "carried from ORA_DW.PAYMENT_HISTORY.PMT_LATE_90_12MO",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.PAYMENT_HISTORY.PMT_LATE_90_12MO",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/PAYMENT_HISTORY.csv",
+            "column": "PMT_LATE_90_12MO",
+            "sample": "1"
+          }
+        },
+        {
+          "name": "MAX_DAYS_PAST_DUE_EVER",
+          "expression": "ORA_DW.PAYMENT_HISTORY.MAX_DAYS_PAST_DUE_EVER",
+          "sas_type": "carried from ORA_DW.PAYMENT_HISTORY.MAX_DAYS_PAST_DUE_EVER",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.PAYMENT_HISTORY.MAX_DAYS_PAST_DUE_EVER",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/PAYMENT_HISTORY.csv",
+            "column": "MAX_DAYS_PAST_DUE_EVER",
+            "sample": "91"
+          }
+        },
+        {
+          "name": "MONTHS_SINCE_LAST_DPD",
+          "expression": "ORA_DW.PAYMENT_HISTORY.MONTHS_SINCE_LAST_DPD",
+          "sas_type": "carried from ORA_DW.PAYMENT_HISTORY.MONTHS_SINCE_LAST_DPD",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.PAYMENT_HISTORY.MONTHS_SINCE_LAST_DPD",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/PAYMENT_HISTORY.csv",
+            "column": "MONTHS_SINCE_LAST_DPD",
+            "sample": "13"
+          }
+        },
+        {
+          "name": "AVG_PMT_RATIO_12MO",
+          "expression": "ORA_DW.PAYMENT_HISTORY.AVG_PMT_RATIO_12MO",
+          "sas_type": "carried from ORA_DW.PAYMENT_HISTORY.AVG_PMT_RATIO_12MO",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.PAYMENT_HISTORY.AVG_PMT_RATIO_12MO",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/PAYMENT_HISTORY.csv",
+            "column": "AVG_PMT_RATIO_12MO",
+            "sample": "0.6016"
+          }
+        },
+        {
+          "name": "COLLATERAL_VALUE",
+          "expression": "ORA_DW.COLLATERAL.COLLATERAL_VALUE",
+          "sas_type": "carried from ORA_DW.COLLATERAL.COLLATERAL_VALUE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.COLLATERAL.COLLATERAL_VALUE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/COLLATERAL.csv",
+            "column": "COLLATERAL_VALUE",
+            "sample": "592503.16"
+          }
+        },
+        {
+          "name": "LAST_APPRAISAL_DATE",
+          "expression": "ORA_DW.COLLATERAL.LAST_APPRAISAL_DATE",
+          "sas_type": "carried from ORA_DW.COLLATERAL.LAST_APPRAISAL_DATE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:34",
+          "evidence": "INFERRED",
+          "source": "ORA_DW.COLLATERAL.LAST_APPRAISAL_DATE",
+          "csv_evidence": {
+            "csv": "Data/csv/oracle_dw/COLLATERAL.csv",
+            "column": "LAST_APPRAISAL_DATE",
+            "sample": "26DEC2023"
+          }
+        },
+        {
+          "name": "LTV",
+          "expression": "case when c.COLLATERAL_VALUE > 0 then ... end as LTV",
+          "sas_type": "num",
+          "format": "8.4",
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:71",
+          "evidence": "FACT"
+        },
+        {
+          "name": "PD",
+          "expression": "1 / (1 + exp(-LOG_ODDS))",
+          "sas_type": "num",
+          "format": "PERCENT8.4",
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:122",
+          "evidence": "FACT"
+        },
+        {
+          "name": "LGD",
+          "expression": "max(0, min(1, (LTV - 0.5) * 0.8))",
+          "sas_type": "num",
+          "format": "PERCENT8.4",
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:163",
+          "evidence": "FACT"
+        },
+        {
+          "name": "EAD",
+          "expression": "CURRENT_BALANCE + 0.50 * (CREDIT_LIMIT - CURRENT_BALANCE)",
+          "sas_type": "num",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:173",
+          "evidence": "FACT"
+        },
+        {
+          "name": "EXPECTED_LOSS",
+          "expression": "PD * LGD * EAD",
+          "sas_type": "num",
+          "format": "DOLLAR18.2",
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:179",
+          "evidence": "FACT"
+        },
+        {
+          "name": "NEW_RISK_RATING",
+          "expression": "7-way PD threshold assignment",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:183",
+          "evidence": "FACT"
+        },
+        {
+          "name": "SCORE_DATE",
+          "expression": "\"&score_date\"d",
+          "sas_type": "num (SAS date)",
+          "format": "DATE9.",
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:76",
+          "evidence": "FACT"
+        },
+        {
+          "name": "MODEL_ID",
+          "expression": "\"&model_id\"",
+          "sas_type": "char$UNKNOWN",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:192",
+          "evidence": "FACT",
+          "note": "Macro parameter length is not declared in this program."
+        },
+        {
+          "name": "SCORE_TIMESTAMP",
+          "expression": "datetime()",
+          "sas_type": "num (SAS datetime)",
+          "format": "DATETIME20.",
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:193",
+          "evidence": "FACT"
+        }
+      ]
+    },
+    {
+      "table": "CURATED.RISK_MIGRATION",
+      "created_or_appended_by": [
+        "Programs/Banking/credit_risk_scoring.sas:238"
+      ],
+      "columns": [
+        {
+          "name": "SCORE_DATE",
+          "expression": "\"&score_date\"d as SCORE_DATE",
+          "sas_type": "num (SAS date)",
+          "format": "DATE9.",
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:205",
+          "evidence": "FACT"
+        },
+        {
+          "name": "ACCOUNT_ID",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_ID",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_ID",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:219",
+          "evidence": "INFERRED",
+          "key_reason": "ON",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_ID"
+        },
+        {
+          "name": "PREV_RATING",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.RISK_RATING",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.RISK_RATING",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:207",
+          "evidence": "INFERRED",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.RISK_RATING"
+        },
+        {
+          "name": "CURR_RATING",
+          "expression": "CURATED.RISK_SCORES.NEW_RISK_RATING",
+          "sas_type": "carried from CURATED.RISK_SCORES.NEW_RISK_RATING",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:208",
+          "evidence": "INFERRED",
+          "source": "CURATED.RISK_SCORES.NEW_RISK_RATING"
+        },
+        {
+          "name": "MIGRATION_DIRECTION",
+          "expression": "case ... end as MIGRATION_DIRECTION",
+          "sas_type": "char$10",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:214",
+          "evidence": "FACT"
+        },
+        {
+          "name": "PD",
+          "expression": "CURATED.RISK_SCORES.PD",
+          "sas_type": "carried from CURATED.RISK_SCORES.PD",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:215",
+          "evidence": "INFERRED",
+          "source": "CURATED.RISK_SCORES.PD"
+        },
+        {
+          "name": "EXPECTED_LOSS",
+          "expression": "CURATED.RISK_SCORES.EXPECTED_LOSS",
+          "sas_type": "carried from CURATED.RISK_SCORES.EXPECTED_LOSS",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:216",
+          "evidence": "INFERRED",
+          "source": "CURATED.RISK_SCORES.EXPECTED_LOSS"
+        }
+      ]
+    },
+    {
+      "table": "REPORTS.RISK_SUMMARY",
+      "created_or_appended_by": [
+        "Programs/Banking/credit_risk_scoring.sas:249"
+      ],
+      "columns": [
+        {
+          "name": "ACCOUNT_TYPE",
+          "expression": "CURATED.RISK_SCORES.ACCOUNT_TYPE",
+          "sas_type": "carried from CURATED.RISK_SCORES.ACCOUNT_TYPE",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:247",
+          "evidence": "INFERRED",
+          "source": "CURATED.RISK_SCORES.ACCOUNT_TYPE"
+        },
+        {
+          "name": "NEW_RISK_RATING",
+          "expression": "CURATED.RISK_SCORES.NEW_RISK_RATING",
+          "sas_type": "carried from CURATED.RISK_SCORES.NEW_RISK_RATING",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:247",
+          "evidence": "INFERRED",
+          "source": "CURATED.RISK_SCORES.NEW_RISK_RATING"
+        },
+        {
+          "name": "N_ACCOUNTS",
+          "expression": "n=N_ACCOUNTS",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:250",
+          "evidence": "FACT"
+        },
+        {
+          "name": "AVG_PD",
+          "expression": "mean(PD)=AVG_PD",
+          "sas_type": "num (aggregate)",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:251",
+          "evidence": "FACT"
+        },
+        {
+          "name": "AVG_LGD",
+          "expression": "mean(LGD)=AVG_LGD",
+          "sas_type": "num (aggregate)",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:252",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TOTAL_EAD",
+          "expression": "sum(EAD)=TOTAL_EAD",
+          "sas_type": "num (aggregate)",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:253",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TOTAL_EL",
+          "expression": "sum(EXPECTED_LOSS)=TOTAL_EL",
+          "sas_type": "num (aggregate)",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/credit_risk_scoring.sas:254",
+          "evidence": "FACT"
+        }
+      ]
+    },
+    {
+      "table": "REPORTS.MONTHLY_RWA",
+      "created_or_appended_by": [
+        "Programs/Banking/monthly_regulatory_reporting.sas:41"
+      ],
+      "columns": [
+        {
+          "name": "REPORT_MONTH",
+          "expression": "\"&report_month\" as REPORT_MONTH",
+          "sas_type": "char$6",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:43",
+          "evidence": "FACT"
+        },
+        {
+          "name": "ACCOUNT_TYPE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:44",
+          "evidence": "INFERRED",
+          "key_reason": "GROUP BY / ORDER BY",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE"
+        },
+        {
+          "name": "CUSTOMER_SEGMENT",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:45",
+          "evidence": "INFERRED",
+          "key_reason": "GROUP BY / ORDER BY",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.CUSTOMER_SEGMENT"
+        },
+        {
+          "name": "RISK_WEIGHT",
+          "expression": "case when ACCOUNT_TYPE ... end as RISK_WEIGHT",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:56",
+          "evidence": "FACT"
+        },
+        {
+          "name": "N_ACCOUNTS",
+          "expression": "count(*) as N_ACCOUNTS",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:57",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TOTAL_EXPOSURE",
+          "expression": "sum(CURRENT_BALANCE) as TOTAL_EXPOSURE",
+          "sas_type": "num (aggregate)",
+          "format": "DOLLAR20.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:58",
+          "evidence": "FACT"
+        },
+        {
+          "name": "RWA",
+          "expression": "sum(CURRENT_BALANCE * calculated RISK_WEIGHT) as RWA",
+          "sas_type": "num (aggregate)",
+          "format": "DOLLAR20.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:59",
+          "evidence": "FACT"
+        }
+      ]
+    },
+    {
+      "table": "REPORTS.DELINQUENCY_AGING",
+      "created_or_appended_by": [
+        "Programs/Banking/monthly_regulatory_reporting.sas:73"
+      ],
+      "columns": [
+        {
+          "name": "REPORT_MONTH",
+          "expression": "\"&report_month\" as REPORT_MONTH",
+          "sas_type": "char$6",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:43",
+          "evidence": "FACT"
+        },
+        {
+          "name": "ACCOUNT_TYPE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:44",
+          "evidence": "INFERRED",
+          "key_reason": "GROUP BY / ORDER BY",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE"
+        },
+        {
+          "name": "REGION_CODE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:77",
+          "evidence": "INFERRED",
+          "key_reason": "GROUP BY / ORDER BY",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.REGION_CODE"
+        },
+        {
+          "name": "DELINQ_BUCKET",
+          "expression": "case when DAYS_PAST_DUE ... end as DELINQ_BUCKET",
+          "sas_type": "char$10",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:87",
+          "evidence": "FACT"
+        },
+        {
+          "name": "N_ACCOUNTS",
+          "expression": "count(*) as N_ACCOUNTS",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:88",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TOTAL_BALANCE",
+          "expression": "sum(CURRENT_BALANCE) as TOTAL_BALANCE",
+          "sas_type": "num (aggregate)",
+          "format": "DOLLAR20.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:89",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TOTAL_PAST_DUE",
+          "expression": "sum(PAST_DUE_AMOUNT) as TOTAL_PAST_DUE",
+          "sas_type": "num (aggregate)",
+          "format": "DOLLAR20.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:90",
+          "evidence": "FACT"
+        }
+      ]
+    },
+    {
+      "table": "REPORTS.LLP_COVERAGE",
+      "created_or_appended_by": [
+        "Programs/Banking/monthly_regulatory_reporting.sas:115"
+      ],
+      "columns": [
+        {
+          "name": "REPORT_MONTH",
+          "expression": "\"&report_month\" as REPORT_MONTH",
+          "sas_type": "char$6",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:43",
+          "evidence": "FACT"
+        },
+        {
+          "name": "ACCOUNT_TYPE",
+          "expression": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "sas_type": "carried from STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE",
+          "format": null,
+          "key": true,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:118",
+          "evidence": "INFERRED",
+          "key_reason": "GROUP BY",
+          "source": "STG_BANK.CUST_ACCOUNTS_DAILY.ACCOUNT_TYPE"
+        },
+        {
+          "name": "N_LOANS",
+          "expression": "count(*) as N_LOANS",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:119",
+          "evidence": "FACT"
+        },
+        {
+          "name": "GROSS_LOANS",
+          "expression": "sum(a.CURRENT_BALANCE) as GROSS_LOANS",
+          "sas_type": "num (aggregate)",
+          "format": "DOLLAR20.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:120",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TOTAL_ALLOWANCE",
+          "expression": "sum(l.ALLOWANCE_AMT) as TOTAL_ALLOWANCE",
+          "sas_type": "num (aggregate)",
+          "format": "DOLLAR20.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:121",
+          "evidence": "FACT"
+        },
+        {
+          "name": "COVERAGE_PCT",
+          "expression": "sum(l.ALLOWANCE_AMT) / sum(a.CURRENT_BALANCE) * 100",
+          "sas_type": "num",
+          "format": "8.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:126",
+          "evidence": "FACT"
+        },
+        {
+          "name": "NPL_BALANCE",
+          "expression": "sum(case when l.DAYS_PAST_DUE >= 90 then ... end)",
+          "sas_type": "num (aggregate)",
+          "format": "DOLLAR20.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:128",
+          "evidence": "FACT"
+        },
+        {
+          "name": "NPL_COVERAGE_PCT",
+          "expression": "sum(l.ALLOWANCE_AMT) / calculated NPL_BALANCE * 100",
+          "sas_type": "num",
+          "format": "8.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:133",
+          "evidence": "FACT"
+        }
+      ]
+    },
+    {
+      "table": "REPORTS.CAPITAL_ADEQUACY",
+      "created_or_appended_by": [
+        "Programs/Banking/monthly_regulatory_reporting.sas:170"
+      ],
+      "columns": [
+        {
+          "name": "REPORT_MONTH",
+          "expression": "\"&report_month\" as REPORT_MONTH",
+          "sas_type": "char$6",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:43",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TOTAL_RWA",
+          "expression": "sum(RWA) as TOTAL_RWA",
+          "sas_type": "num (aggregate)",
+          "format": "DOLLAR20.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:173",
+          "evidence": "FACT"
+        },
+        {
+          "name": "CET1_CAPITAL",
+          "expression": "50000000 as CET1_CAPITAL",
+          "sas_type": "num",
+          "format": "DOLLAR20.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:175",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TIER1_CAPITAL",
+          "expression": "65000000 as TIER1_CAPITAL",
+          "sas_type": "num",
+          "format": "DOLLAR20.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:176",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TOTAL_CAPITAL",
+          "expression": "80000000 as TOTAL_CAPITAL",
+          "sas_type": "num",
+          "format": "DOLLAR20.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:177",
+          "evidence": "FACT"
+        },
+        {
+          "name": "CET1_RATIO",
+          "expression": "50000000 / sum(RWA) * 100",
+          "sas_type": "num",
+          "format": "8.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:178",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TIER1_RATIO",
+          "expression": "65000000 / sum(RWA) * 100",
+          "sas_type": "num",
+          "format": "8.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:179",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TOTAL_CAPITAL_RATIO",
+          "expression": "80000000 / sum(RWA) * 100",
+          "sas_type": "num",
+          "format": "8.2",
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:180",
+          "evidence": "FACT"
+        },
+        {
+          "name": "CET1_STATUS",
+          "expression": "case ... then 'PASS' else 'FAIL' end",
+          "sas_type": "char$4",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:183",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TIER1_STATUS",
+          "expression": "case ... then 'PASS' else 'FAIL' end",
+          "sas_type": "char$4",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:185",
+          "evidence": "FACT"
+        },
+        {
+          "name": "TOTAL_CAPITAL_STATUS",
+          "expression": "case ... then 'PASS' else 'FAIL' end",
+          "sas_type": "char$4",
+          "format": null,
+          "key": false,
+          "cite": "Programs/Banking/monthly_regulatory_reporting.sas:187",
+          "evidence": "FACT"
+        }
+      ]
+    },
+    {
+      "table": "ARCHIVE.BATCH_HISTORY",
+      "created_or_appended_by": [
+        "BatchJobs/run_daily_banking.sas:142"
+      ],
+      "columns": [
+        {
+          "name": "BATCH_ID",
+          "expression": "\"&batch_id\"",
+          "sas_type": "char$60",
+          "format": null,
+          "key": false,
+          "cite": "BatchJobs/run_daily_banking.sas:32",
+          "evidence": "FACT"
+        },
+        {
+          "name": "STEP_NUM",
+          "expression": "&step_num",
+          "sas_type": "num",
+          "format": null,
+          "key": false,
+          "cite": "BatchJobs/run_daily_banking.sas:32",
+          "evidence": "FACT"
+        },
+        {
+          "name": "STEP_NAME",
+          "expression": "\"&step_name\"",
+          "sas_type": "char$50",
+          "format": null,
+          "key": false,
+          "cite": "BatchJobs/run_daily_banking.sas:32",
+          "evidence": "FACT"
+        },
+        {
+          "name": "PROGRAM_PATH",
+          "expression": "\"&program\"",
+          "sas_type": "char$200",
+          "format": null,
+          "key": false,
+          "cite": "BatchJobs/run_daily_banking.sas:32",
+          "evidence": "FACT"
+        },
+        {
+          "name": "STATUS",
+          "expression": "ifc(&step_rc = 0, \"PASS\", \"FAIL\")",
+          "sas_type": "char$10",
+          "format": null,
+          "key": false,
+          "cite": "BatchJobs/run_daily_banking.sas:33",
+          "evidence": "FACT"
+        },
+        {
+          "name": "START_TIME",
+          "expression": "&step_start",
+          "sas_type": "num (SAS datetime)",
+          "format": "DATETIME20.",
+          "key": false,
+          "cite": "BatchJobs/run_daily_banking.sas:34",
+          "evidence": "FACT"
+        },
+        {
+          "name": "END_TIME",
+          "expression": "%sysfunc(datetime())",
+          "sas_type": "num (SAS datetime)",
+          "format": "DATETIME20.",
+          "key": false,
+          "cite": "BatchJobs/run_daily_banking.sas:34",
+          "evidence": "FACT"
+        },
+        {
+          "name": "DURATION",
+          "expression": "%sysevalf(%sysfunc(datetime()) - &step_start)",
+          "sas_type": "num (SAS time)",
+          "format": "TIME8.",
+          "key": false,
+          "cite": "BatchJobs/run_daily_banking.sas:33",
+          "evidence": "FACT"
+        },
+        {
+          "name": "ERROR_MSG",
+          "expression": "ifc(&step_rc = 0, \"\", \"SYSCC=&step_rc\")",
+          "sas_type": "char$500",
+          "format": null,
+          "key": false,
+          "cite": "BatchJobs/run_daily_banking.sas:33",
+          "evidence": "FACT"
+        }
+      ]
+    }
+  ],
+  "programs": [
+    {
+      "program": "Programs/Banking/load_customer_accounts.sas",
+      "name": "load_customer_accounts",
+      "autoexec_macro_variables": [
+        "CURR_DT",
+        "EMAIL_ONCALL"
+      ],
+      "round_calls": [],
+      "row_sequential_logic": [],
+      "datetime_today_time_calls": [
+        {
+          "call": "datetime()",
+          "line": 23
+        },
+        {
+          "call": "datetime()",
+          "line": 151
+        },
+        {
+          "call": "datetime()",
+          "line": 204
+        }
+      ],
+      "proc_append": [],
+      "lock_usage": [],
+      "business_date_where": [
+        {
+          "expression": "a.ACCOUNT_STATUS not in ('W', 'C') and a.OPEN_DATE <= \"&run_date\"d %if &regio...",
+          "line": 62
+        }
+      ]
+    },
+    {
+      "program": "Programs/Banking/daily_transaction_processing.sas",
+      "name": "daily_transaction_processing",
+      "autoexec_macro_variables": [
+        "CURR_DT"
+      ],
+      "round_calls": [],
+      "row_sequential_logic": [
+        {
+          "kind": "by",
+          "expression": "by ACCOUNT_ID TRANSACTION_DATE TRANSACTION_ID;",
+          "line": 139
+        },
+        {
+          "kind": "retain",
+          "expression": "retain RUNNING_BALANCE;",
+          "line": 140
+        },
+        {
+          "kind": "first.",
+          "expression": "first.ACCOUNT_ID",
+          "line": 143
+        }
+      ],
+      "datetime_today_time_calls": [
+        {
+          "call": "datetime()",
+          "line": 24
+        },
+        {
+          "call": "datetime()",
+          "line": 230
+        }
+      ],
+      "proc_append": [
+        {
+          "base": "CURATED.DAILY_TRANSACTIONS",
+          "data": "WORK.TXN_WITH_BALANCE",
+          "line": 207
+        },
+        {
+          "base": "CURATED.TXN_ANOMALIES",
+          "data": "WORK.TXN_ANOMALIES",
+          "line": 214
+        }
+      ],
+      "lock_usage": [
+        {
+          "target": "CURATED.DAILY_TRANSACTIONS",
+          "arguments": "%lock(CURATED.DAILY_TRANSACTIONS)",
+          "line": 205
+        },
+        {
+          "target": "CURATED.DAILY_TRANSACTIONS, unlock",
+          "arguments": "%lock(CURATED.DAILY_TRANSACTIONS, unlock)",
+          "line": 211
+        }
+      ],
+      "business_date_where": [
+        {
+          "expression": "TRANSACTION_DATE >= intnx('day', \"&txn_date\"d, -90)",
+          "line": 167
+        }
+      ]
+    },
+    {
+      "program": "Programs/Banking/credit_risk_scoring.sas",
+      "name": "credit_risk_scoring",
+      "autoexec_macro_variables": [
+        "CURR_DT"
+      ],
+      "round_calls": [],
+      "row_sequential_logic": [],
+      "datetime_today_time_calls": [
+        {
+          "call": "datetime()",
+          "line": 193
+        }
+      ],
+      "proc_append": [
+        {
+          "base": "CURATED.RISK_SCORES",
+          "data": "WORK.SCORED",
+          "line": 231
+        },
+        {
+          "base": "CURATED.RISK_MIGRATION",
+          "data": "WORK.RISK_MIGRATION",
+          "line": 238
+        }
+      ],
+      "lock_usage": [
+        {
+          "target": "CURATED.RISK_SCORES",
+          "arguments": "%lock(CURATED.RISK_SCORES)",
+          "line": 229
+        },
+        {
+          "target": "CURATED.RISK_SCORES, unlock",
+          "arguments": "%lock(CURATED.RISK_SCORES, unlock)",
+          "line": 234
+        },
+        {
+          "target": "CURATED.RISK_MIGRATION",
+          "arguments": "%lock(CURATED.RISK_MIGRATION)",
+          "line": 236
+        },
+        {
+          "target": "CURATED.RISK_MIGRATION, unlock",
+          "arguments": "%lock(CURATED.RISK_MIGRATION, unlock)",
+          "line": 241
+        }
+      ],
+      "business_date_where": [
+        {
+          "expression": "CUSTOMER_ID = b.CUSTOMER_ID and SCORE_DATE <= \"&score_date\"d) left join ORA_D...",
+          "line": 77
+        },
+        {
+          "expression": "a.SNAPSHOT_DATE = \"&score_date\"d and (a.RISK_RATING ne s.NEW_RISK_RATING or a...",
+          "line": 220
+        }
+      ]
+    },
+    {
+      "program": "Programs/Banking/monthly_regulatory_reporting.sas",
+      "name": "monthly_regulatory_reporting",
+      "autoexec_macro_variables": [
+        "PREV_YM",
+        "REPORT_PATH"
+      ],
+      "round_calls": [],
+      "row_sequential_logic": [],
+      "datetime_today_time_calls": [],
+      "proc_append": [],
+      "lock_usage": [],
+      "business_date_where": [
+        {
+          "expression": "a.SNAPSHOT_DATE = \"&month_end\"d",
+          "line": 63
+        },
+        {
+          "expression": "a.SNAPSHOT_DATE = \"&month_end\"d and a.ACCOUNT_TYPE in ('MTG','AUTO','PERS','C...",
+          "line": 94
+        },
+        {
+          "expression": "a.SNAPSHOT_DATE = \"&month_end\"d and a.ACCOUNT_TYPE in ('MTG','AUTO','PERS','C...",
+          "line": 137
+        }
+      ]
+    },
+    {
+      "program": "BatchJobs/run_daily_banking.sas",
+      "name": "run_daily_banking",
+      "autoexec_macro_variables": [
+        "ABORT_ON_ERR",
+        "CURR_DT",
+        "EMAIL_DL",
+        "EMAIL_ONCALL"
+      ],
+      "round_calls": [],
+      "row_sequential_logic": [],
+      "datetime_today_time_calls": [
+        {
+          "call": "datetime()",
+          "line": 15
+        },
+        {
+          "call": "datetime()",
+          "line": 16
+        },
+        {
+          "call": "datetime()",
+          "line": 59
+        },
+        {
+          "call": "datetime()",
+          "line": 89
+        },
+        {
+          "call": "datetime()",
+          "line": 90
+        },
+        {
+          "call": "datetime()",
+          "line": 149
+        },
+        {
+          "call": "datetime()",
+          "line": 156
+        }
+      ],
+      "proc_append": [
+        {
+          "base": "ARCHIVE.BATCH_HISTORY",
+          "data": "WORK.BATCH_CONTROL",
+          "line": 142
+        }
+      ],
+      "lock_usage": [],
+      "business_date_where": []
+    }
+  ],
+  "unknowns": [
+    "MODEL_ID has no declared length; emitted as char$UNKNOWN.",
+    "Source-table character lengths are not declared in the selected programs; source CSV header/sample is supplied instead.",
+    "Exception output columns are determined by the compiled DATA-step PDV and may be missing for variables assigned after early OUTPUT."
+  ]
+}

@@ -1,0 +1,28 @@
+Run URL: https://dbc-8bc9474f-40ae.cloud.databricks.com/jobs/216001923865775/runs/568864968862809?o=7474651138173478
+
+2026-09-02 00:21:06 "sas_legacy_run_daily_banking" RUNNING
+2026-09-02 00:24:35 "sas_legacy_run_daily_banking" TERMINATED SUCCESS
+Output:
+=======
+Task load_customer_accounts:
+load_customer_accounts: 4 statements, business_date=2024-01-31 region=ALL
+
+=======
+Task daily_transaction_processing:
+daily_transaction_processing: 8 statements, business_date=2024-01-31
+
+=======
+Task credit_risk_scoring:
+credit_risk_scoring: 6 statements, score_date=2024-01-31 model_id=CRM-2023-Q4-v2
+
+=======
+Task monthly_regulatory_reporting:
+monthly_regulatory_reporting: 8 statements, sheets=['RWA', 'Delinquency', 'LLP_Coverage'] path=/Volumes/sas_legacy/sas_bronze/landing/reports/REG_REPORT_202401.xlsx
+
+=======
+Task batch_summary:
+NOTE: Step 1 PASSED
+NOTE: Step 2 PASSED
+NOTE: Step 3 PASSED
+NOTE: Step 4 PASSED
+run_daily_banking: batch_id=BANK_20240131_20260902T002106 rows_written=4 pass=4 fail=0

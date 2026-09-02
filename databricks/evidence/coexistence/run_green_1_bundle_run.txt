@@ -1,0 +1,95 @@
+Run URL: https://dbc-8bc9474f-40ae.cloud.databricks.com/jobs/1058116656072070/runs/876111316294946?o=7474651138173478
+
+2026-09-02 00:53:00 "sas_legacy_recon" RUNNING
+2026-09-02 00:54:43 "sas_legacy_recon" INTERNAL_ERROR FAILED Task recon_U3 failed with message: Workload failed, see run output for details.
+Task recon_U3 FAILED:
+SystemExit: 1
+An exception has occurred, use %tb to see the full traceback.
+
+[0;31mSystemExit[0m[0;31m:[0m 1
+
+
+Error: Task recon_U3 failed!
+Error:
+SystemExit: 1
+Trace:
+An exception has occurred, use %tb to see the full traceback.
+
+[0;31mSystemExit[0m[0;31m:[0m 1
+
+Task recon_U3 FAILED:
+PermissionError: [Errno 13] Permission denied: '/tmp/sas_legacy_recon_U3/recon.json'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mPermissionError[0m                           Traceback (most recent call last)
+File [0;32m~/.ipykernel/5229/command--1-2307907746:8[0m
+[1;32m      5[0m [38;5;28;01mdel[39;00m sys
+[1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
+[0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
+
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py:348[0m
+[1;32m    344[0m     [38;5;28;01mreturn[39;00m [38;5;241m0[39m [38;5;28;01mif[39;00m report[[38;5;124m"[39m[38;5;124moverall[39m[38;5;124m"[39m] [38;5;241m==[39m [38;5;124m"[39m[38;5;124mPASS[39m[38;5;124m"[39m [38;5;28;01melse[39;00m [38;5;241m1[39m
+[1;32m    347[0m [38;5;28;01mif[39;00m [38;5;18m__name__[39m [38;5;241m==[39m [38;5;124m"[39m[38;5;124m__main__[39m[38;5;124m"[39m:
+[0;32m--> 348[0m     _rc [38;5;241m=[39m main()
+[1;32m    349[0m     [38;5;28;01mif[39;00m _rc:
+[1;32m    350[0m         [38;5;28;01mraise[39;00m [38;5;167;01mSystemExit[39;00m(_rc)
+
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py:338[0m, in [0;36mmain[0;34m(argv)[0m
+[1;32m    335[0m report[[38;5;124m"[39m[38;5;124msummary[39m[38;5;124m"[39m] [38;5;241m=[39m summarize(report)
+[1;32m    337[0m out [38;5;241m=[39m _output_dir(a[38;5;241m.[39mout, a[38;5;241m.[39munit)
+[0;32m--> 338[0m (out [38;5;241m/[39m [38;5;124m"[39m[38;5;124mrecon.json[39m[38;5;124m"[39m)[38;5;241m.[39mwrite_text(json[38;5;241m.[39mdumps(report, indent[38;5;241m=[39m[38;5;241m2[39m, default[38;5;241m=[39m[38;5;28mstr[39m), encoding[38;5;241m=[39m[38;5;124m"[39m[38;5;124mutf-8[39m[38;5;124m"[39m)
+[1;32m    339[0m (out [38;5;241m/[39m [38;5;124m"[39m[38;5;124mrecon.summary.md[39m[38;5;124m"[39m)[38;5;241m.[39mwrite_text(report[[38;5;124m"[39m[38;5;124msummary[39m[38;5;124m"[39m], encoding[38;5;241m=[39m[38;5;124m"[39m[38;5;124mutf-8[39m[38;5;124m"[39m)
+[1;32m    340[0m [38;5;28mprint[39m(report[[38;5;124m"[39m[38;5;124msummary[39m[38;5;124m"[39m])
+
+File [0;32m/usr/lib/python3.11/pathlib.py:1078[0m, in [0;36mPath.write_text[0;34m(self, data, encoding, errors, newline)[0m
+[1;32m   1075[0m     [38;5;28;01mraise[39;00m [38;5;167;01mTypeError[39;00m([38;5;124m'[39m[38;5;124mdata must be str, not [39m[38;5;132;01m%s[39;00m[38;5;124m'[39m [38;5;241m%[39m
+[1;32m   1076[0m                     data[38;5;241m.[39m[38;5;18m__class__[39m[38;5;241m.[39m[38;5;18m__name__[39m)
+[1;32m   1077[0m encoding [38;5;241m=[39m io[38;5;241m.[39mtext_encoding(encoding)
+[0;32m-> 1078[0m [38;5;28;01mwith[39;00m [38;5;28mself[39m[38;5;241m.[39mopen(mode[38;5;241m=[39m[38;5;124m'[39m[38;5;124mw[39m[38;5;124m'[39m, encoding[38;5;241m=[39mencoding, errors[38;5;241m=[39merrors, newline[38;5;241m=[39mnewline) [38;5;28;01mas[39;00m f:
+[1;32m   1079[0m     [38;5;28;01mreturn[39;00m f[38;5;241m.[39mwrite(data)
+
+File [0;32m/usr/lib/python3.11/pathlib.py:1044[0m, in [0;36mPath.open[0;34m(self, mode, buffering, encoding, errors, newline)[0m
+[1;32m   1042[0m [38;5;28;01mif[39;00m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m mode:
+[1;32m   1043[0m     encoding [38;5;241m=[39m io[38;5;241m.[39mtext_encoding(encoding)
+[0;32m-> 1044[0m [38;5;28;01mreturn[39;00m io[38;5;241m.[39mopen([38;5;28mself[39m, mode, buffering, encoding, errors, newline)
+
+[0;31mPermissionError[0m: [Errno 13] Permission denied: '/tmp/sas_legacy_recon_U3/recon.json'
+
+Error: Task recon_U3 failed!
+Error:
+PermissionError: [Errno 13] Permission denied: '/tmp/sas_legacy_recon_U3/recon.json'
+Trace:
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mPermissionError[0m                           Traceback (most recent call last)
+File [0;32m~/.ipykernel/5229/command--1-2307907746:8[0m
+[1;32m      5[0m [38;5;28;01mdel[39;00m sys
+[1;32m      7[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(filename, [38;5;124m"[39m[38;5;124mrb[39m[38;5;124m"[39m) [38;5;28;01mas[39;00m f:
+[0;32m----> 8[0m   exec([38;5;28mcompile[39m(f[38;5;241m.[39mread(), filename, [38;5;124m'[39m[38;5;124mexec[39m[38;5;124m'[39m))
+
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py:348[0m
+[1;32m    344[0m     [38;5;28;01mreturn[39;00m [38;5;241m0[39m [38;5;28;01mif[39;00m report[[38;5;124m"[39m[38;5;124moverall[39m[38;5;124m"[39m] [38;5;241m==[39m [38;5;124m"[39m[38;5;124mPASS[39m[38;5;124m"[39m [38;5;28;01melse[39;00m [38;5;241m1[39m
+[1;32m    347[0m [38;5;28;01mif[39;00m [38;5;18m__name__[39m [38;5;241m==[39m [38;5;124m"[39m[38;5;124m__main__[39m[38;5;124m"[39m:
+[0;32m--> 348[0m     _rc [38;5;241m=[39m main()
+[1;32m    349[0m     [38;5;28;01mif[39;00m _rc:
+[1;32m    350[0m         [38;5;28;01mraise[39;00m [38;5;167;01mSystemExit[39;00m(_rc)
+
+File [0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py:338[0m, in [0;36mmain[0;34m(argv)[0m
+[1;32m    335[0m report[[38;5;124m"[39m[38;5;124msummary[39m[38;5;124m"[39m] [38;5;241m=[39m summarize(report)
+[1;32m    337[0m out [38;5;241m=[39m _output_dir(a[38;5;241m.[39mout, a[38;5;241m.[39munit)
+[0;32m--> 338[0m (out [38;5;241m/[39m [38;5;124m"[39m[38;5;124mrecon.json[39m[38;5;124m"[39m)[38;5;241m.[39mwrite_text(json[38;5;241m.[39mdumps(report, indent[38;5;241m=[39m[38;5;241m2[39m, default[38;5;241m=[39m[38;5;28mstr[39m), encoding[38;5;241m=[39m[38;5;124m"[39m[38;5;124mutf-8[39m[38;5;124m"[39m)
+[1;32m    339[0m (out [38;5;241m/[39m [38;5;124m"[39m[38;5;124mrecon.summary.md[39m[38;5;124m"[39m)[38;5;241m.[39mwrite_text(report[[38;5;124m"[39m[38;5;124msummary[39m[38;5;124m"[39m], encoding[38;5;241m=[39m[38;5;124m"[39m[38;5;124mutf-8[39m[38;5;124m"[39m)
+[1;32m    340[0m [38;5;28mprint[39m(report[[38;5;124m"[39m[38;5;124msummary[39m[38;5;124m"[39m])
+
+File [0;32m/usr/lib/python3.11/pathlib.py:1078[0m, in [0;36mPath.write_text[0;34m(self, data, encoding, errors, newline)[0m
+[1;32m   1075[0m     [38;5;28;01mraise[39;00m [38;5;167;01mTypeError[39;00m([38;5;124m'[39m[38;5;124mdata must be str, not [39m[38;5;132;01m%s[39;00m[38;5;124m'[39m [38;5;241m%[39m
+[1;32m   1076[0m                     data[38;5;241m.[39m[38;5;18m__class__[39m[38;5;241m.[39m[38;5;18m__name__[39m)
+[1;32m   1077[0m encoding [38;5;241m=[39m io[38;5;241m.[39mtext_encoding(encoding)
+[0;32m-> 1078[0m [38;5;28;01mwith[39;00m [38;5;28mself[39m[38;5;241m.[39mopen(mode[38;5;241m=[39m[38;5;124m'[39m[38;5;124mw[39m[38;5;124m'[39m, encoding[38;5;241m=[39mencoding, errors[38;5;241m=[39merrors, newline[38;5;241m=[39mnewline) [38;5;28;01mas[39;00m f:
+[1;32m   1079[0m     [38;5;28;01mreturn[39;00m f[38;5;241m.[39mwrite(data)
+
+File [0;32m/usr/lib/python3.11/pathlib.py:1044[0m, in [0;36mPath.open[0;34m(self, mode, buffering, encoding, errors, newline)[0m
+[1;32m   1042[0m [38;5;28;01mif[39;00m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m mode:
+[1;32m   1043[0m     encoding [38;5;241m=[39m io[38;5;241m.[39mtext_encoding(encoding)
+[0;32m-> 1044[0m [38;5;28;01mreturn[39;00m io[38;5;241m.[39mopen([38;5;28mself[39m, mode, buffering, encoding, errors, newline)
+
+[0;31mPermissionError[0m: [Errno 13] Permission denied: '/tmp/sas_legacy_recon_U3/recon.json'
+Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task recon_U3 failed with message: Workload failed, see run output for details.

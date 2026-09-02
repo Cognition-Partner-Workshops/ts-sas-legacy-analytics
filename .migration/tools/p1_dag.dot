@@ -1,0 +1,69 @@
+digraph p1_banking_core {
+  rankdir=LR;
+  node [shape=box, fontsize=10, fontname="Helvetica"];
+  edge [fontsize=8, fontname="Helvetica"];
+
+  subgraph cluster_bronze {
+    label="sas_bronze (seed snapshots, 31JAN2024)"; style=dashed; color=gray50;
+    cust_accounts [label="cust_accounts\n487 rows"];
+    cust_demographics [label="cust_demographics\n250 rows"];
+    bureau_scores [label="bureau_scores\n500 rows"];
+    payment_history [label="payment_history\n248 rows"];
+    collateral [label="collateral\n114 rows"];
+    loan_details [label="loan_details\n248 rows"];
+    txn_feed [label="txn_feed_20240131\n622 rows"];
+    daily_rates [label="daily_rates\n455 rows\n(header-only; not read)", style=dotted];
+    daily_txn_hist [label="daily_transactions (90-day history)\n18293 rows"];
+  }
+
+  subgraph cluster_w0 {
+    label="wave 0 (serial): shared objects + scaffolding"; style=filled; fillcolor="#f0f0f0";
+    W0 [label="U0 sas_macros pkg (12-file closure)\nsas_ref formats (9)\ncatalog/schemas/volume, bundle, recon harness", shape=folder];
+  }
+
+  subgraph cluster_w1 {
+    label="wave 1 (pilot, width 1)"; style=filled; fillcolor="#e8f4ff";
+    U1 [label="U1 load_customer_accounts\nPIPELINE  M", shape=component];
+  }
+  subgraph cluster_w2 {
+    label="wave 2 (fan-out, width 3)"; style=filled; fillcolor="#e8ffe8";
+    U2 [label="U2 daily_transaction_processing\nPIPELINE  L", shape=component];
+    U3 [label="U3 credit_risk_scoring\nML-SCORING  L", shape=component];
+    U4 [label="U4 monthly_regulatory_reporting\nSQL + CONSUMER  M", shape=component];
+  }
+  subgraph cluster_w3 {
+    label="wave 3 (serial)"; style=filled; fillcolor="#fff4e0";
+    U5 [label="U5 run_daily_banking\nORCHESTRATION  S", shape=component];
+  }
+
+  subgraph cluster_silver {
+    label="sas_silver"; style=dashed; color=gray50;
+    cust_accounts_daily; acct_exceptions; daily_transactions; running_balances; txn_anomalies; txn_rejected;
+    risk_scores; risk_migration; archive_batch_history;
+  }
+  subgraph cluster_gold {
+    label="sas_gold"; style=dashed; color=gray50;
+    risk_summary; monthly_rwa; delinquency_aging; llp_coverage; capital_adequacy;
+  }
+
+  cust_accounts -> U1; cust_demographics -> U1;
+  U1 -> cust_accounts_daily; U1 -> acct_exceptions;
+
+  txn_feed -> U2; cust_accounts_daily -> U2; daily_txn_hist -> U2 [label="90-day z-score baseline"];
+  U2 -> daily_transactions; U2 -> running_balances; U2 -> txn_anomalies; U2 -> txn_rejected [style=dashed, label="WORK-only in legacy"];
+
+  cust_accounts_daily -> U3; bureau_scores -> U3; payment_history -> U3; collateral -> U3;
+  U3 -> risk_scores; U3 -> risk_migration; U3 -> risk_summary;
+
+  cust_accounts_daily -> U4; loan_details -> U4;
+  daily_transactions -> U4 [style=dotted, color=red, label="INFERRED (header only, no code read)"];
+  collateral -> U4 [style=dotted, color=red, label="INFERRED (header only)"];
+  U4 -> monthly_rwa; U4 -> delinquency_aging; U4 -> llp_coverage; U4 -> capital_adequacy;
+  U4 -> xlsx [label="%export_xlsx -> openpyxl task (T-12)"];
+  xlsx [label="REG_REPORT_<yyyymm>.xlsx", shape=note];
+
+  U5 -> U1 [label="step 1", style=bold]; U5 -> U2 [label="step 2", style=bold]; U5 -> U3 [label="step 3", style=bold]; U5 -> U4 [label="step 4", style=bold];
+  U5 -> archive_batch_history;
+
+  W0 -> U1 [style=invis]; 
+}

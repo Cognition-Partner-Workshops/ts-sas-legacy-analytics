@@ -27,6 +27,7 @@
 | D5-001 | D5 | Control-M definitions | `[FACT]` No scheduler export exists in the repository; Control-M is named in `BatchJobs/run_daily_banking.sas:6` and `run_daily_insurance.sas:4`. | Customer | OPEN | Both orchestrators |
 | D5-002 | D5 | Banking order | `[FACT]` `run_daily_banking` executes steps 1→4 at `BatchJobs/run_daily_banking.sas:121-130`: load accounts, daily transactions, credit risk scoring, monthly regulatory reporting. | Customer | OPEN | banking wave |
 | D5-003 | D5 | Insurance order | `[FACT]` `run_daily_insurance` executes steps 1→2 at `BatchJobs/run_daily_insurance.sas:109-112`: claims processing, policy valuation. | Customer | OPEN | insurance wave |
+| D5-004 | D5 | Coexistence recon schedule | `[FACT]` Job `sas_legacy_recon` (id `1058116656072070`, bundle target `dev`), 5 independent serverless tasks `recon_U1`..`recon_U5`, schedule `0 15 6 * * ?` UTC `UNPAUSED`, `max_concurrent_runs: 1`; reads silver/gold, writes only `sas_recon.run_log`. Alerting: WEBHOOK: NOT WIRED — GAP for STOP E (creating a notification destination needs workspace-admin; `notification-destinations list` empty on 2026-09-02); remediation carried by Devin automation "sas_legacy P1 coexistence: recon ledger + remediation" (automation id: TBD, filled by parent — GAP G-2). Ledger: `.migration/09_parallel_run_ledger.md`. `sas_legacy_run_daily_banking` stays PAUSED (Control-M remains trigger authority). | Devin (job) / Customer (webhook destination) | OPEN (webhook GAP) | STOP E |
 | D6-001 | D6 | BI tools | `[DISCOVERED]` N/A: no Power BI, Tableau, Qlik, or other BI-tool references found in the in-scope SAS directories. | Customer | ACCEPTED | None |
 | D7-001 | D7 | External APIs | `[DISCOVERED]` N/A: no HTTP/REST/API integration found in the in-scope pipeline and orchestrator directories. | Customer | ACCEPTED | None |
 | D8-001 | D8 | Externally consumed views | `[DISCOVERED]` N/A as a dependency class: view references found are local WORK/macro implementation helpers (for example `Macro/guess_pk.sas:635,653`), not persistent pipeline outputs. | Customer | ACCEPTED | None |
@@ -37,11 +38,44 @@
 | D10-003 | D10 | Insurance seed data absent | `[FACT]` `Data/README.md:100-101` states insurance has no seed data. | Customer | OPEN | claims_processing; policy_valuation |
 | D10-004 | D10 | `ORA_DW.COST_OF_FUNDS` seed absent | `[FACT]` Explicitly listed in `03_recon_tolerances.md` §"Units convertible but NOT reconcilable"; source use is `Programs/Reports/customer_profitability.sas:8`. | Customer | OPEN | customer_profitability |
 | D10-005 | D10 | Control-M export absent | `[FACT]` No export exists in repo; Control-M schedule annotations are present at `BatchJobs/run_daily_banking.sas:6` and `run_daily_insurance.sas:4`. | Customer | OPEN | Both orchestrators |
-| D10-006 | D10 | Catalog `sas_legacy` not provisioned | `[DISCOVERED]` `databricks catalogs get sas_legacy` reported that the catalog does not exist; Devin can self-create it, gated on STOP A. | Devin | OPEN | Wave 0 |
+| D10-006 | D10 | Catalog `sas_legacy` not provisioned | `[DISCOVERED]` `databricks catalogs get sas_legacy` reported that the catalog does not exist; Devin can self-create it, gated on STOP A. | Devin | CLOSED (catalog created 2026-09-01) | Wave 0 |
 | D10-007 | D10 | Legacy output baseline absent | `[FACT]` R-0 in `03_recon_tolerances.md` §R-0 requires customer SAS outputs or an independent reference implementation. | Customer | OPEN | All RECON phases |
-| D2-INV-001 | D2 | Shared-macro closure | `[FACT]` Transitive `%call` closure from the 7 programs + 2 orchestrators reaches 12 of 92 `Macro/*.sas` files (`parmv nobs lock sendmail export_xlsx export_dbms handle get_data_attr loop seplist useridToEmail queryActiveDirectory`); the other 80 + `handle_email.txt` have zero reachable calls (`.migration/tools/census.json`). Proposal: port only the closure; the rest is PROPOSED-unused. | Customer | UNDECIDED | Wave 0 scope |
-| D3-INV-001 | D3 | Header-only inputs | `[FACT]` `monthly_regulatory_reporting.sas:9-10` declares `CURATED.DAILY_TRANSACTIONS` and `ORA_DW.COLLATERAL` as inputs; the code reads only `STG_BANK.CUST_ACCOUNTS_DAILY` and `ORA_DW.LOAN_DETAILS` (lines 60-61, 91-92, 134-135). `customer_profitability.sas:8` declares `ORA_DW.COST_OF_FUNDS`; no code read exists. D10-004 may be closable as not-required. | Customer | UNDECIDED | monthly_regulatory_reporting; customer_profitability |
-| D6-INV-001 | D6 | `customer_profitability` trigger | `[FACT]` Not invoked by either orchestrator and not referenced by any scanned file; trigger unknown pending the Control-M export (D10-005). | Customer | UNDECIDED | customer_profitability |
-| D9-INV-001 | D9 | `ARCHIVE.BATCH_HISTORY` shared write target | `[FACT]` Appended by both `run_daily_banking.sas` and `run_daily_insurance.sas`; must be registered once in `05_progress.md` before either orchestrator loads it. | Devin | UNDECIDED | both orchestrators |
-| D7-INV-001 | D7 | Last-run evidence gap | `[FACT]` `Logs/` covers only `load_customer_accounts` and `daily_transaction_processing` (2024-01-15); no run evidence for units 3-7 or orchestrators. | Customer | UNDECIDED | credit_risk_scoring; monthly_regulatory_reporting; customer_profitability; insurance units |
-| D10-INV-001 | D10 | Estate completeness | `[FACT]` `autoexec.sas:14` and all `%include`s point at `/opt/sas/...` server paths outside the repo; no `sasautos` listing, metadata export, or scheduler job list exists. Completeness UNVERIFIABLE. | Customer | UNDECIDED | Whole estate |
+| D2-INV-001 | D2 | Shared-macro closure | `[FACT]` Transitive `%call` closure from the 7 programs + 2 orchestrators reaches 12 of 92 `Macro/*.sas` files (`parmv nobs lock sendmail export_xlsx export_dbms handle get_data_attr loop seplist useridToEmail queryActiveDirectory`); the other 80 + `handle_email.txt` have zero reachable calls (`.migration/tools/census.json`). Proposal: port only the closure; the rest is PROPOSED-unused. | Customer | DECIDED (STOP C, DEC-013: port the 12-file closure only) | Wave 0 scope |
+| D3-INV-001 | D3 | Header-only inputs | `[FACT]` `monthly_regulatory_reporting.sas:9-10` declares `CURATED.DAILY_TRANSACTIONS` and `ORA_DW.COLLATERAL` as inputs; the code reads only `STG_BANK.CUST_ACCOUNTS_DAILY` and `ORA_DW.LOAN_DETAILS` (lines 60-61, 91-92, 134-135). `customer_profitability.sas:8` declares `ORA_DW.COST_OF_FUNDS`; no code read exists. D10-004 may be closable as not-required. | Customer | DECIDED (STOP C, DEC-013: header-only declarations are not lineage) | monthly_regulatory_reporting; customer_profitability |
+| D6-INV-001 | D6 | `customer_profitability` trigger | `[FACT]` Not invoked by either orchestrator and not referenced by any scanned file; trigger unknown pending the Control-M export (D10-005). | Customer | OUT OF P1 SCOPE (STOP C; P2 plan) | customer_profitability |
+| D9-INV-001 | D9 | `ARCHIVE.BATCH_HISTORY` shared write target | `[FACT]` Appended by both `run_daily_banking.sas` and `run_daily_insurance.sas`; must be registered once in `05_progress.md` before either orchestrator loads it. | Devin | DECIDED (STOP C: P1 owns `sas_silver.archive_batch_history`; registered + loaded wave 3) | both orchestrators |
+| D7-INV-001 | D7 | Last-run evidence gap | `[FACT]` `Logs/` covers only `load_customer_accounts` and `daily_transaction_processing` (2024-01-15); no run evidence for units 3-7 or orchestrators. | Customer | ACCEPTED as scope constraint (STOP C, REQ-04) | credit_risk_scoring; monthly_regulatory_reporting; customer_profitability; insurance units |
+| D10-INV-001 | D10 | Estate completeness | `[FACT]` `autoexec.sas:14` and all `%include`s point at `/opt/sas/...` server paths outside the repo; no `sasautos` listing, metadata export, or scheduler job list exists. Completeness UNVERIFIABLE. | Customer | ACCEPTED as scope constraint (STOP C, REQ-04) | Whole estate |
+| G-1 | D5/D8 | Release branch | `[FACT]` Signoff prep 2026-09-02: PRs #24 (`migration/00-setup` → `main`, draft), #25, #26 are still OPEN; every wave PR merged only into `migration/02-analysis-plan`, nothing into `main`. Cutover from a non-default branch has no protected-branch guarantee. | Requester | OPEN | STOP E (merge the chain or record `migration/02-analysis-plan` as the release branch) |
+| G-2 | D5 | Alerting fallback auditability | `[FACT]` D5-004 remediation automation id recorded as TBD. | Devin (parent) | OPEN | STOP E |
+| G-3 | D8 | Governance-access parity | `[FACT]` `SHOW GRANTS ON CATALOG sas_legacy` and on `sas_bronze`/`sas_silver`/`sas_gold` return 0 rows (2026-09-02, `databricks/evidence/signoff/uc_grants_sas_legacy.md`); catalog owner-only; both jobs `run_as` the migration owner (workspace admin). Legacy libref access model (read-only sources vs batch-writable STG/CURATED/REPORTS) has no target equivalent; no consumer principal exists. | Customer (grants) / Devin (proposal) | OPEN (GAP, high) | STOP E |
+| G-4 | D4 | Job failure notifications | `[FACT]` `sas_legacy_run_daily_banking` has `email_notifications: {}` and `webhook_notifications: {}`; `sas_legacy_recon` has no `on_failure`. A failed production run after the flip is silent outside the Jobs UI / Devin automation. Overlaps D4-003 and D5-004. | Customer (destination) | OPEN (GAP, medium) | STOP E |
+
+## P1 plan decisions (2026-09-01, DEC-013, APPROVED at STOP C 2026-09-01)
+
+Full contract/routing/cutover/decommission columns are in `docs/migration/ts-sas-legacy-analytics_P1_banking_core_plan.md` §1; STOP C approved 2026-09-01: PROPOSED-* below reads as DECIDED / DEFERRED / ACCEPTED.
+
+| ID | Decision | Status | Request |
+|---|---|---|---|
+| D2-001, D2-002, D2-003, D2-INV-001 | Port 12-file closure as behaviour; 9 banking formats → `sas_ref`; autoexec → libref map + job parameters | PROPOSED-DECIDED | — |
+| D3-001..006, 008, 009, D10-002 | Bronze snapshot from `Data/csv`; live ingestion DEFERRED-with-condition | PROPOSED-DEFERRED | REQ-01 |
+| D3-INV-001 | Header-only declarations are not lineage; edges dropped | PROPOSED-DECIDED | — |
+| D4-001, D4-002, D4-003 | Gold Delta = contract; xlsx via openpyxl task (T-12); email → Jobs notifications; DEFERRED-with-condition on destinations | PROPOSED-DEFERRED | REQ-02 |
+| D5-001, D5-002, D10-005 | Workflow task order 1→4; job PAUSED; Control-M remains trigger until STOP E | PROPOSED-DEFERRED | REQ-03 |
+| D9-002 | Intra-P1, handled by wave order | PROPOSED-DECIDED | — |
+| D9-INV-001 | P1 owns `sas_silver.archive_batch_history` | PROPOSED-DECIDED | — |
+| D9-001, D6-INV-001, D10-003, D10-004 | Not touched by P1; deferred to P2/P3 plans | OUT OF P1 SCOPE | — |
+| D7-INV-001, D10-INV-001 | Accepted as scope constraints | PROPOSED-ACCEPTED | REQ-04 |
+| D10-001, D10-007 | Reference-derived recon (DEC-004); STOP E requires customer in-perimeter recon | PROPOSED-ACCEPTED | REQ-05 |
+| D10-006 | Devin creates `sas_legacy` in wave 0 | PROPOSED-DECIDED | — |
+
+### Fired requests
+
+| Req | Ask | Recipient | Lead time | Status |
+|---|---|---|---|---|
+| REQ-01 | Oracle DW / RAW_BANK delivery path to target (extract to volume or federation; secret names only) | requester → source DBA | ≥ 1 week assumed | FIRED 2026-09-01 (STOP C DM) |
+| REQ-02 | `REPORTS.*` consumers, xlsx delivery path, notification destination | requester | days | FIRED 2026-09-01 |
+| REQ-03 | Control-M export for `run_daily_banking` | requester → scheduler team | days | FIRED 2026-09-01 |
+| REQ-04 | `sasautos` listing / SAS metadata export | requester | days | FIRED 2026-09-01 |
+| REQ-05 | In-perimeter SAS run of the 31JAN2024 bootstrap, outputs as CSV | requester | unknown | FIRED 2026-09-01 — **NOT AVAILABLE at signoff prep 2026-09-02; blocking for cutover** |
+

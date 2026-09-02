@@ -1,0 +1,12 @@
+run 1 (ad hoc CLI, --executor warehouse, business_date=2024-01-31 region=ALL)
+{'tbl': 'cust_accounts_daily', 'n': '466', 'n_ts': '1', 'checksum': '-36758330745'}
+{'tbl': 'acct_exceptions', 'n': '32', 'n_ts': '0', 'checksum': '-1237428266'}
+source-volume (sas_bronze._manifest, before run): CUST_ACCOUNTS.csv 487, CUST_DEMOGRAPHICS.csv 250
+checksum = SUM(hash(all 28 non-load_timestamp columns, utilization_pct rounded 6dp))
+
+run 2 (serverless job sas_legacy_run_daily_banking job_id=216001923865775, run_id=636052434694604, --only load_customer_accounts, same business_date=2024-01-31 region=ALL)
+{'tbl': 'cust_accounts_daily', 'n': '466', 'n_ts': '1', 'checksum': '-36758330745'}
+{'tbl': 'acct_exceptions', 'n': '32', 'n_ts': '0', 'checksum': '-1237428266'}
+result: counts and checksums unchanged after re-run (INSERT ... REPLACE WHERE snapshot_date / INSERT OVERWRITE); checksum SQL in checksum.sql
+note: two earlier job attempts (run 621597099070944, incl. auto-retry) executed the same load successfully but were reported FAILED by the runner on
+      `SystemExit(0)` (see SKILL FEEDBACK); an earlier attempt failed before any write on `__file__` undefined / missing openpyxl.

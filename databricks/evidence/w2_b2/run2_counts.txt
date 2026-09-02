@@ -1,0 +1,4 @@
+{'tbl': 'daily_transactions', 'n': '18903', 'checksum': '112599679093'}
+{'tbl': 'running_balances', 'n': '610', 'checksum': '20005949123'}
+{'tbl': 'txn_anomalies', 'n': '46', 'checksum': '22002145941'}
+{'tbl': 'txn_rejected', 'n': '12', 'checksum': '4713650340'}

@@ -1,0 +1,9 @@
+{
+  "produced_by": "synthetic fixture (tests only)",
+  "business_date": "2024-01-31",
+  "files": {
+    "risk_migration.csv": "8c4aba871a99348b1c9bf27c6ecb683e190f3203f54938c9adc770f313252761",
+    "risk_scores.csv": "82e17bcb5cf61962d30e7867763f86de71968c3405e6a0f7f535083c61d23400",
+    "risk_summary.csv": "2d557d170e44d0db2cb786beb16cbca6b7ee319f4ee04e91fc1d794ce1b95f41"
+  }
+}

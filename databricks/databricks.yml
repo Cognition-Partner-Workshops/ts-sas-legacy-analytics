@@ -1,0 +1,30 @@
+bundle:
+  name: sas_legacy
+
+include:
+  - resources/*.yml
+
+sync:
+  paths:
+    - .
+    - ../docs/migration/recon/reference
+
+variables:
+  business_date:
+    default: "2024-01-31"
+  report_month:
+    default: "202401"
+  region:
+    default: "ALL"
+  abort_on_err:
+    default: "Y"
+  catalog:
+    default: sas_legacy
+  warehouse_id:
+    default: 565cd2fd713738c4
+
+targets:
+  dev:
+    default: true
+    presets:
+      name_prefix: ""

@@ -1,0 +1,51 @@
+Run URL: https://dbc-8bc9474f-40ae.cloud.databricks.com/jobs/1058116656072070/runs/1063912159259719?o=7474651138173478
+
+2026-09-02 01:01:57 "sas_legacy_recon" RUNNING
+2026-09-02 01:03:40 "sas_legacy_recon" INTERNAL_ERROR FAILED Task recon_U3 failed with message: Workload failed, see run output for details.
+Task recon_U3 FAILED:
+SystemExit: 1
+An exception has occurred, use %tb to see the full traceback.
+
+[0;31mSystemExit[0m[0;31m:[0m 1
+
+
+Error: Task recon_U3 failed!
+Error:
+SystemExit: 1
+Trace:
+An exception has occurred, use %tb to see the full traceback.
+
+[0;31mSystemExit[0m[0;31m:[0m 1
+
+Task recon_U5 FAILED:
+SystemExit: 1
+An exception has occurred, use %tb to see the full traceback.
+
+[0;31mSystemExit[0m[0;31m:[0m 1
+
+
+Error: Task recon_U5 failed!
+Error:
+SystemExit: 1
+Trace:
+An exception has occurred, use %tb to see the full traceback.
+
+[0;31mSystemExit[0m[0;31m:[0m 1
+
+Task recon_U5 FAILED:
+SystemExit: 1
+An exception has occurred, use %tb to see the full traceback.
+
+[0;31mSystemExit[0m[0;31m:[0m 1
+
+
+Error: Task recon_U5 failed!
+Error:
+SystemExit: 1
+Trace:
+An exception has occurred, use %tb to see the full traceback.
+
+[0;31mSystemExit[0m[0;31m:[0m 1
+
+Error: failed to reach TERMINATED or SKIPPED, got INTERNAL_ERROR: Task recon_U3 failed with message: Workload failed, see run output for details.
+run_id=1063912159259719 bundle_rc=1

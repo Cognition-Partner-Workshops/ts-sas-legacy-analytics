@@ -1,0 +1,4 @@
+Uploading bundle files to /Workspace/Users/<requester>/.bundle/sas_legacy/dev/files...
+Updated jobs.sas_legacy_run_daily_banking
+Files: 112 uploaded, 0 deleted
+Resources: 0 created, 1 changed, 0 deleted, 1 unchanged

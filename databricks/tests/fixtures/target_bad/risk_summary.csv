@@ -1,0 +1,4 @@
+account_type,new_risk_rating,n_accounts,total_ead,avg_pd
+CHK,AAA,1,1000.00,0.0040
+CHK,BBB,1,2500.50,0.0200
+CHK,CCC,1,300.00,0.2000

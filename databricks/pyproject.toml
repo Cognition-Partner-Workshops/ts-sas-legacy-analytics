@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sas-legacy-databricks"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+  "openpyxl==3.1.5",
+  "requests",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "ruff",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+exclude = ["databricks/tests/fixtures"]
+
+[tool.pytest.ini_options]
+testpaths = ["databricks/tests"]
+pythonpath = ["databricks/src", "databricks"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.packages.find]
+where = ["src"]

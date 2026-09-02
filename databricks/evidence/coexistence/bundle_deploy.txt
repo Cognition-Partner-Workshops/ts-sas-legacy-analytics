@@ -1,0 +1,242 @@
+Uploading bundle files to /Workspace/Users/<requester>/.bundle/sas_legacy/dev/files...
+Files: 3 uploaded, 0 deleted
+Resources: 0 created, 0 changed, 0 deleted, 2 unchanged
+
+## redeploy (retry-safe output)
+Name: sas_legacy
+Target: dev
+Workspace:
+  User: <requester>
+  Path: /Workspace/Users/<requester>/.bundle/sas_legacy/dev
+
+Validation OK!
+Uploading bundle files to /Workspace/Users/<requester>/.bundle/sas_legacy/dev/files...
+Files: 16 uploaded, 5 deleted
+Resources: 0 created, 0 changed, 0 deleted, 2 unchanged
+
+## sas_legacy_run_daily_banking PAUSED confirmation
+{
+  "created_time": 1788302212000,
+  "creator_user_name": "<requester>",
+  "job_id": 216001923865775,
+  "run_as_user_name": "<requester>",
+  "settings": {
+    "deployment": {
+      "kind": "BUNDLE",
+      "metadata_file_path": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/state/metadata.json"
+    },
+    "edit_mode": "UI_LOCKED",
+    "email_notifications": {},
+    "environments": [
+      {
+        "environment_key": "default",
+        "spec": {
+          "client": "2",
+          "dependencies": [
+            "openpyxl==3.1.5",
+            "databricks-sdk==0.63.0"
+          ]
+        }
+      }
+    ],
+    "format": "MULTI_TASK",
+    "max_concurrent_runs": 1,
+    "name": "sas_legacy_run_daily_banking",
+    "queue": {
+      "enabled": true
+    },
+    "schedule": {
+      "pause_status": "PAUSED",
+      "quartz_cron_expression": "0 45 5 * * ?",
+      "timezone_id": "UTC"
+    },
+    "tasks": [
+      {
+        "depends_on": [
+          {
+            "task_key": "load_customer_accounts"
+          },
+          {
+            "task_key": "daily_transaction_processing"
+          },
+          {
+            "task_key": "credit_risk_scoring"
+          },
+          {
+            "task_key": "monthly_regulatory_reporting"
+          }
+        ],
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_DONE",
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--run-id",
+            "{{job.run_id}}"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/src/jobs/run_daily_banking.py"
+        },
+        "task_key": "batch_summary",
+        "timeout_seconds": 0
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "daily_transaction_processing"
+          }
+        ],
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--report-month",
+            "202401",
+            "--region",
+            "ALL",
+            "--abort-on-err",
+            "Y"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/src/jobs/credit_risk_scoring.py"
+        },
+        "task_key": "credit_risk_scoring",
+        "timeout_seconds": 0
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "load_customer_accounts"
+          }
+        ],
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--report-month",
+            "202401",
+            "--region",
+            "ALL",
+            "--abort-on-err",
+            "Y"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/src/jobs/daily_transaction_processing.py"
+        },
+        "task_key": "daily_transaction_processing",
+        "timeout_seconds": 0
+      },
+      {
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--report-month",
+            "202401",
+            "--region",
+            "ALL",
+            "--abort-on-err",
+            "Y"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/src/jobs/load_customer_accounts.py"
+        },
+        "task_key": "load_customer_accounts",
+        "timeout_seconds": 0
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "credit_risk_scoring"
+          }
+        ],
+        "disabled": false,
+        "email_notifications": {},
+        "environment_key": "default",
+        "run_if": "ALL_SUCCESS",
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--report-month",
+            "202401",
+            "--region",
+            "ALL",
+            "--abort-on-err",
+            "Y"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/src/jobs/monthly_regulatory_reporting.py"
+        },
+        "task_key": "monthly_regulatory_reporting",
+        "timeout_seconds": 0
+      }
+    ],
+    "timeout_seconds": 0,
+    "webhook_notifications": {}
+  }
+}
+sas_legacy_run_daily_banking schedule.pause_status: PAUSED
+
+WEBHOOK: NOT WIRED (workspace-admin needed to create a destination; list returned empty)
+[
+  
+]
+
+## redeploy (cycle 4, DEC-017 reference correction)
+Name: sas_legacy
+Target: dev
+Workspace:
+  User: <requester>
+  Path: /Workspace/Users/<requester>/.bundle/sas_legacy/dev
+
+Validation OK!
+Uploading bundle files to /Workspace/Users/<requester>/.bundle/sas_legacy/dev/files...
+Files: 39 uploaded, 0 deleted
+Resources: 0 created, 0 changed, 0 deleted, 2 unchanged
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+KeyError: 'tasks'
+Error: unknown flag: --overwrite
+
+Usage:
+  databricks workspace export SOURCE_PATH [flags]
+
+Flags:
+      --file string           Path on the local file system to save exported file at.
+      --format ExportFormat   This specifies the format of the exported file. Supported values: [
+                                AUTO,
+                                DBC,
+                                HTML,
+                                JUPYTER,
+                                RAW,
+                                R_MARKDOWN,
+                                SOURCE,
+                              ]
+  -h, --help                  help for export
+
+Global Flags:
+      --debug            enable debug logging
+  -o, --output type      output type: text or json (default text)
+  -p, --profile string   ~/.databrickscfg profile
+  -t, --target string    bundle target to use (if applicable)
+
+sha256sum: evidence/coexistence/deployed_manifest_cycle_4.json: No such file or directory
+deployed reference manifest sha256: 
+sas_legacy_run_daily_banking schedule.pause_status: PAUSED
+
+## manifest export correction (cycle 4)
+deployed reference manifest sha256: 
+
+## manifest export correction (cycle 4, SOURCE)
+deployed reference manifest sha256: 39cca40cb55d9c26a63e9c0da9fe934f7b22b3931f470a3342b7e95ae1e3c3ed
