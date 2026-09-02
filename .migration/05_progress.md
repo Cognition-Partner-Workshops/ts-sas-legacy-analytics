@@ -69,3 +69,5 @@ W0-A cost line: ACUs not visible from the CLI; serverless SQL warehouse `565cd2f
 `[PROPOSED]` Halt the wave after 3 failures of the same class.
 
 Wave 2 close (2026-09-01): B2/B3/B4 children 3 x ~9-16 ACU (B4 9.1 ACU visible; B2/B3 see session ledgers); independent recon child 3.8 ACU; parent-side ~70 short warehouse statements for the wave window; 0 exceptions; 0 circuit-breaker events; 1 write-target-adjacent incident (shared bundle path race, no data collision). STOP D wave 2 notified. Next: wave 3 B5 `run_daily_banking` (width 1) after DEC-017 direction and the T-12 harness fix.
+
+Wave 3 launched 2026-09-02 (width 1): B5/U5 `run_daily_banking` child session d29773b64e6b4668adfb4ae30abcb34d, branch `migration/05-wave3-run-daily-banking`; hand-off includes the U5 recon spec shape (key `step_num` within latest batch, `batch_id` T-3 pattern, times T-7) and the parent-approved T-12 `--xlsx-path` harness fix. Independent wave-3 recon (U1-U5 after the end-to-end job) follows. Wave 2 STOP D notified (Slack DM ts 1788307541.913489).
