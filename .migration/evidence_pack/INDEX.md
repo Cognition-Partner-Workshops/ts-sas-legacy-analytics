@@ -192,5 +192,5 @@ ACUs are Devin session cost as recorded in the wave briefs; Databricks usage is 
 | (vi) governance parity | **GAP** (G-3) |
 | (vii) production-data recon | **NOT AVAILABLE — BLOCKING** (REQ-05) |
 | (viii) end-to-end verification | MET on seed (2 full runs + cycle 4); never run from the schedule |
-| (ix) decisions | DEC-016 pending |
+| (ix) decisions | DEC-016 approved (a) 2026-09-02 |
 | (x) cost | rolled up; two sessions unrecorded |
