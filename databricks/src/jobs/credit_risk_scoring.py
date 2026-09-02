@@ -21,8 +21,9 @@ Literal Base SAS semantics are the parity target (DEC-015 (a)):
   and is covered by the explicit ``IS NULL`` disjunct.
 - PROC MEANS ``n=N_ACCOUNTS`` is the non-missing count of the first VAR, ``PD`` (AMB-08);
   CLASS rows with a missing class value are excluded (none occur, filter stated anyway).
-- ``%parmv(model_id)`` would upper-case the value (``_CASE=U``); the reference and the
-  hand-off fix ``model_id`` as ``CRM-2023-Q4-v2``, which is what is written (see PR note).
+- ``%parmv(model_id, _req=1)`` inherits ``_CASE=U``, so the macro default ``CRM-2023-Q4-v2``
+  is written as ``MODEL_ID = 'CRM-2023-Q4-V2'``; ``run()`` upper-cases the parameter once at
+  entry the same way (DEC-017 (a)).
 
 Idempotency: ``risk_scores`` / ``risk_migration`` replace the ``score_date = business_date``
 slice (Delta ``REPLACE WHERE``); ``risk_summary`` is a PROC MEANS output and is overwritten
@@ -402,9 +403,7 @@ def statements(score_date: date, model_id: str = MODEL_ID, catalog: str = CATALO
 def run(execute: Callable[[str], object], business_date: str, model_id: str = MODEL_ID,
         catalog: str = CATALOG, woe_debug: bool = False) -> list[str]:
     sd = parse_business_date(validate_param("score_date", business_date, required=True))
-    # %parmv defaults to _CASE=U; the model identifier is case-preserved to match the
-    # reference/hand-off value CRM-2023-Q4-v2 (recorded as a decision in the PR/ledger).
-    mid = validate_param("model_id", model_id, required=True, case="N")
+    mid = validate_param("model_id", model_id, required=True)  # _CASE=U, as %parmv
     sqls = statements(sd, mid, catalog, woe_debug)
     for s in sqls:
         execute(s)
@@ -442,7 +441,8 @@ def main(argv: list[str] | None = None) -> int:
         spark = SparkSession.builder.getOrCreate()
         execute = spark.sql
     n = len(run(execute, a.business_date, a.model_id, woe_debug=a.woe_debug))
-    print(f"credit_risk_scoring: {n} statements, score_date={a.business_date} model_id={a.model_id}")
+    print(f"credit_risk_scoring: {n} statements, score_date={a.business_date} "
+          f"model_id={a.model_id.upper()}")
     return 0
 
 

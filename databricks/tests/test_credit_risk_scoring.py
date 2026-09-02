@@ -121,6 +121,7 @@ def test_run_executes_statements_in_order_and_debug_only_on_request():
     seen = []
     sqls = crs.run(seen.append, "2024-01-31")
     assert seen == sqls and len(sqls) == 6
+    assert sqls == crs.statements(SD, "CRM-2023-Q4-V2")  # model_id is the only run() normalisation
     assert [s.split()[0] for s in sqls] == ["CREATE"] * 3 + ["INSERT"] * 3
     assert not any("risk_scores_woe_debug" in s for s in sqls)
     dbg = crs.run(lambda s: None, "2024-01-31", woe_debug=True)
@@ -128,9 +129,13 @@ def test_run_executes_statements_in_order_and_debug_only_on_request():
     assert "log_odds" in dbg[-1] and "REPLACE WHERE score_date" in dbg[-1]
 
 
-def test_model_id_case_is_preserved_and_params_validated():
-    sqls = crs.run(lambda s: None, "2024-01-31", model_id="CRM-2023-Q4-v2")
-    assert "'CRM-2023-Q4-v2' AS model_id" in sqls[3]
+def test_model_id_is_upper_cased_like_parmv_and_params_validated():
+    # DEC-017 (a): %parmv(model_id, _req=1) inherits _CASE=U, so legacy writes 'CRM-2023-Q4-V2'
+    sqls = crs.run(lambda s: None, "2024-01-31")
+    assert "'CRM-2023-Q4-V2' AS model_id" in sqls[3]
+    assert "CRM-2023-Q4-v2" not in sqls[3]
+    sqls = crs.run(lambda s: None, "2024-01-31", model_id="crm-2099-q1-v9")
+    assert "'CRM-2099-Q1-V9' AS model_id" in sqls[3]
     with pytest.raises(ValueError):
         crs.run(lambda s: None, "31JAN2024")
     with pytest.raises(ParamError):
