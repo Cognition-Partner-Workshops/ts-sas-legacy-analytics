@@ -66,6 +66,9 @@ class TableSpec:
     woe_debug: str | None = None
     xlsx: bool = False  # T-12: existence + expected workbook sheets when --xlsx-path is given
     xlsx_sheets: tuple[str, ...] | None = None
+    latest_key: str | None = None
+    latest_prefix: str | None = None
+    pattern_keys: tuple[str, ...] = ()
 
 
 UNITS: dict[str, tuple[TableSpec, ...]] = {
@@ -258,12 +261,19 @@ UNITS: dict[str, tuple[TableSpec, ...]] = {
             "sas_silver",
             ("batch_id", "step_num"),
             {
+                "batch_id": r"T-3:pattern=^BANK_{yyyymmdd}_\d{8}T\d{6}$",
+                "program_path": "T-3",
+                "error_msg": "T-3",
+                "status": "T-3",
+                "step_name": "T-3",
                 "start_time": "T-7",
                 "end_time": "T-7",
                 "duration": "T-7",
-                "status": "T-3",
-                "step_name": "T-3",
             },
+            latest_key="batch_id",
+            latest_prefix="BANK_{yyyymmdd}_",
+            pattern_keys=("batch_id",),
+            distinct_keys=("step_num",),
         ),
     ),
 }

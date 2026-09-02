@@ -1,0 +1,5 @@
+batch_id,step_num,step_name,program_path,status,start_time,end_time,duration,error_msg
+BANK_20240131_000000,1,Load Customer Accounts,/opt/sas/custom/programs/Banking/load_customer_accounts.sas,PASS,2024-01-31T00:00:00,2024-01-31T00:00:00,0,
+BANK_20240131_000000,2,Daily Transaction Processing,/opt/sas/custom/programs/Banking/daily_transaction_processing.sas,PASS,2024-01-31T00:00:00,2024-01-31T00:00:00,0,
+BANK_20240131_000000,3,Credit Risk Scoring,/opt/sas/custom/programs/Banking/credit_risk_scoring.sas,PASS,2024-01-31T00:00:00,2024-01-31T00:00:00,0,
+BANK_20240131_000000,4,Monthly Regulatory Reporting,/opt/sas/custom/programs/Banking/monthly_regulatory_reporting.sas,PASS,2024-01-31T00:00:00,2024-01-31T00:00:00,0,

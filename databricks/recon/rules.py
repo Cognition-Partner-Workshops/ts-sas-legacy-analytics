@@ -5,9 +5,13 @@ Row values arrive as strings (CSV / Statement Execution JSON_ARRAY) or None for 
 
 from __future__ import annotations
 
+import hashlib
 import math
+import os
 import re
+import tempfile
 from collections import Counter
+from collections.abc import Callable, Mapping
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
@@ -100,10 +104,15 @@ def key_of(row: Row, keys: Key) -> Key:
     return tuple(norm_exact(row.get(k)) or "" for k in keys)
 
 
+def base_rule(rule: str) -> str:
+    return rule.split(":", 1)[0]
+
+
 # ---------------------------------------------------------------- per-column compare
 
 
 def _compare_value(rule: str, column: str, ref: str | None, tgt: str | None) -> bool:
+    rule = base_rule(rule)
     if rule == "T-7":
         return not is_null(tgt)  # excluded from comparison; non-null asserted
     if is_null(ref) or is_null(tgt):
@@ -136,8 +145,9 @@ def row_level(
     if spec.multiset:
         out.extend(_multiset_rows(spec, ref_rows, tgt_rows, columns))
         return out
-    ref_by = {key_of(r, spec.keys): r for r in ref_rows}
-    tgt_by = {key_of(r, spec.keys): r for r in tgt_rows}
+    effective_keys = tuple(k for k in spec.keys if k not in spec.pattern_keys)
+    ref_by = {key_of(r, effective_keys): r for r in ref_rows}
+    tgt_by = {key_of(r, effective_keys): r for r in tgt_rows}
     dup_ref = len(ref_rows) - len(ref_by)
     dup_tgt = len(tgt_rows) - len(tgt_by)
     missing = sorted(set(ref_by) - set(tgt_by))
@@ -149,15 +159,33 @@ def row_level(
             "PASS" if t2_ok else "FAIL",
             len(ref_by), len(tgt_by),
             f"missing_in_target={len(missing)} extra_in_target={len(extra)} "
-            f"dup_keys_ref={dup_ref} dup_keys_target={dup_tgt}",
+            f"dup_keys_ref={dup_ref} dup_keys_target={dup_tgt}"
+            + (f" pattern_keys={','.join(spec.pattern_keys)}" if spec.pattern_keys else ""),
             [list(k) for k in (missing + extra)[:MAX_EXAMPLES]],
         )
     )
     shared = set(ref_by) & set(tgt_by)
     for col in columns:
-        if col in spec.keys:
+        if col in effective_keys:
             continue
         rule = classify_column(spec, col)
+        if rule.startswith("T-3:pattern="):
+            pattern = rule.split("=", 1)[1]
+            mism = [
+                [list(k), tgt_by[k].get(col)]
+                for k in shared
+                if not isinstance(tgt_by[k].get(col), str)
+                or re.fullmatch(pattern, tgt_by[k][col]) is None
+            ]
+            out.append(
+                RuleResult(
+                    "T-3", spec.name, col, "PASS" if not mism else "FAIL",
+                    pattern, None,
+                    f"pattern match on target; rows_compared={len(shared)} mismatches={len(mism)}",
+                    mism[:MAX_EXAMPLES],
+                )
+            )
+            continue
         if rule in ("T-7",):
             bad = [k for k in shared if is_null(tgt_by[k].get(col))]
             out.append(
@@ -192,6 +220,7 @@ def multiset_key(spec: TableSpec, row: Row) -> tuple:
     for c in spec.keys:
         rule = classify_column(spec, c)
         v = row.get(c)
+        rule = base_rule(rule)
         if rule == "T-7":
             continue
         if rule in ("T-4", "T-5") and not is_null(v):
@@ -242,7 +271,7 @@ def numeric_columns(spec: TableSpec, ref_rows: list[Row], columns: list[str]) ->
     """Columns whose non-null reference values all parse as numbers (excluding T-7 columns)."""
     cols = []
     for c in columns:
-        if classify_column(spec, c) == "T-7":
+        if base_rule(classify_column(spec, c)) == "T-7":
             continue
         vals = [r.get(c) for r in ref_rows if not is_null(r.get(c))]
         if vals and all(to_decimal(v) is not None for v in vals):
@@ -261,11 +290,12 @@ def local_aggregates(rows: list[Row], num_cols: list[str], keys: Key) -> dict[st
     return agg
 
 
-def aggregate_sql(fqn: str, num_cols: list[str], keys: Key) -> str:
+def aggregate_sql(fqn: str, num_cols: list[str], keys: Key, where: str | None = None) -> str:
     parts = [f"CAST(SUM(`{c}`) AS STRING) AS `sum_{c}`" for c in num_cols]
     parts += [f"CAST(COUNT(DISTINCT `{k}`) AS STRING) AS `nd_{k}`" for k in keys]
     parts.append("CAST(COUNT(*) AS STRING) AS `n_rows`")
-    return f"SELECT {', '.join(parts)} FROM {fqn}"
+    sql = f"SELECT {', '.join(parts)} FROM {fqn}"
+    return f"{sql} WHERE {where}" if where else sql
 
 
 def compare_aggregates(
@@ -277,8 +307,9 @@ def compare_aggregates(
         if name.startswith("sum_"):
             col = name[4:]
             rule = classify_column(spec, col)
-            ok = _compare_value(rule if rule in ABS_TOL or rule == "ML-3" else "T-3", col, rv, tv)
-            if rule == "ML-4":  # SUM over table abs <= 0.05
+            base = base_rule(rule)
+            ok = _compare_value(base if base in ABS_TOL or base == "ML-3" else "T-3", col, rv, tv)
+            if base == "ML-4":  # SUM over table abs <= 0.05
                 a, b = to_float(rv), to_float(tv)
                 ok = a is not None and b is not None and abs(a - b) <= ML4_SUM_TOL
             detail = f"SUM({col}) under {rule} tolerance"
@@ -426,6 +457,8 @@ def t11(spec: TableSpec) -> RuleResult:
 def t12(spec: TableSpec, xlsx_path: str | None) -> RuleResult:
     if not spec.xlsx:
         return RuleResult("T-12", spec.name, None, "NOT_APPLICABLE", None, None, "no workbook")
+    if isinstance(xlsx_path, Mapping) and xlsx_path.get("error"):
+        return RuleResult("T-12", spec.name, None, "FAIL", None, None, str(xlsx_path["error"]))
     if not xlsx_path:
         return RuleResult(
             "T-12", spec.name, None, "NOT_APPLICABLE", None, None,
@@ -447,3 +480,28 @@ def t12(spec: TableSpec, xlsx_path: str | None) -> RuleResult:
 
 def now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0, tzinfo=None).isoformat() + "Z"
+
+
+def resolve_xlsx(
+    xlsx_path: str | None, fetch: Callable[[str], bytes] | None
+) -> tuple[str | None, dict | None]:
+    if xlsx_path is None:
+        return None, None
+    if xlsx_path.startswith("/Volumes/"):
+        if fetch is None:
+            return None, {"xlsx_source_path": xlsx_path, "error": "no Files API client"}
+        content = fetch(xlsx_path)
+        digest = hashlib.sha256(content).hexdigest()
+        with tempfile.NamedTemporaryFile(suffix=".xlsx", delete=False) as fh:
+            fh.write(content)
+            local_path = fh.name
+        return local_path, {
+            "xlsx_source_path": xlsx_path,
+            "xlsx_local_path": local_path,
+            "xlsx_sha256": digest,
+        }
+    digest = None
+    if os.path.isfile(xlsx_path):
+        with open(xlsx_path, "rb") as fh:
+            digest = hashlib.sha256(fh.read()).hexdigest()
+    return xlsx_path, {"xlsx_source_path": xlsx_path, "xlsx_sha256": digest}
