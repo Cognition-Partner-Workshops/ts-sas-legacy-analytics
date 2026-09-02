@@ -5,7 +5,6 @@ from pathlib import Path
 from recon import rules, run_recon
 from recon.units import tables_for
 
-
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
