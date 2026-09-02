@@ -95,8 +95,21 @@ resources:
         - environment_key: default
           spec:
             client: "2"
+            dependencies:
+              - openpyxl==3.1.5
+              - databricks-sdk==0.63.0
+      max_concurrent_runs: 1
+      schedule:
+        quartz_cron_expression: "0 15 6 * * ?"
+        timezone_id: UTC
+        pause_status: UNPAUSED
+      email_notifications:
+        no_alert_for_skipped_runs: true
+      parameters:
+        - name: business_date
+          default: ${var.business_date}
       tasks:
-        - task_key: run_recon
+        - task_key: recon_U1
           spark_python_task:
             python_file: ../recon/run_recon.py
             parameters:
@@ -105,7 +118,61 @@ resources:
               - --mode
               - live
               - --business-date
-              - ${var.business_date}
+              - "{{job.parameters.business_date}}"
               - --out
-              - /tmp/recon
+              - /tmp/recon/U1
+          environment_key: default
+        - task_key: recon_U2
+          spark_python_task:
+            python_file: ../recon/run_recon.py
+            parameters:
+              - --unit
+              - U2
+              - --mode
+              - live
+              - --business-date
+              - "{{job.parameters.business_date}}"
+              - --out
+              - /tmp/recon/U2
+          environment_key: default
+        - task_key: recon_U3
+          spark_python_task:
+            python_file: ../recon/run_recon.py
+            parameters:
+              - --unit
+              - U3
+              - --mode
+              - live
+              - --business-date
+              - "{{job.parameters.business_date}}"
+              - --out
+              - /tmp/recon/U3
+          environment_key: default
+        - task_key: recon_U4
+          spark_python_task:
+            python_file: ../recon/run_recon.py
+            parameters:
+              - --unit
+              - U4
+              - --mode
+              - live
+              - --business-date
+              - "{{job.parameters.business_date}}"
+              - --out
+              - /tmp/recon/U4
+              - --xlsx-path
+              - /Volumes/sas_legacy/sas_bronze/landing/reports/REG_REPORT_202401.xlsx
+          environment_key: default
+        - task_key: recon_U5
+          spark_python_task:
+            python_file: ../recon/run_recon.py
+            parameters:
+              - --unit
+              - U5
+              - --mode
+              - live
+              - --business-date
+              - "{{job.parameters.business_date}}"
+              - --out
+              - /tmp/recon/U5
           environment_key: default

@@ -15,14 +15,35 @@ import argparse
 import json
 import os
 import sys
+import tempfile
 import uuid
 from collections.abc import Callable
 from dataclasses import replace
 from datetime import date
 from pathlib import Path
 
+
+def _here() -> Path:
+    sources = [globals().get("__file__"), sys.argv[0], os.getcwd()]
+    for source in sources:
+        if not source:
+            continue
+        candidate = Path(source).expanduser()
+        if not candidate.is_dir():
+            candidate = candidate.parent
+        candidate = candidate.resolve()
+        for _ in range(4):
+            if (candidate / "recon" / "units.py").is_file():
+                return candidate / "recon"
+            candidate = candidate.parent
+    raise RuntimeError("unable to locate recon package")
+
+
+HERE = _here()
+REPO = HERE.parents[1]
+
 if __package__ in (None, ""):  # executed as a plain script (spark_python_task)
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    sys.path.insert(0, str(HERE.parent))
     __package__ = "recon"
 
 from recon import CAVEAT, RECON_MODE, TOLERANCES_VERSION
@@ -52,8 +73,6 @@ from recon.rules import (
 )
 from recon.units import ROW_DIFF_TIER, TableSpec, tables_for
 
-HERE = Path(__file__).resolve().parent
-REPO = HERE.parents[1]
 DEFAULT_REF = REPO / "docs" / "migration" / "recon" / "reference"
 DEFAULT_FIXTURE_TARGET = HERE.parent / "tests" / "fixtures" / "target"
 DEFAULT_WAREHOUSE = "565cd2fd713738c4"
@@ -227,6 +246,17 @@ def summarize(report: dict) -> str:
     return "\n".join(lines[:30]) + "\n"
 
 
+def _output_dir(path: Path, unit: str) -> Path:
+    try:
+        path.mkdir(parents=True, exist_ok=True)
+        for name in ("recon.json", "recon.summary.md"):
+            with (path / name).open("a", encoding="utf-8"):
+                pass
+        return path
+    except OSError:
+        return Path(tempfile.mkdtemp(prefix=f"sas_legacy_recon_{unit}_"))
+
+
 def run_log_sql(report: dict) -> str:
     def q(s: str) -> str:
         return "'" + s.replace("'", "''") + "'"
@@ -307,9 +337,10 @@ def main(argv: list[str] | None = None) -> int:
     }
     report["summary"] = summarize(report)
 
-    a.out.mkdir(parents=True, exist_ok=True)
-    (a.out / "recon.json").write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
-    (a.out / "recon.summary.md").write_text(report["summary"], encoding="utf-8")
+    out = _output_dir(a.out, a.unit)
+    print(f"recon output dir: {out}")
+    (out / "recon.json").write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
+    (out / "recon.summary.md").write_text(report["summary"], encoding="utf-8")
     print(report["summary"])
 
     if wh and not a.no_run_log:
@@ -318,4 +349,6 @@ def main(argv: list[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    _rc = main()
+    if _rc:
+        raise SystemExit(_rc)

@@ -1,0 +1,84 @@
+{
+  "error": "PermissionError: [Errno 13] Permission denied: '/tmp/sas_legacy_recon_U3/recon.json'",
+  "error_trace": "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m\n\u001b[0;31mPermissionError\u001b[0m                           Traceback (most recent call last)\nFile \u001b[0;32m~/.ipykernel/5229/command--1-2307907746:8\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[38;5;28;01mdel\u001b[39;00m sys\n\u001b[1;32m      7\u001b[0m \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mopen\u001b[39m(filename, \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrb\u001b[39m\u001b[38;5;124m\"\u001b[39m) \u001b[38;5;28;01mas\u001b[39;00m f:\n\u001b[0;32m----\u003e 8\u001b[0m   exec(\u001b[38;5;28mcompile\u001b[39m(f\u001b[38;5;241m.\u001b[39mread(), filename, \u001b[38;5;124m'\u001b[39m\u001b[38;5;124mexec\u001b[39m\u001b[38;5;124m'\u001b[39m))\n\nFile \u001b[0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py:348\u001b[0m\n\u001b[1;32m    344\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;241m0\u001b[39m \u001b[38;5;28;01mif\u001b[39;00m report[\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124moverall\u001b[39m\u001b[38;5;124m\"\u001b[39m] \u001b[38;5;241m==\u001b[39m \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mPASS\u001b[39m\u001b[38;5;124m\"\u001b[39m \u001b[38;5;28;01melse\u001b[39;00m \u001b[38;5;241m1\u001b[39m\n\u001b[1;32m    347\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;18m__name__\u001b[39m \u001b[38;5;241m==\u001b[39m \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124m__main__\u001b[39m\u001b[38;5;124m\"\u001b[39m:\n\u001b[0;32m--\u003e 348\u001b[0m     _rc \u001b[38;5;241m=\u001b[39m main()\n\u001b[1;32m    349\u001b[0m     \u001b[38;5;28;01mif\u001b[39;00m _rc:\n\u001b[1;32m    350\u001b[0m         \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mSystemExit\u001b[39;00m(_rc)\n\nFile \u001b[0;32m/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py:338\u001b[0m, in \u001b[0;36mmain\u001b[0;34m(argv)\u001b[0m\n\u001b[1;32m    335\u001b[0m report[\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124msummary\u001b[39m\u001b[38;5;124m\"\u001b[39m] \u001b[38;5;241m=\u001b[39m summarize(report)\n\u001b[1;32m    337\u001b[0m out \u001b[38;5;241m=\u001b[39m _output_dir(a\u001b[38;5;241m.\u001b[39mout, a\u001b[38;5;241m.\u001b[39munit)\n\u001b[0;32m--\u003e 338\u001b[0m (out \u001b[38;5;241m/\u001b[39m \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrecon.json\u001b[39m\u001b[38;5;124m\"\u001b[39m)\u001b[38;5;241m.\u001b[39mwrite_text(json\u001b[38;5;241m.\u001b[39mdumps(report, indent\u001b[38;5;241m=\u001b[39m\u001b[38;5;241m2\u001b[39m, default\u001b[38;5;241m=\u001b[39m\u001b[38;5;28mstr\u001b[39m), encoding\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mutf-8\u001b[39m\u001b[38;5;124m\"\u001b[39m)\n\u001b[1;32m    339\u001b[0m (out \u001b[38;5;241m/\u001b[39m \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrecon.summary.md\u001b[39m\u001b[38;5;124m\"\u001b[39m)\u001b[38;5;241m.\u001b[39mwrite_text(report[\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124msummary\u001b[39m\u001b[38;5;124m\"\u001b[39m], encoding\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mutf-8\u001b[39m\u001b[38;5;124m\"\u001b[39m)\n\u001b[1;32m    340\u001b[0m \u001b[38;5;28mprint\u001b[39m(report[\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124msummary\u001b[39m\u001b[38;5;124m\"\u001b[39m])\n\nFile \u001b[0;32m/usr/lib/python3.11/pathlib.py:1078\u001b[0m, in \u001b[0;36mPath.write_text\u001b[0;34m(self, data, encoding, errors, newline)\u001b[0m\n\u001b[1;32m   1075\u001b[0m     \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mTypeError\u001b[39;00m(\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mdata must be str, not \u001b[39m\u001b[38;5;132;01m%s\u001b[39;00m\u001b[38;5;124m'\u001b[39m \u001b[38;5;241m%\u001b[39m\n\u001b[1;32m   1076\u001b[0m                     data\u001b[38;5;241m.\u001b[39m\u001b[38;5;18m__class__\u001b[39m\u001b[38;5;241m.\u001b[39m\u001b[38;5;18m__name__\u001b[39m)\n\u001b[1;32m   1077\u001b[0m encoding \u001b[38;5;241m=\u001b[39m io\u001b[38;5;241m.\u001b[39mtext_encoding(encoding)\n\u001b[0;32m-\u003e 1078\u001b[0m \u001b[38;5;28;01mwith\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mopen(mode\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mw\u001b[39m\u001b[38;5;124m'\u001b[39m, encoding\u001b[38;5;241m=\u001b[39mencoding, errors\u001b[38;5;241m=\u001b[39merrors, newline\u001b[38;5;241m=\u001b[39mnewline) \u001b[38;5;28;01mas\u001b[39;00m f:\n\u001b[1;32m   1079\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m f\u001b[38;5;241m.\u001b[39mwrite(data)\n\nFile \u001b[0;32m/usr/lib/python3.11/pathlib.py:1044\u001b[0m, in \u001b[0;36mPath.open\u001b[0;34m(self, mode, buffering, encoding, errors, newline)\u001b[0m\n\u001b[1;32m   1042\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mb\u001b[39m\u001b[38;5;124m\"\u001b[39m \u001b[38;5;129;01mnot\u001b[39;00m \u001b[38;5;129;01min\u001b[39;00m mode:\n\u001b[1;32m   1043\u001b[0m     encoding \u001b[38;5;241m=\u001b[39m io\u001b[38;5;241m.\u001b[39mtext_encoding(encoding)\n\u001b[0;32m-\u003e 1044\u001b[0m \u001b[38;5;28;01mreturn\u001b[39;00m io\u001b[38;5;241m.\u001b[39mopen(\u001b[38;5;28mself\u001b[39m, mode, buffering, encoding, errors, newline)\n\n\u001b[0;31mPermissionError\u001b[0m: [Errno 13] Permission denied: '/tmp/sas_legacy_recon_U3/recon.json'",
+  "metadata": {
+    "cleanup_duration": 0,
+    "creator_user_name": "<requester>",
+    "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+    "end_time": 1788310478486,
+    "execution_duration": 17000,
+    "job_id": 1058116656072070,
+    "job_parameters": [
+      {
+        "default": "2024-01-31",
+        "name": "business_date"
+      }
+    ],
+    "job_run_id": 876111316294946,
+    "number_in_job": 716894723070225,
+    "original_attempt_run_id": 165277987034700,
+    "run_id": 716894723070225,
+    "run_name": "recon_U3",
+    "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/1058116656072070/run/716894723070225",
+    "run_type": "JOB_RUN",
+    "setup_duration": 2000,
+    "start_time": 1788310458519,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "FAILED",
+      "state_message": "Workload failed, see run output for details",
+      "user_cancelled_or_timedout": false
+    },
+    "status": {
+      "state": "TERMINATED",
+      "termination_details": {
+        "code": "RUN_EXECUTION_ERROR",
+        "message": "Workload failed, see run output for details",
+        "type": "CLIENT_ERROR"
+      }
+    },
+    "tasks": [
+      {
+        "attempt_number": 1,
+        "cleanup_duration": 0,
+        "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+        "end_time": 1788310478486,
+        "environment_key": "default",
+        "execution_duration": 17000,
+        "run_id": 716894723070225,
+        "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/1058116656072070/run/716894723070225",
+        "setup_duration": 2000,
+        "spark_python_task": {
+          "parameters": [
+            "--unit",
+            "U3",
+            "--mode",
+            "live",
+            "--business-date",
+            "{{job.parameters.business_date}}",
+            "--out",
+            "/tmp/recon/U3"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py"
+        },
+        "start_time": 1788310458519,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "FAILED",
+          "state_message": "Workload failed, see run output for details",
+          "user_cancelled_or_timedout": false
+        },
+        "status": {
+          "state": "TERMINATED",
+          "termination_details": {
+            "code": "RUN_EXECUTION_ERROR",
+            "message": "Workload failed, see run output for details",
+            "type": "CLIENT_ERROR"
+          }
+        },
+        "task_key": "recon_U3"
+      }
+    ],
+    "trigger": "RETRY"
+  }
+}

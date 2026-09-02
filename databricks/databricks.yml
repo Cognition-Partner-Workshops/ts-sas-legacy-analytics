@@ -4,6 +4,11 @@ bundle:
 include:
   - resources/*.yml
 
+sync:
+  paths:
+    - .
+    - ../docs/migration/recon/reference
+
 variables:
   business_date:
     default: "2024-01-31"

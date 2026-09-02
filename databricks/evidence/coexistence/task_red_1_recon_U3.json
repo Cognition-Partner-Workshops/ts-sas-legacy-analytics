@@ -1,0 +1,87 @@
+{
+  "error": "SystemExit: 1",
+  "error_trace": "An exception has occurred, use %tb to see the full traceback.\n\n\u001b[0;31mSystemExit\u001b[0m\u001b[0;31m:\u001b[0m 1\n",
+  "logs": "recon output dir: /tmp/sas_legacy_recon_U3_s4ueue12\n# recon U3 2024-02-29 — FAIL\nmode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id cf33434f-7de1-4b2a-a5af-b0f16d80a7fa\nreference manifest sha256: aea7c04a35b6171c343a1eedc45bb509402b746864a6e111ac6608d154625cc7\n\n| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |\n|---|---|---|---|---|---|---|---|---|\n| risk_scores | row_level | 236 | 236 | 64 | 1 | 4 | 0 | T-3:model_id |\n| risk_migration | row_level | 195 | 195 | 15 | 0 | 4 | 0 | - |\n| risk_summary | row_level | 12 | 12 | 16 | 0 | 2 | 0 | - |\n\nwarehouse statements: 9, elapsed_s: 5.1\n\n\n\n/databricks/python/lib/python3.11/site-packages/IPython/core/interactiveshell.py:3585: UserWarning: To exit: use 'exit', 'quit', or Ctrl-D.\n  warn(\"To exit: use 'exit', 'quit', or Ctrl-D.\", stacklevel=1)\n",
+  "logs_truncated": false,
+  "metadata": {
+    "cleanup_duration": 0,
+    "creator_user_name": "<requester>",
+    "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+    "end_time": 1788310991796,
+    "execution_duration": 69000,
+    "job_id": 1058116656072070,
+    "job_parameters": [
+      {
+        "default": "2024-01-31",
+        "name": "business_date",
+        "value": "2024-02-29"
+      }
+    ],
+    "job_run_id": 1063912159259719,
+    "number_in_job": 1012986235303144,
+    "original_attempt_run_id": 1012986235303144,
+    "run_id": 1012986235303144,
+    "run_name": "recon_U3",
+    "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/1058116656072070/run/1012986235303144",
+    "run_type": "JOB_RUN",
+    "setup_duration": 5000,
+    "start_time": 1788310917661,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "FAILED",
+      "state_message": "Workload failed, see run output for details",
+      "user_cancelled_or_timedout": false
+    },
+    "status": {
+      "state": "TERMINATED",
+      "termination_details": {
+        "code": "RUN_EXECUTION_ERROR",
+        "message": "Workload failed, see run output for details",
+        "type": "CLIENT_ERROR"
+      }
+    },
+    "tasks": [
+      {
+        "attempt_number": 0,
+        "cleanup_duration": 0,
+        "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+        "end_time": 1788310991796,
+        "environment_key": "default",
+        "execution_duration": 69000,
+        "run_id": 1012986235303144,
+        "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/1058116656072070/run/1012986235303144",
+        "setup_duration": 5000,
+        "spark_python_task": {
+          "parameters": [
+            "--unit",
+            "U3",
+            "--mode",
+            "live",
+            "--business-date",
+            "{{job.parameters.business_date}}",
+            "--out",
+            "/tmp/recon/U3"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/databricks/recon/run_recon.py"
+        },
+        "start_time": 1788310917661,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "FAILED",
+          "state_message": "Workload failed, see run output for details",
+          "user_cancelled_or_timedout": false
+        },
+        "status": {
+          "state": "TERMINATED",
+          "termination_details": {
+            "code": "RUN_EXECUTION_ERROR",
+            "message": "Workload failed, see run output for details",
+            "type": "CLIENT_ERROR"
+          }
+        },
+        "task_key": "recon_U3"
+      }
+    ],
+    "trigger": "ONE_TIME"
+  }
+}
