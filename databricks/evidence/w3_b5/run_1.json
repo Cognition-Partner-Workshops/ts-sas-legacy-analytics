@@ -1,0 +1,265 @@
+{
+  "cleanup_duration": 0,
+  "creator_user_name": "<requester>",
+  "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+  "end_time": 1788308453904,
+  "execution_duration": 0,
+  "job_id": 216001923865775,
+  "job_run_id": 736214486752362,
+  "number_in_job": 736214486752362,
+  "original_attempt_run_id": 736214486752362,
+  "run_duration": 175128,
+  "run_id": 736214486752362,
+  "run_name": "sas_legacy_run_daily_banking",
+  "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/736214486752362",
+  "run_type": "JOB_RUN",
+  "setup_duration": 0,
+  "start_time": 1788308278776,
+  "state": {
+    "life_cycle_state": "TERMINATED",
+    "result_state": "SUCCESS",
+    "state_message": "",
+    "user_cancelled_or_timedout": false
+  },
+  "status": {
+    "state": "TERMINATED",
+    "termination_details": {
+      "code": "SUCCESS",
+      "message": "",
+      "type": "SUCCESS"
+    }
+  },
+  "tasks": [
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788308341287,
+      "environment_key": "default",
+      "execution_duration": 58000,
+      "run_id": 728272839406101,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/728272839406101",
+      "setup_duration": 4000,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/load_customer_accounts.py"
+      },
+      "start_time": 1788308278818,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "SUCCESS",
+          "message": "",
+          "type": "SUCCESS"
+        }
+      },
+      "task_key": "load_customer_accounts"
+    },
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "depends_on": [
+        {
+          "task_key": "daily_transaction_processing"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788308400489,
+      "environment_key": "default",
+      "execution_duration": 23000,
+      "run_id": 42836606181913,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/42836606181913",
+      "setup_duration": 2000,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/credit_risk_scoring.py"
+      },
+      "start_time": 1788308375206,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "SUCCESS",
+          "message": "",
+          "type": "SUCCESS"
+        }
+      },
+      "task_key": "credit_risk_scoring"
+    },
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 1000,
+      "depends_on": [
+        {
+          "task_key": "load_customer_accounts"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788308374751,
+      "environment_key": "default",
+      "execution_duration": 30000,
+      "run_id": 700367291274386,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/700367291274386",
+      "setup_duration": 2000,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/daily_transaction_processing.py"
+      },
+      "start_time": 1788308341674,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "SUCCESS",
+          "message": "",
+          "type": "SUCCESS"
+        }
+      },
+      "task_key": "daily_transaction_processing"
+    },
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "depends_on": [
+        {
+          "task_key": "credit_risk_scoring"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788308429162,
+      "environment_key": "default",
+      "execution_duration": 27000,
+      "run_id": 912170561285817,
+      "run_if": "ALL_SUCCESS",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/912170561285817",
+      "setup_duration": 1000,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--report-month",
+          "202401",
+          "--region",
+          "ALL",
+          "--abort-on-err",
+          "Y"
+        ],
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/monthly_regulatory_reporting.py"
+      },
+      "start_time": 1788308400904,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "SUCCESS",
+          "message": "",
+          "type": "SUCCESS"
+        }
+      },
+      "task_key": "monthly_regulatory_reporting"
+    },
+    {
+      "attempt_number": 0,
+      "cleanup_duration": 0,
+      "depends_on": [
+        {
+          "task_key": "load_customer_accounts"
+        },
+        {
+          "task_key": "daily_transaction_processing"
+        },
+        {
+          "task_key": "credit_risk_scoring"
+        },
+        {
+          "task_key": "monthly_regulatory_reporting"
+        }
+      ],
+      "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+      "end_time": 1788308453482,
+      "environment_key": "default",
+      "execution_duration": 21000,
+      "run_id": 669044511717763,
+      "run_if": "ALL_DONE",
+      "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/669044511717763",
+      "setup_duration": 2000,
+      "spark_python_task": {
+        "parameters": [
+          "--business-date",
+          "2024-01-31",
+          "--run-id",
+          "{{job.run_id}}"
+        ],
+        "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/run_daily_banking.py"
+      },
+      "start_time": 1788308429633,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "status": {
+        "state": "TERMINATED",
+        "termination_details": {
+          "code": "SUCCESS",
+          "message": "",
+          "type": "SUCCESS"
+        }
+      },
+      "task_key": "batch_summary"
+    }
+  ],
+  "trigger": "ONE_TIME"
+}

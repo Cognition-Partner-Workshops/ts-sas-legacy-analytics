@@ -1,7 +1,7 @@
 Name: sas_legacy
 Target: dev
 Workspace:
-  User: dhrov.subramanian@cognition.ai
-  Path: /Workspace/Users/dhrov.subramanian@cognition.ai/.bundle/sas_legacy/dev
+  User: <requester>
+  Path: /Workspace/Users/<requester>/.bundle/sas_legacy/dev
 
 Validation OK!
