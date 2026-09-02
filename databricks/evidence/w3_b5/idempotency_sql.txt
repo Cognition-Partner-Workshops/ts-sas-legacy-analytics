@@ -1,0 +1,50 @@
+-- statement 1
+SELECT COUNT(*) AS n, COUNT(DISTINCT batch_id) AS nb
+FROM sas_legacy.sas_silver.archive_batch_history
+WHERE batch_id LIKE 'BANK_20240131_%';
+[{"n": "8", "nb": "2"}]
+-- statement 2
+SELECT batch_id, step_num, step_name, status, duration, error_msg
+FROM sas_legacy.sas_silver.archive_batch_history
+WHERE batch_id LIKE 'BANK_20240131_%'
+ORDER BY batch_id, step_num;
+[{"batch_id": "BANK_20240131_20260902T001758", "step_num": "1", "step_name": "Load Customer Accounts", "status": "PASS", "duration": "62.469", "error_msg": ""}, {"batch_id": "BANK_20240131_20260902T001758", "step_num": "2", "step_name": "Daily Transaction Processing", "status": "PASS", "duration": "33.077", "error_msg": ""}, {"batch_id": "BANK_20240131_20260902T001758", "step_num": "3", "step_name": "Credit Risk Scoring", "status": "PASS", "duration": "25.283", "error_msg": ""}, {"batch_id": "BANK_20240131_20260902T001758", "step_num": "4", "step_name": "Monthly Regulatory Reporting", "status": "PASS", "duration": "28.258", "error_msg": ""}, {"batch_id": "BANK_20240131_20260902T002106", "step_num": "1", "step_name": "Load Customer Accounts", "status": "PASS", "duration": "65.79", "error_msg": ""}, {"batch_id": "BANK_20240131_20260902T002106", "step_num": "2", "step_name": "Daily Transaction Processing", "status": "PASS", "duration": "59.757", "error_msg": ""}, {"batch_id": "BANK_20240131_20260902T002106", "step_num": "3", "step_name": "Credit Risk Scoring", "status": "PASS", "duration": "26.764", "error_msg": ""}, {"batch_id": "BANK_20240131_20260902T002106", "step_num": "4", "step_name": "Monthly Regulatory Reporting", "status": "PASS", "duration": "28.349", "error_msg": ""}]
+-- statement 3
+SELECT COUNT(*) FROM sas_legacy.sas_silver.cust_accounts_daily;
+[{"count(1)": "466"}]
+-- statement 4
+SELECT COUNT(*) FROM sas_legacy.sas_silver.acct_exceptions;
+[{"count(1)": "32"}]
+-- statement 5
+SELECT COUNT(*) FROM sas_legacy.sas_silver.daily_transactions;
+[{"count(1)": "18903"}]
+-- statement 6
+SELECT COUNT(*) FROM sas_legacy.sas_silver.running_balances;
+[{"count(1)": "610"}]
+-- statement 7
+SELECT COUNT(*) FROM sas_legacy.sas_silver.txn_anomalies;
+[{"count(1)": "46"}]
+-- statement 8
+SELECT COUNT(*) FROM sas_legacy.sas_silver.txn_rejected;
+[{"count(1)": "12"}]
+-- statement 9
+SELECT COUNT(*) FROM sas_legacy.sas_silver.risk_scores;
+[{"count(1)": "236"}]
+-- statement 10
+SELECT COUNT(*) FROM sas_legacy.sas_silver.risk_migration;
+[{"count(1)": "195"}]
+-- statement 11
+SELECT COUNT(*) FROM sas_legacy.sas_gold.risk_summary;
+[{"count(1)": "12"}]
+-- statement 12
+SELECT COUNT(*) FROM sas_legacy.sas_gold.monthly_rwa;
+[{"count(1)": "59"}]
+-- statement 13
+SELECT COUNT(*) FROM sas_legacy.sas_gold.delinquency_aging;
+[{"count(1)": "70"}]
+-- statement 14
+SELECT COUNT(*) FROM sas_legacy.sas_gold.llp_coverage;
+[{"count(1)": "6"}]
+-- statement 15
+SELECT COUNT(*) FROM sas_legacy.sas_gold.capital_adequacy;
+[{"count(1)": "1"}]

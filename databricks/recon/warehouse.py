@@ -90,5 +90,12 @@ class Warehouse:
             )
         r.raise_for_status()
 
+    def download_file(self, remote_path: str) -> bytes:
+        r = self._s.get(
+            self.base + "/api/2.0/fs/files/" + remote_path.lstrip("/"), timeout=120
+        )
+        r.raise_for_status()
+        return r.content
+
     def execute(self, sql: str) -> None:
         self.query(sql)

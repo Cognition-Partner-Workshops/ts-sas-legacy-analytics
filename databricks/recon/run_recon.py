@@ -16,6 +16,9 @@ import json
 import os
 import sys
 import uuid
+from collections.abc import Callable
+from dataclasses import replace
+from datetime import date
 from pathlib import Path
 
 if __package__ in (None, ""):  # executed as a plain script (spark_python_task)
@@ -39,6 +42,7 @@ from recon.rules import (
     ml8,
     now_iso,
     numeric_columns,
+    resolve_xlsx,
     row_level,
     t9,
     t9_declared_unexercised,
@@ -54,6 +58,20 @@ DEFAULT_REF = REPO / "docs" / "migration" / "recon" / "reference"
 DEFAULT_FIXTURE_TARGET = HERE.parent / "tests" / "fixtures" / "target"
 DEFAULT_WAREHOUSE = "565cd2fd713738c4"
 CATALOG = "sas_legacy"
+XLSX_FETCH_OVERRIDE: Callable[[str], bytes] | None = None
+
+
+def resolve_spec(spec: TableSpec, business_date: date | str) -> TableSpec:
+    date_value = (
+        business_date.isoformat() if isinstance(business_date, date) else str(business_date)
+    )
+    yyyymmdd = date_value.replace("-", "")
+    rules = {
+        column: rule.replace("{yyyymmdd}", yyyymmdd)
+        for column, rule in spec.column_rules.items()
+    }
+    prefix = spec.latest_prefix.replace("{yyyymmdd}", yyyymmdd) if spec.latest_prefix else None
+    return replace(spec, column_rules=rules, latest_prefix=prefix)
 
 
 class TargetReader:
@@ -69,30 +87,63 @@ class TargetReader:
 
     def count(self, spec: TableSpec) -> int:
         if self.mode == "fixture":
-            return len(self._local(spec.name))
-        return int(self.wh.query(f"SELECT COUNT(*) AS n FROM {self.fqn(spec)}")[0]["n"])
+            return len(self._local(spec.name, spec))
+        where = self._latest_where(spec)
+        sql = f"SELECT COUNT(*) AS n FROM {self.fqn(spec)}"
+        return int(self.wh.query(f"{sql} WHERE {where}" if where else sql)[0]["n"])
 
     def rows(self, spec: TableSpec, name: str | None = None) -> list[dict] | None:
         name = name or spec.name
         if self.mode == "fixture":
             p = self.target_dir / f"{name}.csv"
-            return read_csv(p) if p.is_file() else None
-        return self.wh.query(f"SELECT * FROM {CATALOG}.{spec.schema}.{name}")
+            if not p.is_file():
+                return None
+            rows = read_csv(p)
+            return self._filter_latest(spec, rows) if name == spec.name else rows
+        fqn = f"{CATALOG}.{spec.schema}.{name}"
+        where = self._latest_where(spec) if name == spec.name else None
+        sql = f"SELECT * FROM {fqn}"
+        return self.wh.query(f"{sql} WHERE {where}" if where else sql)
 
     def aggregates(self, spec: TableSpec, num_cols, ref_rows) -> dict:
         keys = spec.distinct_keys or spec.keys
         if self.mode == "fixture":
-            return local_aggregates(self._local(spec.name), num_cols, keys)
-        return self.wh.query(aggregate_sql(self.fqn(spec), num_cols, keys))[0]
+            return local_aggregates(self._local(spec.name, spec), num_cols, keys)
+        return self.wh.query(aggregate_sql(self.fqn(spec), num_cols, keys, self._latest_where(spec)))[0]
 
-    def _local(self, name: str) -> list[dict]:
+    def _latest_where(self, spec: TableSpec) -> str | None:
+        if not spec.latest_key or not spec.latest_prefix:
+            return None
+        key = spec.latest_key
+        prefix = spec.latest_prefix
+        fqn = self.fqn(spec)
+        return f"{key} = (SELECT MAX({key}) FROM {fqn} WHERE {key} LIKE '{prefix}%')"
+
+    def _filter_latest(self, spec: TableSpec, rows: list[dict]) -> list[dict]:
+        if not spec.latest_key or not spec.latest_prefix:
+            return rows
+        key = spec.latest_key
+        matches = [row.get(key) for row in rows if (row.get(key) or "").startswith(spec.latest_prefix)]
+        if not matches:
+            return []
+        latest = max(matches)
+        return [row for row in rows if row.get(key) == latest]
+
+    def _local(self, name: str, spec: TableSpec | None = None) -> list[dict]:
         p = self.target_dir / f"{name}.csv"
         if not p.is_file():
             raise SystemExit(f"target fixture missing: {p}")
-        return read_csv(p)
+        rows = read_csv(p)
+        return self._filter_latest(spec, rows) if spec else rows
 
 
-def recon_table(spec: TableSpec, ref_dir: Path, tgt: TargetReader, xlsx_path: str | None):
+def recon_table(
+    spec: TableSpec,
+    ref_dir: Path,
+    tgt: TargetReader,
+    xlsx_path: str | None,
+    xlsx_info: dict | None = None,
+):
     ref_rows = load_reference_table(ref_dir, spec.name)
     columns = list(ref_rows[0].keys()) if ref_rows else list(spec.keys)
     results: list[RuleResult] = []
@@ -122,7 +173,7 @@ def recon_table(spec: TableSpec, ref_dir: Path, tgt: TargetReader, xlsx_path: st
         results.append(t9(spec, ref_rows, tgt_rows))
     results.append(t10(spec))
     results.append(t11(spec))
-    results.append(t12(spec, xlsx_path))
+    results.append(t12(spec, xlsx_info if xlsx_info and xlsx_info.get("error") else xlsx_path))
 
     if spec.ml and tgt_rows is not None:
         if "pd" in columns:
@@ -152,10 +203,15 @@ def summarize(report: dict) -> str:
             f"tolerances {report['tolerances_version']}; run_id {report['run_id']}"
         ),
         f"reference manifest sha256: {report['reference_manifest_sha256']}",
+    ]
+    if report.get("xlsx"):
+        info = report["xlsx"]
+        lines.append(f"xlsx: {info['xlsx_source_path']} sha256={info.get('xlsx_sha256')}")
+    lines.extend([
         "",
         "| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |",
         "|---|---|---|---|---|---|---|---|---|",
-    ]
+    ])
     for t in report["tables"]:
         vs = [r["verdict"] for r in t["results"]]
         failing = sorted({f"{r['rule']}:{r['column']}" if r["column"] else r["rule"]
@@ -214,11 +270,14 @@ def main(argv: list[str] | None = None) -> int:
 
         wh = Warehouse(a.warehouse_id)
     tgt = TargetReader(a.mode, a.target_dir, wh)
+    fetch = XLSX_FETCH_OVERRIDE or (wh.download_file if wh else None)
+    local_xlsx, xlsx_info = resolve_xlsx(a.xlsx_path, fetch)
 
     tables = []
     try:
         for spec in tables_for(a.unit):
-            tables.append(recon_table(spec, a.reference_dir, tgt, a.xlsx_path))
+            resolved = resolve_spec(spec, a.business_date)
+            tables.append(recon_table(resolved, a.reference_dir, tgt, local_xlsx, xlsx_info))
     except ReferenceMissing as exc:
         print(exc, file=sys.stderr)
         return 2
@@ -237,6 +296,7 @@ def main(argv: list[str] | None = None) -> int:
         "tolerances_version": TOLERANCES_VERSION,
         "reference_manifest_sha256": manifest_sha,
         "reference_manifest": manifest,
+        "xlsx": xlsx_info,
         "overall": "PASS" if counts["FAIL"] == 0 else "FAIL",
         "counts": counts,
         "warehouse": {

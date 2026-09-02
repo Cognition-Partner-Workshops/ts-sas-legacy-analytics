@@ -1,0 +1,32 @@
+W3 B5 live idempotency summary
+
+Archive history (business-date prefix BANK_20240131_):
+  count: 8 (expected 8) MATCH
+  distinct batch IDs: 2 (expected 2) MATCH
+    BANK_20240131_20260902T001758
+    BANK_20240131_20260902T002106
+
+Archive statuses (all 8 rows):
+  BANK_20240131_20260902T001758 step_1: PASS
+  BANK_20240131_20260902T001758 step_2: PASS
+  BANK_20240131_20260902T001758 step_3: PASS
+  BANK_20240131_20260902T001758 step_4: PASS
+  BANK_20240131_20260902T002106 step_1: PASS
+  BANK_20240131_20260902T002106 step_2: PASS
+  BANK_20240131_20260902T002106 step_3: PASS
+  BANK_20240131_20260902T002106 step_4: PASS
+
+Upstream target counts (plain COUNT(*) queries):
+  U1 sas_silver.cust_accounts_daily: actual=466 expected=466 MATCH
+  U1 sas_silver.acct_exceptions: actual=32 expected=32 MATCH
+  U2 sas_silver.daily_transactions: actual=18903 expected=18903 MATCH
+  U2 sas_silver.running_balances: actual=610 expected=610 MATCH
+  U2 sas_silver.txn_anomalies: actual=46 expected=46 MATCH
+  U2 sas_silver.txn_rejected: actual=12 expected=12 MATCH
+  U3 sas_silver.risk_scores: actual=236 expected=236 MATCH
+  U3 sas_silver.risk_migration: actual=195 expected=195 MATCH
+  U3 sas_gold.risk_summary: actual=12 expected=12 MATCH
+  U4 sas_gold.monthly_rwa: actual=59 expected=59 MATCH
+  U4 sas_gold.delinquency_aging: actual=70 expected=70 MATCH
+  U4 sas_gold.llp_coverage: actual=6 expected=6 MATCH
+  U4 sas_gold.capital_adequacy: actual=1 expected=1 MATCH

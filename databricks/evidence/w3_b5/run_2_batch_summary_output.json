@@ -1,0 +1,74 @@
+{
+  "logs": "NOTE: Step 1 PASSED\nNOTE: Step 2 PASSED\nNOTE: Step 3 PASSED\nNOTE: Step 4 PASSED\nrun_daily_banking: batch_id=BANK_20240131_20260902T002106 rows_written=4 pass=4 fail=0\n",
+  "logs_truncated": false,
+  "metadata": {
+    "cleanup_duration": 0,
+    "creator_user_name": "<requester>",
+    "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+    "end_time": 1788308669527,
+    "execution_duration": 19000,
+    "job_id": 216001923865775,
+    "job_run_id": 568864968862809,
+    "number_in_job": 569347746330437,
+    "original_attempt_run_id": 569347746330437,
+    "run_id": 569347746330437,
+    "run_name": "batch_summary",
+    "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/569347746330437",
+    "run_type": "JOB_RUN",
+    "setup_duration": 1000,
+    "start_time": 1788308649124,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "SUCCESS",
+      "state_message": "",
+      "user_cancelled_or_timedout": false
+    },
+    "status": {
+      "state": "TERMINATED",
+      "termination_details": {
+        "code": "SUCCESS",
+        "message": "",
+        "type": "SUCCESS"
+      }
+    },
+    "tasks": [
+      {
+        "attempt_number": 0,
+        "cleanup_duration": 0,
+        "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+        "end_time": 1788308669527,
+        "environment_key": "default",
+        "execution_duration": 19000,
+        "run_id": 569347746330437,
+        "run_page_url": "https://dbc-8bc9474f-40ae.cloud.databricks.com/?o=7474651138173478#job/216001923865775/run/569347746330437",
+        "setup_duration": 1000,
+        "spark_python_task": {
+          "parameters": [
+            "--business-date",
+            "2024-01-31",
+            "--run-id",
+            "{{job.run_id}}"
+          ],
+          "python_file": "/Workspace/Users/<requester>/.bundle/sas_legacy/dev/files/src/jobs/run_daily_banking.py"
+        },
+        "start_time": 1788308649124,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "SUCCESS",
+          "state_message": "",
+          "user_cancelled_or_timedout": false
+        },
+        "status": {
+          "state": "TERMINATED",
+          "termination_details": {
+            "code": "SUCCESS",
+            "message": "",
+            "type": "SUCCESS"
+          }
+        },
+        "task_key": "batch_summary"
+      }
+    ],
+    "trigger": "ONE_TIME"
+  }
+}
