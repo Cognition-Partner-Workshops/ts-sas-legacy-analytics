@@ -78,5 +78,17 @@ class Warehouse:
         self.elapsed_s += time.time() - t0
         return [dict(zip(cols, row)) for row in data]
 
+    def fetch(self, sql: str) -> Rows:
+        return self.query(sql)
+
+    def upload_file(self, local_path: str, remote_path: str) -> None:
+        with open(local_path, "rb") as body:
+            r = self._s.put(
+                self.base + "/api/2.0/fs/files/" + remote_path.lstrip("/") + "?overwrite=true",
+                data=body,
+                timeout=120,
+            )
+        r.raise_for_status()
+
     def execute(self, sql: str) -> None:
         self.query(sql)

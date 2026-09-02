@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterable, Mapping
 from pathlib import Path
 
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
 
 
 def export_xlsx(
@@ -18,9 +18,15 @@ def export_xlsx(
 
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)
-    workbook = Workbook()
-    worksheet = workbook.active
-    worksheet.title = sheet
+    if output.exists():
+        workbook = load_workbook(output)
+        if sheet in workbook.sheetnames:
+            del workbook[sheet]
+        worksheet = workbook.create_sheet(sheet)
+    else:
+        workbook = Workbook()
+        worksheet = workbook.active
+        worksheet.title = sheet
     records = list(rows)
     keys = list(records[0]) if records else []
     if header:

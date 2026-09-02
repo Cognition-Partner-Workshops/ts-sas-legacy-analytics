@@ -1,0 +1,19 @@
+U2 daily_transaction_processing ad hoc warehouse execution
+
+run 1 id: ad-hoc-1 (direct CLI invocation; no Databricks job run ID)
+invocation: python jobs/daily_transaction_processing.py --business-date 2024-01-31 --executor warehouse
+output: daily_transaction_processing: 9 statements, business_date=2024-01-31
+{'tbl': 'daily_transactions', 'n': '18903', 'checksum': '112599679093'}
+{'tbl': 'running_balances', 'n': '610', 'checksum': '20005949123'}
+{'tbl': 'txn_anomalies', 'n': '46', 'checksum': '22002145941'}
+{'tbl': 'txn_rejected', 'n': '12', 'checksum': '4713650340'}
+
+run 2 id: ad-hoc-2 (direct CLI invocation; no Databricks job run ID)
+invocation: python jobs/daily_transaction_processing.py --business-date 2024-01-31 --executor warehouse
+output: daily_transaction_processing: 8 statements, business_date=2024-01-31
+{'tbl': 'daily_transactions', 'n': '18903', 'checksum': '112599679093'}
+{'tbl': 'running_balances', 'n': '610', 'checksum': '20005949123'}
+{'tbl': 'txn_anomalies', 'n': '46', 'checksum': '22002145941'}
+{'tbl': 'txn_rejected', 'n': '12', 'checksum': '4713650340'}
+
+result: counts and checksums unchanged; second run added 0 rows.

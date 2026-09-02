@@ -1,0 +1,10 @@
+source-volume assertion (before run), sas_bronze._manifest vs live counts:
+  bureau_scores: manifest 500 live 500 OK
+  payment_history: manifest 248 live 248 OK
+  collateral: manifest 114 live 114 OK
+  cust_accounts_daily (2024-01-31): expected 466 live 466 OK
+  pre-state sas_silver.risk_scores: absent
+  pre-state sas_silver.risk_migration: absent
+  pre-state sas_gold.risk_summary: absent
+  pre-state sas_silver.risk_scores_woe_debug: absent
+ASSERTION PASS

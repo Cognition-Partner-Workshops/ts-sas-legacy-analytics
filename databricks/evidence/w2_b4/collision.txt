@@ -1,0 +1,4 @@
+{'error_code': 'BAD_REQUEST', 'message': 'No such file or directory /Volumes/sas_legacy/sas_bronze/landing/reports'}
+statement 1: SUCCEEDED
+[['sas_gold', 'risk_summary', 'false']]
+statement 2: FAILED

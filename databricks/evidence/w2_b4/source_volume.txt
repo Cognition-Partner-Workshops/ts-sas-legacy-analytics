@@ -1,0 +1,6 @@
+statement 1: SUCCEEDED
+[['CUST_ACCOUNTS.csv', '487'], ['LOAN_DETAILS.csv', '248']]
+statement 2: SUCCEEDED
+[['248']]
+statement 3: SUCCEEDED
+[['466']]
