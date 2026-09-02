@@ -8,6 +8,8 @@ resources:
             client: "2"
             dependencies:
               - openpyxl==3.1.5
+              - databricks-sdk==0.63.0
+      max_concurrent_runs: 1
       schedule:
         quartz_cron_expression: "0 45 5 * * ?"
         timezone_id: UTC
@@ -70,6 +72,21 @@ resources:
               - ${var.region}
               - --abort-on-err
               - ${var.abort_on_err}
+          environment_key: default
+        - task_key: batch_summary
+          depends_on:
+            - task_key: load_customer_accounts
+            - task_key: daily_transaction_processing
+            - task_key: credit_risk_scoring
+            - task_key: monthly_regulatory_reporting
+          run_if: ALL_DONE
+          spark_python_task:
+            python_file: ../src/jobs/run_daily_banking.py
+            parameters:
+              - --business-date
+              - ${var.business_date}
+              - --run-id
+              - "{{job.run_id}}"
           environment_key: default
 
     sas_legacy_recon:
