@@ -82,3 +82,5 @@ DEC-017 (a) EXECUTED 2026-09-02 (coexistence window, reference side, independent
 ||||||| f2ed9ec
 
 Coexistence (`!dbx_parallel_run`) window OPEN — provisional — as of 2026-09-02T01:04Z (branch `migration/06-coexistence`): recon job `sas_legacy_recon` id `1058116656072070`, 5 independent tasks, 06:15 UTC daily, UNPAUSED; `sas_legacy_run_daily_banking` PAUSED. Cycles: 876111316294946 RED 4/5 (U3 `T-3:model_id`, DEC-017 (a) baseline drift, PR #36), 1063912159259719 STAGED red (`business_date=2024-02-29`, U5 T-1/T-2/T-8 + U3), 737965062575783 RED 4/5 (U3 only, recovery confirmed). The 5-consecutive-GREEN clock starts after the DEC-017 reference correction lands. WEBHOOK: NOT WIRED (workspace-admin) — D5-004 GAP for STOP E; ledger `.migration/09_parallel_run_ledger.md`. Local gate: ruff clean, pytest 83 passed.
+
+Coexistence cycle 4 (2026-09-02T01:12Z, branch `migration/06-coexistence-cycle4`): bundle redeployed with the DEC-017 (a)-corrected reference (manifest `39cca40c…`, PR #37); `sas_legacy_recon` run 371352986351516 GREEN 5/5. Window state: OPEN — GREEN clock started, 1/5.

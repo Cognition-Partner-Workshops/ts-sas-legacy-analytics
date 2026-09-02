@@ -1,0 +1,89 @@
+Error: expected a KEY of the resource to run
+
+## corrected invocation (resource key sas_legacy_recon)
+Run URL: https://dbc-8bc9474f-40ae.cloud.databricks.com/jobs/1058116656072070/runs/371352986351516?o=7474651138173478
+
+2026-09-02 01:12:17 "sas_legacy_recon" RUNNING
+2026-09-02 01:13:39 "sas_legacy_recon" TERMINATED SUCCESS
+Output:
+=======
+Task recon_U5:
+recon output dir: /tmp/recon/U5
+# recon U5 2024-01-31 — PASS
+mode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id 6562c18d-f88a-4f0e-97f2-6440e7f6fc90
+reference manifest sha256: 39cca40cb55d9c26a63e9c0da9fe934f7b22b3931f470a3342b7e95ae1e3c3ed
+
+| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |
+|---|---|---|---|---|---|---|---|---|
+| archive_batch_history | row_level | 4 | 4 | 13 | 0 | 2 | 0 | - |
+
+warehouse statements: 3, elapsed_s: 1.5
+
+
+=======
+Task recon_U1:
+recon output dir: /tmp/sas_legacy_recon_U1_jlxik1uc
+# recon U1 2024-01-31 — PASS
+mode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id 30709025-7af6-47a8-8d43-df0243891163
+reference manifest sha256: 39cca40cb55d9c26a63e9c0da9fe934f7b22b3931f470a3342b7e95ae1e3c3ed
+
+| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |
+|---|---|---|---|---|---|---|---|---|
+| cust_accounts_daily | row_level | 466 | 466 | 40 | 0 | 2 | 0 | - |
+| acct_exceptions | row_level | 32 | 32 | 12 | 0 | 2 | 1 | - |
+
+warehouse statements: 6, elapsed_s: 3.4
+
+
+=======
+Task recon_U3:
+recon output dir: /tmp/sas_legacy_recon_U3_uwi23mua
+# recon U3 2024-01-31 — PASS
+mode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id 32c88cb6-1bff-4ba0-9dfa-d895bf780ab8
+reference manifest sha256: 39cca40cb55d9c26a63e9c0da9fe934f7b22b3931f470a3342b7e95ae1e3c3ed
+
+| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |
+|---|---|---|---|---|---|---|---|---|
+| risk_scores | row_level | 236 | 236 | 65 | 0 | 4 | 0 | - |
+| risk_migration | row_level | 195 | 195 | 15 | 0 | 4 | 0 | - |
+| risk_summary | row_level | 12 | 12 | 16 | 0 | 2 | 0 | - |
+
+warehouse statements: 9, elapsed_s: 5.0
+
+
+=======
+Task recon_U2:
+recon output dir: /tmp/sas_legacy_recon_U2_5jhkqapy
+# recon U2 2024-01-31 — PASS
+mode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id 04eceeca-51c1-4095-ae70-eb4d2e2b825d
+reference manifest sha256: 39cca40cb55d9c26a63e9c0da9fe934f7b22b3931f470a3342b7e95ae1e3c3ed
+
+| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |
+|---|---|---|---|---|---|---|---|---|
+| daily_transactions | row_level | 18903 | 18903 | 15 | 0 | 2 | 0 | - |
+| running_balances | row_level | 610 | 610 | 8 | 0 | 2 | 0 | - |
+| txn_anomalies | row_level | 46 | 46 | 35 | 0 | 2 | 0 | - |
+| txn_rejected | row_level | 12 | 12 | 6 | 0 | 2 | 1 | - |
+
+warehouse statements: 12, elapsed_s: 6.1
+
+
+=======
+Task recon_U4:
+recon output dir: /tmp/sas_legacy_recon_U4_v9p20rv0
+# recon U4 2024-01-31 — PASS
+mode: DEGRADED (reference-derived, not SAS-produced); tolerances v1; run_id 517fa982-7baa-4c1d-a9f3-b249b3be0b8d
+reference manifest sha256: 39cca40cb55d9c26a63e9c0da9fe934f7b22b3931f470a3342b7e95ae1e3c3ed
+xlsx: /Volumes/sas_legacy/sas_bronze/landing/reports/REG_REPORT_202401.xlsx sha256=850d6d21a24f963fe65a1b88f8b5422fed9a7b55d5aa977aef12b5311e2d4e86
+
+| table | tier | ref rows | tgt rows | PASS | FAIL | N/A | DECL-UNEX | failing rules |
+|---|---|---|---|---|---|---|---|---|
+| monthly_rwa | row_level | 59 | 59 | 16 | 0 | 1 | 0 | - |
+| delinquency_aging | row_level | 70 | 70 | 14 | 0 | 2 | 0 | - |
+| llp_coverage | row_level | 6 | 6 | 18 | 0 | 2 | 0 | - |
+| capital_adequacy | row_level | 1 | 1 | 22 | 0 | 2 | 0 | - |
+
+warehouse statements: 12, elapsed_s: 5.9
+
+
+run_id=371352986351516 bundle_rc=0
