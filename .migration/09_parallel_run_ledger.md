@@ -11,6 +11,7 @@
 | Exit criterion | 5 consecutive GREEN cycles **and** REQ-05 SAS-produced recon (upgrade from `snapshot` tier), or user acceptance at STOP E |
 | Cost per cycle (observed) | ~5.3–6.1 serverless task-minutes (5 tasks x ~60–70 s) + 42 warehouse statements on `565cd2fd713738c4` (45 when a task retries) |
 | Alerting | WEBHOOK: NOT WIRED (creating a notification destination needs workspace-admin; `notification-destinations list` is empty). Remediation is carried by the daily Devin automation "sas_legacy P1 coexistence: recon ledger + remediation" (D5-004) |
+| Run history | 6 job runs total: 2 infra shakedowns (below) + 4 recon cycles; GREEN clock counts recon cycles from cycle 4 only |
 | Evidence | `databricks/evidence/coexistence/` (run JSON + per-task outputs, scrubbed to `<requester>`) |
 
 Verdict semantics: GREEN = 5/5 tasks SUCCESS (every unit PASS); RED = any task FAILED (`run_recon.py` exits 1 on any FAIL verdict). Staged reds are marked `STAGED — expected`.
@@ -21,6 +22,8 @@ Note on the staged red: `business_date` only parameterises the `{yyyymmdd}` batc
 
 | UTC timestamp | run_id | verdict | detail | triage | PR |
 |---|---|---|---|---|---|
+| 2026-09-02T00:47:33Z | 1084922540695680 | FAILED — shakedown (infra) | U2/U3/U4 "Workload failed" at task entry (not a recon FAIL); U1 retried SUCCESS, U5 SUCCESS | deploy shakedown, entry-point path fix; recorded per audit F-4 | #38 |
+| 2026-09-02T00:50:32Z | 698984939827672 | FAILED — shakedown (infra) | U2/U3/U4 "Workload failed" at task entry (not a recon FAIL) | deploy shakedown; recorded per audit F-4 | #38 |
 | 2026-09-02T00:53:00Z | 876111316294946 | RED (4/5) | U3 `T-3:model_id` `CRM-2023-Q4-V2` vs reference `-v2`; U1/U2/U4/U5 PASS | (a) baseline drift — approved conversion change DEC-017 (a); reference correction pending, independent recon session | #36 |
 | 2026-09-02T01:01:57Z | 1063912159259719 | RED (3/5) — STAGED, expected | `business_date=2024-02-29` override: U5 `T-1` (0 target rows vs 4 ref), `T-2:batch_id,step_num`, `T-8:step_num`; U3 `T-3:model_id` (as above); U1/U2/U4 PASS (date-agnostic) | staged red; fail path + independence proven; webhook not wired (see header) | #38 |
 | 2026-09-02T01:04:00Z | 737965062575783 | RED (4/5) | U3 `T-3:model_id` only; U1/U2/U4/U5 PASS — recovery from the staged red confirmed | (a) baseline drift — DEC-017 (a), same as cycle 1 | #36 |

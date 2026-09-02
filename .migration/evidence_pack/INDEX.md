@@ -85,6 +85,8 @@ New GAPs found by this session (not previously in the register; added there as G
 |---|---|---|---|---|---|
 | T-9 per-type breakdown on `acct_exceptions` | DEC-015 (a) / AMB-01; wave 1 brief; wave 3 recon | literal schema has no `EXCEPTION_CODE` column | Requester | medium | STOP E (REQ-05 or production `STG_BANK.ACCT_EXCEPTIONS` schema export) |
 | T-9 per-type breakdown on `txn_rejected` | DEC-015 (a) / AMB-02; wave 2 brief | no `REJECT_REASON` column | Requester | medium | STOP E (same) |
+| AMB-06 missing-value comparison (`. < 0` TRUE in SAS) → `anomaly_type` for orphan accounts | `reference_impl/AMBIGUITIES.md`; audit F-5 | conversion implements literal reading (`daily_transaction_processing.py:241`); no orphan in seed | Requester | medium | STOP E (REQ-05 / production data) |
+| AMB-08 `N=N_ACCOUNTS` vs `_FREQ_` when PD missing | `reference_impl/AMBIGUITIES.md`; audit F-5 | no missing PD in seed | Requester | low | STOP E (REQ-05) |
 | `ABORT_ON_ERR=N` branch and the FAIL/abort branch of `run_daily_banking` | wave 3 brief; wave 3 recon | every archived step PASSed in both full runs; unit-tested only | Devin (tests) / Requester (accept) | medium | STOP E — accept as unit-tested, or request a deliberate failed-task run before cutover |
 | `restart_from` repair-run row selection | wave 3 brief | mapped to Jobs repair run; never exercised live | Devin / Requester | low | STOP E accept |
 | `%sendmail` (4 call sites: U1, both orchestrators, claims) | D4-003 DEFERRED | no notification destination (REQ-02), no SMTP | Customer | medium | STOP E — destination or explicit "no email" |
