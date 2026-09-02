@@ -13,7 +13,7 @@ from . import sas_semantics as S
 from .seeds import Row
 
 SENTINEL_TS = "2024-01-31T00:00:00"
-MODEL_ID = "CRM-2023-Q4-v2"                                                  # line 18 default
+MODEL_ID_DEFAULT = "CRM-2023-Q4-v2"                                          # line 18 default
 SCORED_TYPES = ("MTG", "AUTO", "PERS", "CC", "LOC", "HELC")                  # line 84
 WOE_COLS = ["INTERCEPT", "WOE_FICO", "WOE_UTIL", "WOE_DPD", "WOE_AGE", "WOE_LTV", "LOG_ODDS"]  # line 196
 
@@ -62,7 +62,7 @@ def score_input(libs: Dict[str, List[Row]], daily_accounts: List[Row], score_dat
     return out
 
 
-def scorecard(inputs: List[Row], score_date: dt.date) -> List[Row]:
+def scorecard(inputs: List[Row], score_date: dt.date, model_id: str) -> List[Row]:
     """DATA step lines 92-197. WOE_* / LOG_ODDS are kept on the returned rows
     (ML-8 debug); callers drop WOE_COLS for the persisted table (line 196)."""
     out: List[Row] = []
@@ -157,7 +157,7 @@ def scorecard(inputs: List[Row], score_date: dt.date) -> List[Row]:
         else: r["NEW_RISK_RATING"] = 7.0
 
         r["SCORE_DATE"] = score_date                                        # line 191
-        r["MODEL_ID"] = MODEL_ID                                            # line 192
+        r["MODEL_ID"] = model_id                                            # line 192
         r["SCORE_TIMESTAMP"] = SENTINEL_TS                                  # line 193 datetime() -> sentinel
         out.append(r)
     return out
@@ -205,9 +205,11 @@ def risk_summary(scored: List[Row]) -> List[Row]:
     return out
 
 
-def run(libs: Dict[str, List[Row]], daily_accounts: List[Row], score_date: dt.date) -> Dict[str, List[Row]]:
+def run(libs: Dict[str, List[Row]], daily_accounts: List[Row], score_date: dt.date,
+        model_id: str = MODEL_ID_DEFAULT) -> Dict[str, List[Row]]:
+    model_id = S.parmv(model_id)                                            # line 21 %parmv(model_id) _CASE=U
     inp = score_input(libs, daily_accounts, score_date)
-    scored_full = scorecard(inp, score_date)
+    scored_full = scorecard(inp, score_date, model_id)
     scored = [{k: v for k, v in r.items() if k not in WOE_COLS} for r in scored_full]  # line 196 drop
     return {"CURATED.RISK_SCORES": scored,                                  # lines 231-232 (base absent -> full structure)
             "CURATED.RISK_MIGRATION": risk_migration(scored, daily_accounts, score_date),

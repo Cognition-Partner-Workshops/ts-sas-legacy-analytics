@@ -195,6 +195,18 @@ def put_wd(x: Num, w: int = 5, d: int = 1) -> str:
     return s.rjust(w)
 
 
+def parmv(value: str, case: str = "U") -> str:
+    """%parmv(_CASE=) value conversion (Macro/parmv.sas:147, 204-215): the
+    default _CASE=U upper-cases the parameter value at macro entry; L lowers;
+    N leaves it unchanged."""
+    case = case.upper()
+    if case == "U":
+        return value.upper()
+    if case == "L":
+        return value.lower()
+    return value
+
+
 def catx(sep: str, *parts: str) -> str:
     """CATX(): strips leading/trailing blanks, drops blank items."""
     return sep.join(p.strip() for p in parts if p.strip() != "")

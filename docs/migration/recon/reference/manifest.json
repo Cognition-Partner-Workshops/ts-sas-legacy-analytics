@@ -12,6 +12,17 @@
   "source_commit": "00ef7f735ae7659bdd5edbb2537d6f4f56184418",
   "source_commit_scope": "last commit touching Programs, BatchJobs, Config, Formats, Macro, Data/",
   "generator": "python -m reference_impl.run_all --business-date 2024-01-31 --report-month 202401",
+  "changelog": [
+    {
+      "date": "2026-09-02",
+      "decision": "DEC-017 (a)",
+      "changed": [
+        "risk_scores.csv"
+      ],
+      "manifest_sha256_before": "aea7c04a35b6171c343a1eedc45bb509402b746864a6e111ac6608d154625cc7",
+      "reason": "MODEL_ID upper-cased at %parmv entry (_CASE=U default): CRM-2023-Q4-v2 -> CRM-2023-Q4-V2"
+    }
+  ],
   "outputs": {
     "cust_accounts_daily.csv": {
       "sas_table": "STG_BANK.CUST_ACCOUNTS_DAILY",
@@ -46,7 +57,7 @@
     "risk_scores.csv": {
       "sas_table": "CURATED.RISK_SCORES",
       "rows": 236,
-      "sha256": "e112a246b4c01c2341e80109b8eece8b58a7da14962890c9d400f08bde5b31e8"
+      "sha256": "9f8d21a7d00b21a58ba2b0a7b6cc41f345e17dd53b6a89c3d84e845296ace55b"
     },
     "risk_migration.csv": {
       "sas_table": "CURATED.RISK_MIGRATION",

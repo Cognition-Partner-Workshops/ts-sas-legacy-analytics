@@ -28,6 +28,12 @@ DEFAULT_OUT = os.path.join(HERE, "..", "reference")
 
 CAVEAT = "reference-derived, not SAS-produced"
 GENERATOR = "python -m reference_impl.run_all --business-date 2024-01-31 --report-month 202401"
+CHANGELOG = [
+    {"date": "2026-09-02", "decision": "DEC-017 (a)",
+     "changed": ["risk_scores.csv"],
+     "manifest_sha256_before": "aea7c04a35b6171c343a1eedc45bb509402b746864a6e111ac6608d154625cc7",
+     "reason": "MODEL_ID upper-cased at %parmv entry (_CASE=U default): CRM-2023-Q4-v2 -> CRM-2023-Q4-V2"},
+]
 
 # SAS table -> reference csv name, T-2 sort key (analysis §6). monthly_rwa adds
 # risk_weight because the SAS GROUP BY includes it (AMB-07).
@@ -145,6 +151,7 @@ def generate(business_date: dt.date, report_month: str, csv_root: str, out_dir: 
         "source_commit": source_commit(),
         "source_commit_scope": "last commit touching " + ", ".join(SOURCE_DIRS) + "/",
         "generator": GENERATOR,
+        "changelog": CHANGELOG,
         "outputs": outputs,
         "alternates": alternates,
         "inputs": inputs,

@@ -125,7 +125,7 @@ def test_pd_in_open_unit_interval_and_bands():
     lgd = rs["lgd"].astype(float)
     assert ((lgd >= 0) & (lgd <= 1)).all()
     assert (rs["score_timestamp"] == "2024-01-31T00:00:00").all()
-    assert (rs["model_id"] == "CRM-2023-Q4-v2").all()
+    assert (rs["model_id"] == "CRM-2023-Q4-V2").all()  # DEC-017 (a): %parmv _CASE=U
 
 
 def test_running_balance_last_row_equals_prior_plus_signed_sum():
